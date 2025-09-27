@@ -9,19 +9,47 @@ public class Product {
     private boolean isAvailable;
     private boolean discountAvailable;
     private String lastUpdated;
-
-    // setter method
-    public void updatePrice() {}
-    public void updateName() {}
-    public void updateCategory() {}
-    public void updateStock() {}
-    public void updateDiscount() {}
-
-    // getter methods
-    public void addNewProduct() {}
-    public void applyDiscount() {}
-    public boolean discountAvailable() {}
-    public boolean isAvailable() {}
-    public void deleteProduct() {}
+   
+    // methods
+    public void updatePrice() {
+    }
+    public void updateName() {
+    }
+    public void updateCategory() {
+    }
+    public void updateStock() {
+    }
+    public void updateDiscount() {
+    }
+    public void addNewProduct() {
+    }
+    public void applyDiscount() {
+    }
+    public boolean discountAvailable() {
+        return discountAvailable;
+    }
+    public boolean isAvailable() {
+        return isAvailable;
+    }
+    public void deleteProduct() {
+    }
+    public String getProductId() {
+    }
+    public String getName() {
+    }
+    public String getCategory() {
+    }
+    public int getStock() {
+    }
+    public double getPrice() {
+    }
+    public double getDiscountPercent() {
+    }
+    public boolean getIsAvailable() {
+    }
+    public boolean getDiscountAvailable() {
+    }
+    public String getLastUpdated() {
+    }
 }
 
