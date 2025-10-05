@@ -11,7 +11,7 @@ public class ShoppingCart {
     this.customerId = customerId;
     this.product = null;
     this.productCount = 0;
-    //this.lastUpdated = LocalDateTime.now();
+    // this.lastUpdated = LocalDateTime.now();
     this.instanceCount++; // counts instances
   }
 
@@ -21,7 +21,7 @@ public class ShoppingCart {
   }
 
   public int getproductCount(Product product) {
-    //return product count from looking through hashmap for that product
+    // return product count from looking through hashmap for that product
   }
 
   public double lastUpdated() {
@@ -70,50 +70,51 @@ public class ShoppingCart {
   }
 }
 
-
-public class ShoppingCart{ //only want to be able to make one instance per customer
-  //uses hashmap to keep track of products and product count. Hashmap first value: Instances of the product class. 2nd: #amount in cart
+public class ShoppingCart { // only want to be able to make one instance per customer
+  // uses hashmap to keep track of products and product count. Hashmap first
+  // value: Instances of the product class. 2nd: #amount in cart
   private String customerId;
   private HashMap<Product, Integer> productsList;
 
-  public ShoppingCart(String customerId){
+  public ShoppingCart(String customerId) {
     this.customerId = customerId;
-    //add a hashmap thing
+    // add a hashmap thing
     productsList = new HashMap<>();
   }
 
-  //getters
-  public String getcustomerId(){
+  // getters
+  public String getcustomerId() {
     return customerId;
   }
-  
-  public Map<Product, Integer> getproductsList() { //map so i can freely change the field type
-    return productsList; 
-}
-  //setters
-  public void setcustomerId(String customerId){
+
+  public Map<Product, Integer> getproductsList() { // map so i can freely change the field type
+    return productsList;
+  }
+
+  // setters
+  public void setcustomerId(String customerId) {
     this.customerId = customerId;
   }
 
-  /* TODO: public void setProducts() { //map so i can freely change the field type
-    return products; 
-  }*/ //how do i set products except adding and subtracting
+  /*
+   * TODO: public void setProducts() { //map so i can freely change the field type
+   * return products;
+   * }
+   */ // how do i set products except adding and subtracting
 
-  /*TODO do getters and setters and methods have to be static */
+  /* TODO do getters and setters and methods have to be static */
 
-  public static void calculateTotalInCart(){
+  public static void calculateTotalInCart() {
     double sum = 0;
-    for (Map.Entry<Product, Integer> entry : productsList.entrySet()){
-      Product product = entry.getKey();      
-      int quantity = entry.getValue();       
-      sum += product.getPrice() * quantity;  
+    for (Map.Entry<Product, Integer> entry : productsList.entrySet()) {
+      Product product = entry.getKey();
+      int quantity = entry.getValue();
+      sum += product.getPrice() * quantity;
     }
 
     System.out.println("Total: $" + sum);
   }
-  
-  
-  
+
   public void viewCart() {
     if (productsList.isEmpty()) {
       System.out.println("Your cart is empty.");
@@ -125,13 +126,8 @@ public class ShoppingCart{ //only want to be able to make one instance per custo
     }
   }
 
-  public static void clearCart(){
+  public static void clearCart() {
     this.productsList.clear();
   }
-
-
-
-
-
 
 }
