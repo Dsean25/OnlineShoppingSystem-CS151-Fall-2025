@@ -1,5 +1,5 @@
 import java.time.LocalDateTime;
-import java.util.HashMap
+import java.util.HashMap;
   
   public class ShoppingCart { // only want to be able to make one instance per customer
   // uses hashmap to keep track of products and product count. Hashmap first
@@ -18,7 +18,7 @@ import java.util.HashMap
     return customerId;
   }
 
-  public Map<Product, Integer> getproductsList() { // map so i can freely change the field type
+  public HashMap<Product, Integer> getproductsList() { 
     return productsList;
   }
 
@@ -26,7 +26,6 @@ import java.util.HashMap
   public void setcustomerId(String customerId) {
     this.customerId = customerId;
   }
-
   /*
    * TODO: public void setProducts() { //map so i can freely change the field type
    * return products;
@@ -35,9 +34,10 @@ import java.util.HashMap
 
   /* TODO do getters and setters and methods have to be static */
 
-  public static void calculateTotalInCart() {
+  
+  public void calculateTotalInCart() {
     double sum = 0;
-    for (Map.Entry<Product, Integer> entry : productsList.entrySet()) {
+    for (HashMap.Entry<Product, Integer> entry : productsList.entrySet()) {
       Product product = entry.getKey();
       int quantity = entry.getValue();
       sum += product.getPrice() * quantity;
@@ -50,13 +50,13 @@ import java.util.HashMap
       System.out.println("Your cart is empty.");
     } else {
       System.out.println("Cart for Customer ID: " + customerId);
-      for (Map.Entry<Product, Integer> entry : productsList.entrySet()) {
+      for (HashMap.Entry<Product, Integer> entry : productsList.entrySet()) {
         System.out.println(entry.getKey() + " x " + entry.getValue());
       }
     }
   }
 
-  public static void clearCart() {
+  public void clearCart() {
     this.productsList.clear();
   }
 
