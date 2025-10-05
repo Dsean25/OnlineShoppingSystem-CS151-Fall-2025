@@ -2,39 +2,70 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
   
   public class ShoppingCart { // only want to be able to make one instance per customer
-  // uses hashmap to keep track of products and product count. Hashmap first
-  // value: Instances of the product class. 2nd: #amount in cart
+  
   private String customerId;
   private HashMap<Product, Integer> productsList;
 
   public ShoppingCart(String customerId) {
     this.customerId = customerId;
-    // add a hashmap thing
     productsList = new HashMap<>();
   }
 
-  // getters
+  //getters
   public String getcustomerId() {
     return customerId;
   }
 
   public HashMap<Product, Integer> getproductsList() { 
     return productsList;
+
   }
 
-  // setters
+  //setters
   public void setcustomerId(String customerId) {
     this.customerId = customerId;
   }
+
+  public void setproductsList(HashMap<Product, Integer> productsList) {
+    this.productsList = productsList;
+  }
+
   /*
-   * TODO: public void setProducts() { //map so i can freely change the field type
-   * return products;
-   * }
-   */ // how do i set products except adding and subtracting
+   questions: 
+   - how do i set products except adding and subtracting
+   - do getters and setters and methods have to be static
+    */
 
-  /* TODO do getters and setters and methods have to be static */
+  public void addToCart(Product p, int quantity){
+    boolean hasproduct = productsList.containsKey(p);
+    if(hasproduct){
+      int currQty = productsList.get(p);
+      productsList.put(p, currQty + quantity);
+      System.out.println("Product already in cart. New quantity: " + productsList.get(p));
+    }
+    else{
+      productsList.put(p, quantity);
+      System.out.println("Product added to cart! Quantity: " + productsList.get(p));
+    }
 
-  
+  }
+
+  public void removeFromCart(Product p, int quantity){
+    //should we add smt for when product is not in cart? or is the user simply selecting  based off what they see
+    
+    if (quantity > productsList.get(p)){
+      //throw exception?
+      System.out.println("The amount you want to remove greater than the amount of this product in cart");
+    }
+    else if (productsList.get(p) == quantity){
+      productsList.remove(p);
+      System.out.println("Item removed from cart");
+    }
+    else{
+      productsList.put(p, productsList.get(p) - quantity);
+    }
+  }
+
   public void calculateTotalInCart() {
     double sum = 0;
     for (HashMap.Entry<Product, Integer> entry : productsList.entrySet()) {
