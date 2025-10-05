@@ -40,7 +40,7 @@ import java.util.HashMap;
     if(hasproduct){
       int currQty = productsList.get(p);
       productsList.put(p, currQty + quantity);
-      System.out.println("Product already in cart. New quantity: " + productsList.get(p));
+      System.out.println("This product is already in cart and the quantity has been update to " + productsList.get(p));
     }
     else{
       productsList.put(p, quantity);
