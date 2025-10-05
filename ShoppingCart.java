@@ -1,76 +1,7 @@
 import java.time.LocalDateTime;
-
-public class ShoppingCart {
-  private String customerId;
-  private int productCount;
-  private double lastUpdated;
-  private int instanceCount;
-
-  // constructor
-  public ShoppingCart(String customerId) {
-    this.customerId = customerId;
-    this.product = null;
-    this.productCount = 0;
-    // this.lastUpdated = LocalDateTime.now();
-    this.instanceCount++; // counts instances
-  }
-
-  // getters
-  public String getcustomerId() {
-    return this.customerId;
-  }
-
-  public int getproductCount(Product product) {
-    // return product count from looking through hashmap for that product
-  }
-
-  public double lastUpdated() {
-    return this.lastUpdated;
-  }
-
-  public int getinstances() {
-    return this.instanceCount;
-  }
-
-  // end of getters
-
-  // setters
-  public void setcustomerId(String customerId) {
-    this.customerId = customerId;
-  }
-
-  public void setproduct(String product) {
-    this.product = product;
-  }
-
-  public void setproductCount(String productCount) {
-    this.productCount = productCount;
-  }
-
-  public void setlastUpdated(String lastUpdated) {
-    this.lastUpdated = lastUpdated;
-  }
-
-  // end of setters, did not set instanceCount
-
-  public static void removeAllFromCart(Product P) {
-
-  }
-
-  public static void addProductToCart(Product P) {
-
-  }
-
-  public static double calculateTotal() {
-
-  }
-
-  public static void clearCart() {
-
-  }
-}
-
-public class ShoppingCart { // only want to be able to make one instance per customer
+import java.util.HashMap
+  
+  public class ShoppingCart { // only want to be able to make one instance per customer
   // uses hashmap to keep track of products and product count. Hashmap first
   // value: Instances of the product class. 2nd: #amount in cart
   private String customerId;
@@ -111,7 +42,6 @@ public class ShoppingCart { // only want to be able to make one instance per cus
       int quantity = entry.getValue();
       sum += product.getPrice() * quantity;
     }
-
     System.out.println("Total: $" + sum);
   }
 
