@@ -1,4 +1,4 @@
-public class Customer extends User{
+public class Customer extends User implements Operations{
     private String name;
     private String customerId;
     private ShoppingCart cart;
@@ -33,17 +33,23 @@ public class Customer extends User{
         this.paymentMethod = paymentMethod;
     }
 
-    public void addProductToCart(Product p, int qty){
-        cart.addToCart(p, qty);
+    @Override
+    public void addProduct(Product p, int qty){
+        cart.addProduct(p, qty);
         //print statements are in addtocart
     }
-
-    public void removeProductFromCart(Product p, int qty){
-        cart.removeFromCart(p, qty);
+    @Override
+    public void removeProduct(Product p, int qty){
+        cart.removeProduct(p, qty);
     }
 
     public void placeOrder(){
     
+    }
+
+    @Override
+    public void calculateTotal(){
+        //in cart AND checkout??
     }
 
     public void changePaymentMethod(String paymentmethod){
