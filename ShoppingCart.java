@@ -1,18 +1,18 @@
 import java.time.LocalDateTime;
 
 public class ShoppingCart {
-  String customerId;
-  Product product;
-  int productCount;
+  private String customerId;
+  private Product product;
+  private int productCount;
   public double lastUpdated; // difference between public vs not writing anything
-  int instanceCount;
+  private int instanceCount;
 
   // constructor
   public ShoppingCart(String customerId, Product product, int productCount, double lastUpdated) {
     this.customerId = customerId;
     this.product = null;
     this.productCount = 0;
-    this.lastUpdated = LocalDateTime.now();
+    //this.lastUpdated = LocalDateTime.now();
     this.instanceCount++; // counts instances
   }
 
@@ -62,7 +62,7 @@ public class ShoppingCart {
 
   public static void addProductToCart(Product P) {}
 
-  public static double calculateTotal() {}
+  //public static double calculateTotal() {}
 
   public static void clearCart() {}
 }
