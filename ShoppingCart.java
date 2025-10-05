@@ -1,6 +1,5 @@
 import java.time.LocalDateTime;
 import java.util.HashMap;
-  
   public class ShoppingCart { // only want to be able to make one instance per customer
   
   private String customerId;
