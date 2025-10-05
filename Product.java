@@ -52,4 +52,9 @@ public class Product {
   public boolean getDiscountAvailable() {}
 
   public String getLastUpdated() {}
+  
+  @Override
+  public String toString() {
+    return name + " ($" + price + ")";
+  }
 }
