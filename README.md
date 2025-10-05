@@ -24,8 +24,16 @@ to create a functional and interactive system that models real-life online shopp
    - IntelliJ Setup:
        - Settings → Plugins → Google Java Format → Install → restart IDE → enable → choose Default Google Java Style
        - Optional: Help → Edit Custom VM Options → add [IntelliJ JRE Config](https://github.com/google/google-java-format/blob/master/README.md#intellij-jre-config)
-       
-
+       - To format your code, press Ctrl + Alt + L
+    - VS Code Setup:
+       - Extensions → Google Java Format → Install → Settings
+       - Add this to the setting:
+         ```
+           {
+             "editor.defaultFormatter": "google.google-java-format",
+             "editor.formatOnSave": true
+           }
+       - Save settings and reload VS Code
 ## Usage
 
 
