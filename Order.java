@@ -1,12 +1,12 @@
 package grocery;
 
 import java.util.Date;
+import java.util.HashMap;
 
 public class Order {
   private String orderId;
   private String paymentId;
-  private Product product;
-  private int productCount;
+  private HashMap<Product, Integer> productOrdered;
   private double totalCost;
   private double taxRate;
   private Date orderDate;
@@ -18,7 +18,9 @@ public class Order {
   private boolean returnCompleted;
 
   // Constructor
-  public Order() {}
+  public Order() {
+    productOrdered = new HashMap<>();
+  }
 
   // Getters and setters
   public String getOrderId() {
@@ -37,20 +39,12 @@ public class Order {
     this.paymentId = paymentId;
   }
 
-  public Product getProduct() {
-    return product;
+  public HashMap<Product, Integer> getProductOrdered() {
+    return productOrdered;
   }
 
-  public void setProduct(Product product) {
-    this.product = product;
-  }
-
-  public int getProductCount() {
-    return productCount;
-  }
-
-  public void setProductCount(int productCount) {
-    this.productCount = productCount;
+  public void setProductOrdered(HashMap<Product, Integer> productOrdered) {
+    this.productOrdered = productOrdered;
   }
 
   public double getTotalCost() {
