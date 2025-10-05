@@ -1,68 +1,94 @@
 import java.time.LocalDateTime;
+import java.util.HashMap;
+  
+  public class ShoppingCart { // only want to be able to make one instance per customer
+  
+  private String customerId;
+  private HashMap<Product, Integer> productsList;
 
-public class ShoppingCart {
-  String customerId;
-  Product product;
-  int productCount;
-  public double lastUpdated; // difference between public vs not writing anything
-  int instanceCount;
-
-  // constructor
-  public ShoppingCart(String customerId, Product product, int productCount, double lastUpdated) {
+  public ShoppingCart(String customerId) {
     this.customerId = customerId;
-    this.product = null;
-    this.productCount = 0;
-    this.lastUpdated = LocalDateTime.now();
-    this.instanceCount++; // counts instances
+    productsList = new HashMap<>();
   }
 
-  // getters
+  //getters
   public String getcustomerId() {
-    return this.customerId;
+    return customerId;
   }
 
-  public Product getproduct() {
-    return this.product;
+  public HashMap<Product, Integer> getproductsList() { 
+    return productsList;
+
   }
 
-  public int productCount() {
-    return this.productCount;
+  //setters
+  public void setcustomerId(String customerId) {
+    this.customerId = customerId;
   }
 
-  public double lastUpdated() {
-    return this.lastUpdated;
+  public void setproductsList(HashMap<Product, Integer> productsList) {
+    this.productsList = productsList;
   }
 
-  public int getinstances() {
-    return this.instanceCount;
+  /*
+   questions: 
+   - how do i set products except adding and subtracting
+   - do getters and setters and methods have to be static
+    */
+
+  public void addToCart(Product p, int quantity){
+    boolean hasproduct = productsList.containsKey(p);
+    if(hasproduct){
+      int currQty = productsList.get(p);
+      productsList.put(p, currQty + quantity);
+      System.out.println("Product already in cart. New quantity: " + productsList.get(p));
+    }
+    else{
+      productsList.put(p, quantity);
+      System.out.println("Product added to cart! Quantity: " + productsList.get(p));
+    }
+
   }
 
-  // end of getters
-
-  // setters
-  public void setcustomerId(String customerID) {
-    this.customerID = customerID;
+  public void removeFromCart(Product p, int quantity){
+    //should we add smt for when product is not in cart? or is the user simply selecting  based off what they see
+    
+    if (quantity > productsList.get(p)){
+      //throw exception?
+      System.out.println("The amount you want to remove greater than the amount of this product in cart");
+    }
+    else if (productsList.get(p) == quantity){
+      productsList.remove(p);
+      System.out.println("Item removed from cart");
+    }
+    else{
+      productsList.put(p, productsList.get(p) - quantity);
+    }
   }
 
-  public void setproduct(String product) {
-    this.product = product;
+  public void calculateTotalInCart() {
+    double sum = 0;
+    for (HashMap.Entry<Product, Integer> entry : productsList.entrySet()) {
+      Product product = entry.getKey();
+      int quantity = entry.getValue();
+      sum += product.getPrice() * quantity;
+    }
+    System.out.println("Total: $" + sum);
   }
 
-  public void setproductCount(String productCount) {
-    this.productCount = productCount;
+  public void viewCart() {
+    if (productsList.isEmpty()) {
+      System.out.println("Your cart is empty.");
+    } else {
+      System.out.println("Cart for Customer ID: " + customerId);
+      for (HashMap.Entry<Product, Integer> entry : productsList.entrySet()) {
+        System.out.println(entry.getKey() + " x " + entry.getValue());
+      }
+    }
   }
 
-  public void setlastUpdated(String lastUpdated) {
-    this.lastUpdated = lastUpdated;
+  public void clearCart() {
+    this.productsList.clear();
   }
 
-  // end of setters, did not set instanceCount
-
-  public static void removeFromCart(Product P) {}
-
-  public static void addProductToCart(Product P) {}
-
-  public static double calculateTotal() {}
-
-  public static void clearCart() {}
 }
