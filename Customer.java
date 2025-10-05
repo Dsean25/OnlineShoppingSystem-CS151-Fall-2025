@@ -5,7 +5,7 @@ public class Customer extends User{
     private String paymentMethod;
 
     public Customer(String name, String customerId){
-        //need to call onsuper();
+        //need to call on super();
         this.name = name;
         this.customerId = customerId;
         cart = new ShoppingCart(customerId);
