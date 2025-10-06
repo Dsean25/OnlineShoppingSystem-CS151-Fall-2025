@@ -17,7 +17,7 @@ public abstract class User {
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
-    this.phone = phone;
+    this.phonenumber = phonenumber;
     this.address = address;
   }
 
@@ -38,7 +38,7 @@ public abstract class User {
   }
 
   public String getPhoneNumber() {
-    return phoneNumber;
+    return phonenumber;
   }
 
   public String getAddress() {
