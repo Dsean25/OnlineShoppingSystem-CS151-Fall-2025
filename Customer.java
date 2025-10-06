@@ -1,4 +1,4 @@
-public class Customer extends User implements Operations{
+public class Customer extends User {
     private String name;
     private String customerId;
     private ShoppingCart cart;
@@ -11,7 +11,7 @@ public class Customer extends User implements Operations{
         cart = new ShoppingCart(customerId);
     }
     
-    //setters
+    //getters and setters
     public void setCustomerID(String customerId) {
         this.customerId = customerId;
     }
@@ -24,7 +24,6 @@ public class Customer extends User implements Operations{
         this.cart = cart;
     }
 
-    //getters
     public String getPaymentMethod() {
         return paymentMethod;
     }
@@ -33,12 +32,12 @@ public class Customer extends User implements Operations{
         this.paymentMethod = paymentMethod;
     }
 
-    @Override
+    
     public void addProduct(Product p, int qty){
         cart.addProduct(p, qty);
         //print statements are in addtocart
     }
-    @Override
+
     public void removeProduct(Product p, int qty){
         cart.removeProduct(p, qty);
     }
@@ -47,7 +46,6 @@ public class Customer extends User implements Operations{
     
     }
 
-    @Override
     public void calculateTotal(){
         //in cart AND checkout??
     }
