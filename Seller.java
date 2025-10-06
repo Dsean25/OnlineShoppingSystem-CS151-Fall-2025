@@ -30,4 +30,34 @@ public class Seller extends User {
       System.out.println(product);
     }
   }
+
+  public boolean hasProduct(String productId) {
+    return productMap.containsKey(productId);
+  }
+
+  public void addProduct(Product product) {
+    productMap.put(product.getProductId(), product);
+    System.out.println("Product " + product.getName() + " added to " + storeName);
+  }
+
+  public void removeProduct(String productId) {
+    if (hasProduct(productId)) {
+      Product removedProduct = productMap.remove(productId);
+      System.out.println("Product " + removedProduct.getName() + " removed from " + storeName);
+    } else {
+      System.out.println("Product with ID " + productId + " not found in " + storeName);
+    }
+  }
+
+  public void changeProductPrice(String productId, double newPrice) {
+    if (newPrice < 0) {
+      throw new IllegalArgumentException("The new price must be >= 0");
+    }
+    if (!hasProduct(productId)) {
+      System.out.println("Product with ID " + productId + " is not found in " + storeName);
+      return;
+    }
+    Product p = productMap.get(productId);
+    p.updatePrice();
+  }
 }
