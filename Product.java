@@ -83,7 +83,7 @@ public class Product implements Discountable {
         lastUpdated = LocalDate.now().toString();
     }
 
-    // --- Getters ---
+    // Getters method
     public String getProductId() {
         return productId;
     }
@@ -116,7 +116,7 @@ public class Product implements Discountable {
         return lastUpdated;
     }
 
-    // --- Setters ---
+    // Setters method
     public void setPrice(double price) {
         if (price < 0)
             throw new IllegalArgumentException("Price cannot be negative.");
