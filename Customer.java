@@ -1,4 +1,4 @@
-public class Customer extends User{
+public class Customer extends User {
     private String name;
     private String customerId;
     private ShoppingCart cart;
@@ -11,7 +11,7 @@ public class Customer extends User{
         cart = new ShoppingCart(customerId);
     }
     
-    //setters
+    //getters and setters
     public void setCustomerID(String customerId) {
         this.customerId = customerId;
     }
@@ -24,7 +24,6 @@ public class Customer extends User{
         this.cart = cart;
     }
 
-    //getters
     public String getPaymentMethod() {
         return paymentMethod;
     }
@@ -33,17 +32,22 @@ public class Customer extends User{
         this.paymentMethod = paymentMethod;
     }
 
-    public void addProductToCart(Product p, int qty){
-        cart.addToCart(p, qty);
+    
+    public void addProduct(Product p, int qty){
+        cart.addProduct(p, qty);
         //print statements are in addtocart
     }
 
-    public void removeProductFromCart(Product p, int qty){
-        cart.removeFromCart(p, qty);
+    public void removeProduct(Product p, int qty){
+        cart.removeProduct(p, qty);
     }
 
     public void placeOrder(){
     
+    }
+
+    public void calculateTotal(){
+        //in cart AND checkout??
     }
 
     public void changePaymentMethod(String paymentmethod){

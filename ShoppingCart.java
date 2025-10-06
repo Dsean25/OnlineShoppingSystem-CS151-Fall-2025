@@ -1,7 +1,7 @@
 import java.time.LocalDateTime;
 import java.util.HashMap;
-  public class ShoppingCart { // only want to be able to make one instance per customer
-  
+  public class ShoppingCart implements Operations { // only want to be able to make one instance per customer
+
   private String customerId;
   private HashMap<Product, Integer> productsList;
 
@@ -35,7 +35,8 @@ import java.util.HashMap;
    - do getters and setters and methods have to be static
     */
 
-  public void addToCart(Product p, int quantity){
+  @Override
+  public void addProduct(Product p, int quantity){
     boolean hasproduct = productsList.containsKey(p);
     if(hasproduct){
       int currQty = productsList.get(p);
@@ -48,8 +49,8 @@ import java.util.HashMap;
     }
 
   }
-
-  public void removeFromCart(Product p, int quantity){
+  @Override
+  public void removeProduct(Product p, int quantity){
     //should we add smt for when product is not in cart? or is the user simply selecting  based off what they see
     
     if (quantity > productsList.get(p)){
@@ -64,8 +65,8 @@ import java.util.HashMap;
       productsList.put(p, productsList.get(p) - quantity);
     }
   }
-
-  public void calculateTotalInCart() {
+  @Override
+  public void calculateTotal() {
     double sum = 0;
     for (HashMap.Entry<Product, Integer> entry : productsList.entrySet()) {
       Product product = entry.getKey();
@@ -75,7 +76,7 @@ import java.util.HashMap;
     System.out.println("Total: $" + sum);
   }
 
-  public void viewCart() {
+  public void viewProducts() {
     if (productsList.isEmpty()) {
       System.out.println("Your cart is empty.");
     } else {
