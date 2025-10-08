@@ -1,60 +1,140 @@
-public class Product {
-  // attributes
-  private String productId;
-  private String name;
-  private String category;
-  private int stock;
-  private double price;
-  private double discountPercent;
-  private boolean isAvailable;
-  private boolean discountAvailable;
-  private String lastUpdated;
+import java.time.LocalDate;
 
-  // methods
-  public void updatePrice() {}
+public class Product implements Discountable {
+    private String productId;
+    private String name;
+    private String category;
+    private int stock;
+    private double price;
+    private double discountPercent;
+    private boolean isAvailable;
+    private boolean discountAvailable;
+    private String lastUpdated;
 
-  public void updateName() {}
+    public Product(String productId, String name, String category, int stock, double price) {
+        if (stock < 0 || price < 0) {
+            throw new IllegalArgumentException("Stock and price must be non-negative.");
+        }
 
-  public void updateCategory() {}
+        this.productId = productId;
+        this.name = name;
+        this.category = category;
+        this.stock = stock;
+        this.price = price;
+        this.discountPercent = 0;
+        this.discountAvailable = false;
+        this.isAvailable = stock > 0;
+        this.lastUpdated = LocalDate.now().toString();
+    }
 
-  public void updateStock() {}
+    public void applyDiscount(double percent) {
+        if (percent < 0 || percent > 100) {
+            throw new IllegalArgumentException("Discount must be between 0 and 100.");
+        }
+        discountPercent = percent;
+        discountAvailable = true;
+        updateLastUpdated();
+    }
 
-  public void updateDiscount() {}
+    @Override
+    public void clearDiscount() {
+        discountPercent = 0;
+        discountAvailable = false;
+        updateLastUpdated();
+    }
 
-  public void addNewProduct() {}
+    @Override
+    public double getDiscountPercent() {
+        return discountPercent;
+    }
 
-  public void applyDiscount() {}
+    public double getCurrentPrice() {
+        return price * (1 - discountPercent / 100);
+    }
 
-  public boolean discountAvailable() {
-    return discountAvailable;
-  }
+    public void restock(int amount) {
+        if (amount <= 0) {
+            throw new IllegalArgumentException("Restock amount must be positive.");
+        }
+        stock += amount;
+        isAvailable = true;
+        updateLastUpdated();
+    }
 
-  public boolean isAvailable() {
-    return isAvailable;
-  }
+    public void reduceStock(int amount) {
+        if (amount <= 0) {
+            throw new IllegalArgumentException("Amount must be positive.");
+        }
+        if (amount > stock) {
+            throw new IllegalArgumentException("Not enough stock available.");
+        }
+        stock -= amount;
+        isAvailable = stock > 0;
+        updateLastUpdated();
+    }
 
-  public void deleteProduct() {}
+    public void deleteProduct() {
+        stock = 0;
+        isAvailable = false;
+        updateLastUpdated();
+    }
 
-  public String getProductId() {}
+    private void updateLastUpdated() {
+        lastUpdated = LocalDate.now().toString();
+    }
 
-  public String getName() {}
+    // Getters method
+    public String getProductId() {
+        return productId;
+    }
 
-  public String getCategory() {}
+    public String getName() {
+        return name;
+    }
 
-  public int getStock() {}
+    public String getCategory() {
+        return category;
+    }
 
-  public double getPrice() {}
+    public int getStock() {
+        return stock;
+    }
 
-  public double getDiscountPercent() {}
+    public double getPrice() {
+        return price;
+    }
 
-  public boolean getIsAvailable() {}
+    public boolean isAvailable() {
+        return isAvailable;
+    }
 
-  public boolean getDiscountAvailable() {}
+    public boolean isDiscountAvailable() {
+        return discountAvailable;
+    }
 
-  public String getLastUpdated() {}
-  
-  @Override
-  public String toString() {
-    return name + " ($" + price + ")";
-  }
+    public String getLastUpdated() {
+        return lastUpdated;
+    }
+
+    // Setters method
+    public void setPrice(double price) {
+        if (price < 0)
+            throw new IllegalArgumentException("Price cannot be negative.");
+        this.price = price;
+        updateLastUpdated();
+    }
+
+    public void setStock(int stock) {
+        if (stock < 0)
+            throw new IllegalArgumentException("Stock cannot be negative.");
+        this.stock = stock;
+        isAvailable = stock > 0;
+        updateLastUpdated();
+    }
+
+    @Override
+    public String toString() {
+        return name + " [ID: " + productId + ", $" + String.format("%.2f", getCurrentPrice())
+                + ", Stock: " + stock + ", Discount: " + discountPercent + "%]";
+    }
 }
