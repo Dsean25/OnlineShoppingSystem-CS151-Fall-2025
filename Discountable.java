@@ -1,7 +1,7 @@
 public interface Discountable {
-    void applyDiscount(double percent);
+  void applyDiscount(double percent);
 
-    void clearDiscount();
+  void clearDiscount();
 
-    double getDiscountPercent();
+  double getDiscountPercent();
 }
