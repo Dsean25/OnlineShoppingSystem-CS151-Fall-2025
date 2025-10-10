@@ -16,7 +16,19 @@ We aim to implement object-oriented programming principles learned in this class
 to create a functional and interactive system that models real-life online shopping experience. 
 
 ## Design
+**Classes:**
+1. `Customer`
+2. `Seller`
+3. `Product`
+4. `ShoppingCart`
+5. `Order`
 
+**Abstract Class:**
+1. `User`
+
+**Interface:**
+1. `Discountable`
+2. `Operations`
 
 ## Installation Instructions
 1. Clone the repository
@@ -34,14 +46,16 @@ to create a functional and interactive system that models real-life online shopp
              "editor.formatOnSave": true
            }
        - Save settings and reload VS Code
+3. Run `Main.java`
+
 ## Usage
 
 
 ## Contributions
-**Toey Lui:**
+**Toey Lui (`toeyldev`):**
 
-**Bush Nguyen:**
+**Bush Nguyen (`bush-nguyen`):**
 
-**Matthew Yeh:**
+**Matthew Yeh (`mattthewyeh`):**
 
-**Sweksha Shaw:**
+**Sweksha Shaw (`sweksha-cloud`):**
