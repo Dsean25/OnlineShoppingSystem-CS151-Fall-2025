@@ -6,6 +6,7 @@ public class Customer extends User {
 
     public Customer(String name, String customerId){
         //need to call on super();
+        super(customerId, name, "", name.toLowerCase()+"@gmail.com", "", "");
         this.name = name;
         this.customerId = customerId;
         cart = new ShoppingCart(customerId);
