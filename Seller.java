@@ -25,6 +25,8 @@ public class Seller extends User {
     this.storeName = storeName;
   }
 
+  //add getters and setters from user into seller
+
   public void viewProducts() {
     for (Product product : productMap.values()) {
       System.out.println(product);
