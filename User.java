@@ -1,10 +1,10 @@
 public abstract class User {
   private String userID;
   private String name;
-  private String phoneNumber;
+  private int phoneNumber;
   private String address;
 
-  public User(String userID, String name, String phoneNumber, String address) {
+  public User(String userID, String name, int phoneNumber, String address) {
     this.userID = userID;
     this.name = name;
 
@@ -20,7 +20,7 @@ public abstract class User {
     return name;
   }
 
-  public String getPhoneNumber() {
+  public int getPhoneNumber() {
     return phoneNumber;
   }
 
@@ -28,19 +28,19 @@ public abstract class User {
     return address;
   }
 
-  public void updatePhoneNumber(String newPhoneNumber) {
+  public void setPhoneNumber(int newPhoneNumber) {
     this.phoneNumber = newPhoneNumber;
   }
 
-  public void updateAddress(String newAddress) {
+  public void setAddress(String newAddress) {
     this.address = newAddress;
   }
 
-  public void updateName(String newName) {
+  public void setName(String newName) {
     this.name = newName;
   }
 
-  public void updateUserID(String userID) {
+  public void setUserID(String userID) {
     this.userID = userID;
   }
 }
