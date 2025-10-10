@@ -59,4 +59,30 @@ public class Seller extends User {
     Product p = productMap.get(productId);
     p.setPrice(newPrice);
   }
+
+  @Override
+  public HashMap<String, Product> searchProducts(
+      String category,
+      double minPrice,
+      double maxPrice,
+      boolean isAvailable,
+      boolean discountAvailable) {
+    HashMap<String, Product> results = new HashMap<>();
+
+    for (Product product : productMap.values()) {
+      if (product.getCategory().equals(category)
+          && product.getPrice() >= minPrice
+          && product.getPrice() <= maxPrice
+          && product.isAvailable() == isAvailable
+          && product.isDiscountAvailable() == discountAvailable) {
+        results.put(product.getProductId(), product);
+      }
+    }
+    return results;
+  }
+
+  @Override
+  public Order viewOrder(String orderId) {
+    return null;
+  }
 }

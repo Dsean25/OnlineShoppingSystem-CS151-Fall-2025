@@ -2,7 +2,7 @@ public class Customer extends User {
   private ShoppingCart cart;
   private String paymentMethod;
 
-  public Customer(String userID, String name, int phoneNumber, String address, String password) {
+  public Customer(String userID, String name, String phoneNumber, String address, String password) {
     super(userID, name, phoneNumber, address, password);
   }
 

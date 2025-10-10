@@ -1,11 +1,12 @@
-import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Main {
 
   private static ArrayList<Product> products = new ArrayList<>();
   private static Scanner scanner = new Scanner(System.in);
   private static Seller seller1;
+  private static Customer customer1;
 
   public static void main(String[] args) {
     boolean exit = false;
@@ -78,10 +79,17 @@ public class Main {
     System.out.println("Welcome to Customer Menu!");
     System.out.print("What is your user ID?");
     String customerID = scanner.nextLine();
-
-    // If they haven't created their profile, create one.
+    System.out.println("Please log in to continue.");
+    System.out.print("Enter your password here:");
+    String password = scanner.nextLine();
     if (customerID == null) {
       System.out.println("Customer does not exist. Please try again.");
+      return;
+    }
+    if (customer1.login(customerID, password)) {
+      System.out.println("Login successful!");
+    } else {
+      System.out.println("Login failed. Please try again.");
       return;
     }
 
@@ -104,13 +112,26 @@ public class Main {
     System.out.println("Welcome to Seller Menu!");
     System.out.print("What is your seller ID? ");
     String sellerID = scanner.nextLine();
-    System.out.println();
-
-    // check valid seller ID before allowing them to make changes
-    if (sellerID == null || !sellerID.equals(seller1.getUserID())) {
+    System.out.println("Please log in to continue.");
+    System.out.print("Enter your password here:");
+    String password = scanner.nextLine();
+    if (sellerID == null) {
       System.out.println("Seller does not exist. Please try again.");
       return;
     }
+    if (seller1.login(sellerID, password)) {
+      System.out.println("Login successful!");
+    } else {
+      System.out.println("Login failed. Please try again.");
+      return;
+    }
+    // i'll comment out this part for now, we can maybe implement it into login later?
+
+    // check valid seller ID before allowing them to make changes
+    // if (sellerID == null || !sellerID.equals(seller1.getUserID())) {
+    //   System.out.println("Seller does not exist. Please try again.");
+    //   return;
+    // }
 
     while (!exit) {
       System.out.println("Welcome to store " + seller1.getStoreName() + "!");
@@ -213,13 +234,7 @@ public class Main {
     // Assign products to Seller
     seller1 =
         new Seller(
-            "S001",
-            "Bush",
-            "Nguyen",
-            "bush_nguyen@gmail.com",
-            "111-222-3344",
-            "123 Main St",
-            "FreshMart");
+            "S001", "Bush Nguyen", "111-222-3344", "123 Main St", "FreshMart", "password123");
 
     for (Product product : products) {
       seller1.addProduct(product);
