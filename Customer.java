@@ -1,20 +1,21 @@
 public class Customer extends User {
+  private String name;
+  private String customerId;
   private ShoppingCart cart;
   private String paymentMethod;
 
-  public Customer(String userID,
-      String firstName,
-      String lastName,
-      String email,
-      String phoneNumber,
-      String address,
-      String storeName) {
-    super(userID, firstName, lastName, email, phoneNumber,address);  
-
-    cart = new ShoppingCart(userID);
+  public Customer(String name, String customerId) {
+    // need to call on super();
+    super(customerId, name, "", name.toLowerCase() + "@gmail.com", "", "");
+    this.name = name;
+    this.customerId = customerId;
+    cart = new ShoppingCart(customerId);
   }
 
-  // setters
+  // getters and setters
+  public void setCustomerID(String customerId) {
+    this.customerId = customerId;
+  }
 
   public ShoppingCart getCart() {
     return cart;
@@ -24,7 +25,6 @@ public class Customer extends User {
     this.cart = cart;
   }
 
-  // getters
   public String getPaymentMethod() {
     return paymentMethod;
   }
@@ -33,20 +33,24 @@ public class Customer extends User {
     this.paymentMethod = paymentMethod;
   }
 
-  public void addProductToCart(Product p, int qty) {
-    cart.addToCart(p, qty);
+  public void addProduct(Product p, int qty) {
+    cart.addProduct(p, qty);
     // print statements are in addtocart
   }
 
-  public void removeProductFromCart(Product p, int qty) {
-    cart.removeFromCart(p, qty);
+  public void removeProduct(Product p, int qty) {
+    cart.removeProduct(p, qty);
   }
 
   public void placeOrder() {}
 
-  public void changePaymentMethod(String paymentmethod) {
+  public void calculateTotal() {
+    // in cart AND checkout??
+  }
+
+  public void changePaymentMethod(String paymentMethod) {
     setPaymentMethod(paymentMethod);
-    System.out.printf("Your payment method was changed to %s!%n", paymentmethod);
+    System.out.printf("Your payment method was changed to %s!%n", paymentMethod);
   }
 
   /*+ pending methods, according to UML:
