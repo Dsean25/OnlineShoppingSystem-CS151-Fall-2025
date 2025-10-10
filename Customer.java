@@ -50,9 +50,9 @@ public class Customer extends User {
         //in cart AND checkout??
     }
 
-    public void changePaymentMethod(String paymentmethod){
+    public void changePaymentMethod(String paymentMethod){
         setPaymentMethod(paymentMethod);
-        System.out.printf("Your payment method was changed to %s!%n", paymentmethod);
+        System.out.printf("Your payment method was changed to %s!%n", paymentMethod);
     }
 
        /*+ pending methods, according to UML: 
