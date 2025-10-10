@@ -82,6 +82,7 @@ public class Main {
   }
 
   private static void initialProductSetup() {
+    try {
     // Fruits
     Product apple = new Product("P001", "Apple", "Fruit", 50, 0.99);
     Product banana = new Product("P002", "Banana", "Fruit", 50, 0.50);
@@ -140,5 +141,8 @@ public class Main {
     products.add(rice);
     products.add(pasta);
     products.add(beans);
-  }
+  } catch (InvalidPriceException | InvalidStockException e) {
+    System.err.println("Error initializing products: " + e.getMessage());
+}
+}
 }
