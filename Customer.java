@@ -2,14 +2,15 @@ public class Customer extends User {
   private ShoppingCart cart;
   private String paymentMethod;
 
-  public Customer(String userID,
+  public Customer(
+      String userID,
       String firstName,
       String lastName,
       String email,
       String phoneNumber,
       String address,
       String storeName) {
-    super(userID, firstName, lastName, email, phoneNumber,address);  
+    super(userID, firstName, lastName, email, phoneNumber, address);
 
     cart = new ShoppingCart(userID);
   }
@@ -20,6 +21,14 @@ public class Customer extends User {
     return cart;
   }
 
+  public ShoppingCart getCart() {
+    return cart;
+  }
+
+  public void setCart(ShoppingCart cart) {
+    this.cart = cart;
+  }
+
   public void setCart(ShoppingCart cart) {
     this.cart = cart;
   }
@@ -27,6 +36,10 @@ public class Customer extends User {
   // getters
   public String getPaymentMethod() {
     return paymentMethod;
+  }
+
+  public void setPaymentMethod(String paymentMethod) {
+    this.paymentMethod = paymentMethod;
   }
 
   public void setPaymentMethod(String paymentMethod) {
@@ -44,9 +57,13 @@ public class Customer extends User {
 
   public void placeOrder() {}
 
-  public void changePaymentMethod(String paymentmethod) {
+  public void calculateTotal() {
+    // in cart AND checkout??
+  }
+
+  public void changePaymentMethod(String paymentMethod) {
     setPaymentMethod(paymentMethod);
-    System.out.printf("Your payment method was changed to %s!%n", paymentmethod);
+    System.out.printf("Your payment method was changed to %s!%n", paymentMethod);
   }
 
   /*+ pending methods, according to UML:
