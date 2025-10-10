@@ -151,6 +151,7 @@ public class Main {
 
   private static void initialProductSetup() {
     // Products
+    try {
     // Fruits
     Product apple = new Product("P001", "Apple", "Fruit", 50, 0.99);
     Product banana = new Product("P002", "Banana", "Fruit", 50, 0.50);
@@ -224,5 +225,8 @@ public class Main {
     for (Product product : products) {
       seller1.addProduct(product);
     }
+  } catch (InvalidPriceException | InvalidStockException e) {
+    System.out.println("Error creating product: " + e.getMessage());
+}
   }
 }

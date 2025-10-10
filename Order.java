@@ -144,7 +144,12 @@ public class Order {
       Product product = entry.getKey();
       int quantity = entry.getValue();
       int currentStock = product.getStock();
-      product.setStock(currentStock - quantity);
+      try {
+        product.setStock(currentStock - quantity);
+    } catch (InvalidStockException e) {
+        System.out.println("Error updating stock for " + product.getName() + ": " + e.getMessage());
+        return;
+    }
     }
 
     confirmed = true;
@@ -229,7 +234,11 @@ public class Order {
       Product product = entry.getKey();
       int quantity = entry.getValue();
       int restocked = product.getStock() + quantity;
-      product.setStock(restocked);
+      try {
+        product.setStock(restocked);
+    } catch (InvalidStockException e) {
+        System.out.println("Error restocking product " + product.getName() + ": " + e.getMessage());
+    }
     }
 
     returnCompleted = true;
