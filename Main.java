@@ -4,10 +4,11 @@ import java.util.ArrayList;
 public class Main {
 
   private static ArrayList<Product> products = new ArrayList<>();
+  private static Scanner scanner = new Scanner(System.in);
+  private static Seller seller1;
 
   public static void main(String[] args) {
     boolean exit = false;
-    Scanner scanner = new Scanner(System.in);
     System.out.println("Welcome to the Online Grocery Shop!");
 
     // Set up a default grocery shop
@@ -19,6 +20,7 @@ public class Main {
 
       // Read user input
       int input = scanner.nextInt();
+      scanner.nextLine();
       System.out.println(input);
 
       switch (input) {
@@ -41,6 +43,8 @@ public class Main {
     return;
   }
 
+  // displaymainMenu() Method:
+  // Display the main menu
   private static void displaymainMenu() {
     System.out.println("Main Menu");
     System.out.println("-----------------");
@@ -48,7 +52,7 @@ public class Main {
     System.out.println("2. Customer Menu");
     System.out.println("3. Seller Menu");
     System.out.println("4. Exit");
-    System.out.print("Enter a choice (1 - 4):");
+    System.out.print("Enter a choice (1 - 4): ");
   }
 
   // productMenu() Method:
@@ -68,20 +72,87 @@ public class Main {
     System.out.println("To place an order, ....");
   }
 
+  // customerMenu() Method:
+  // Customer can perform actions including ...
   private static void customerMenu() {
     System.out.println("Welcome to Customer Menu!");
+    System.out.print("What is your user ID?");
+    String customerID = scanner.nextLine();
+
     // If they haven't created their profile, create one.
+    if (customerID == null) {
+      System.out.println("Customer does not exist. Please try again.");
+      return;
+    }
+
     // Access shopping cart
+
+
     // Place an order
+
+
     // Go back
   }
 
+  // sellerMenu() Method:
+  // Seller can perform actions including:
+  // 1) View products
+  // 2) Change product price
+  // 3) Add product
+  // 4) Remove product
   private static void sellerMenu() {
+    boolean exit = false;
+
     System.out.println("Welcome to Seller Menu!");
-    // Update product information
+    System.out.print("What is your seller ID? ");
+    String sellerID = scanner.nextLine();
+    System.out.println();
+
+    // check valid seller ID before allowing them to make changes
+    if (sellerID == null || !sellerID.equals(seller1.getUserID())) {
+      System.out.println("Seller does not exist. Please try again.");
+      return;
+    }
+
+    while (!exit) {
+      System.out.println("Welcome to store " + seller1.getStoreName() + "!");
+      System.out.println("1. View my product");
+      System.out.println("2. Change product price");
+      System.out.println("3. Add product");
+      System.out.println("4. Remove product");
+      System.out.println("5. Exit");
+      System.out.print("Enter a choice (1 - 5): ");
+      int choice = scanner.nextInt();
+      scanner.nextLine();
+
+      switch (choice) {
+        case 1: // View products
+          seller1.viewProducts();
+          break;
+        case 2: // Change product price
+          System.out.print("What is the productID? ");
+          String idPriceChange = scanner.nextLine();
+          System.out.print("What is the new price? ");
+          double newPrice = scanner.nextDouble();
+          seller1.changeProductPrice(idPriceChange, newPrice);
+          break;
+        case 3: // Add product
+          // Need to add
+          break;
+        case 4: // Remove product
+          System.out.print("What is the productID? ");
+          String idRemove = scanner.nextLine();
+          seller1.removeProduct(idRemove);
+          break;
+        case 5:
+          exit = true;
+          break;
+      }
+    }
   }
 
   private static void initialProductSetup() {
+    // Products
     // Fruits
     Product apple = new Product("P001", "Apple", "Fruit", 50, 0.99);
     Product banana = new Product("P002", "Banana", "Fruit", 50, 0.50);
@@ -140,5 +211,20 @@ public class Main {
     products.add(rice);
     products.add(pasta);
     products.add(beans);
+
+    // Assign products to Seller
+    seller1 =
+        new Seller(
+            "S001",
+            "Bush",
+            "Nguyen",
+            "bush_nguyen@gmail.com",
+            "111-222-3344",
+            "123 Main St",
+            "FreshMart");
+
+    for (Product product : products) {
+      seller1.addProduct(product);
+    }
   }
 }
