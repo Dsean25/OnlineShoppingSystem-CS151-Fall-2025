@@ -60,6 +60,6 @@ public class Seller extends User {
       return;
     }
     Product p = productMap.get(productId);
-    p.setPrice(newPrice);
+    p.updatePrice();
   }
 }

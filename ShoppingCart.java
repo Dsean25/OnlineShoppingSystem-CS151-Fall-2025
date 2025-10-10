@@ -1,8 +1,7 @@
+import java.time.LocalDateTime;
 import java.util.HashMap;
-
-public class ShoppingCart
-    implements Operations { // only want to be able to make one instance per customer
-
+  public class ShoppingCart { // only want to be able to make one instance per customer
+  
   private String customerId;
   private HashMap<Product, Integer> productsList;
 
@@ -11,16 +10,17 @@ public class ShoppingCart
     productsList = new HashMap<>();
   }
 
-  // getters
+  //getters
   public String getcustomerId() {
     return customerId;
   }
 
-  public HashMap<Product, Integer> getproductsList() {
+  public HashMap<Product, Integer> getproductsList() { 
     return productsList;
+
   }
 
-  // setters
+  //setters
   public void setcustomerId(String customerId) {
     this.customerId = customerId;
   }
@@ -30,45 +30,42 @@ public class ShoppingCart
   }
 
   /*
-  questions:
-  - how do i set products except adding and subtracting
-  - do getters and setters and methods have to be static
-   */
+   questions: 
+   - how do i set products except adding and subtracting
+   - do getters and setters and methods have to be static
+    */
 
-  @Override
-  public void addProduct(Product p, int quantity) {
+  public void addToCart(Product p, int quantity){
     boolean hasproduct = productsList.containsKey(p);
-    if (hasproduct) {
+    if(hasproduct){
       int currQty = productsList.get(p);
       productsList.put(p, currQty + quantity);
-      System.out.println(
-          "This product is already in cart and the quantity has been update to "
-              + productsList.get(p));
-    } else {
+      System.out.println("This product is already in cart and the quantity has been update to " + productsList.get(p));
+    }
+    else{
       productsList.put(p, quantity);
       System.out.println("Product added to cart! Quantity: " + productsList.get(p));
     }
+
   }
 
-  @Override
-  public void removeProduct(Product p, int quantity) {
-    // should we add smt for when product is not in cart? or is the user simply selecting  based off
-    // what they see
-
-    if (quantity > productsList.get(p)) {
-      // throw exception?
-      System.out.println(
-          "The amount you want to remove greater than the amount of this product in cart");
-    } else if (productsList.get(p) == quantity) {
+  public void removeFromCart(Product p, int quantity){
+    //should we add smt for when product is not in cart? or is the user simply selecting  based off what they see
+    
+    if (quantity > productsList.get(p)){
+      //throw exception?
+      System.out.println("The amount you want to remove greater than the amount of this product in cart");
+    }
+    else if (productsList.get(p) == quantity){
       productsList.remove(p);
       System.out.println("Item removed from cart");
-    } else {
+    }
+    else{
       productsList.put(p, productsList.get(p) - quantity);
     }
   }
 
-  @Override
-  public void calculateTotal() {
+  public void calculateTotalInCart() {
     double sum = 0;
     for (HashMap.Entry<Product, Integer> entry : productsList.entrySet()) {
       Product product = entry.getKey();
@@ -78,7 +75,7 @@ public class ShoppingCart
     System.out.println("Total: $" + sum);
   }
 
-  public void viewProducts() {
+  public void viewCart() {
     if (productsList.isEmpty()) {
       System.out.println("Your cart is empty.");
     } else {
@@ -92,4 +89,5 @@ public class ShoppingCart
   public void clearCart() {
     this.productsList.clear();
   }
+
 }

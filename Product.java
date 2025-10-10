@@ -1,6 +1,5 @@
-import java.time.LocalDate;
-
-public class Product implements Discountable {
+public class Product {
+  // attributes
   private String productId;
   private String name;
   private String category;
@@ -11,136 +10,51 @@ public class Product implements Discountable {
   private boolean discountAvailable;
   private String lastUpdated;
 
-  public Product(String productId, String name, String category, int stock, double price) {
-    if (stock < 0 || price < 0) {
-      throw new IllegalArgumentException("Stock and price must be non-negative.");
-    }
+  // methods
+  public void updatePrice() {}
 
-    this.productId = productId;
-    this.name = name;
-    this.category = category;
-    this.stock = stock;
-    this.price = price;
-    this.discountPercent = 0;
-    this.discountAvailable = false;
-    this.isAvailable = stock > 0;
-    this.lastUpdated = LocalDate.now().toString();
-  }
+  public void updateName() {}
 
-  public void applyDiscount(double percent) {
-    if (percent < 0 || percent > 100) {
-      throw new IllegalArgumentException("Discount must be between 0 and 100.");
-    }
-    discountPercent = percent;
-    discountAvailable = true;
-    updateLastUpdated();
-  }
+  public void updateCategory() {}
 
-  @Override
-  public void clearDiscount() {
-    discountPercent = 0;
-    discountAvailable = false;
-    updateLastUpdated();
-  }
+  public void updateStock() {}
 
-  @Override
-  public double getDiscountPercent() {
-    return discountPercent;
-  }
+  public void updateDiscount() {}
 
-  public double getCurrentPrice() {
-    return price * (1 - discountPercent / 100);
-  }
+  public void addNewProduct() {}
 
-  public void restock(int amount) {
-    if (amount <= 0) {
-      throw new IllegalArgumentException("Restock amount must be positive.");
-    }
-    stock += amount;
-    isAvailable = true;
-    updateLastUpdated();
-  }
+  public void applyDiscount() {}
 
-  public void reduceStock(int amount) {
-    if (amount <= 0) {
-      throw new IllegalArgumentException("Amount must be positive.");
-    }
-    if (amount > stock) {
-      throw new IllegalArgumentException("Not enough stock available.");
-    }
-    stock -= amount;
-    isAvailable = stock > 0;
-    updateLastUpdated();
-  }
-
-  public void deleteProduct() {
-    stock = 0;
-    isAvailable = false;
-    updateLastUpdated();
-  }
-
-  private void updateLastUpdated() {
-    lastUpdated = LocalDate.now().toString();
-  }
-
-  // Getters method
-  public String getProductId() {
-    return productId;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public String getCategory() {
-    return category;
-  }
-
-  public int getStock() {
-    return stock;
-  }
-
-  public double getPrice() {
-    return price;
+  public boolean discountAvailable() {
+    return discountAvailable;
   }
 
   public boolean isAvailable() {
     return isAvailable;
   }
 
-  public boolean isDiscountAvailable() {
-    return discountAvailable;
-  }
+  public void deleteProduct() {}
 
-  public String getLastUpdated() {
-    return lastUpdated;
-  }
+  public String getProductId() {}
 
-  // Setters method
-  public void setPrice(double price) {
-    if (price < 0) throw new IllegalArgumentException("Price cannot be negative.");
-    this.price = price;
-    updateLastUpdated();
-  }
+  public String getName() {}
 
-  public void setStock(int stock) {
-    if (stock < 0) throw new IllegalArgumentException("Stock cannot be negative.");
-    this.stock = stock;
-    isAvailable = stock > 0;
-    updateLastUpdated();
-  }
+  public String getCategory() {}
 
+  public int getStock() {}
+
+  public double getPrice() {}
+
+  public double getDiscountPercent() {}
+
+  public boolean getIsAvailable() {}
+
+  public boolean getDiscountAvailable() {}
+
+  public String getLastUpdated() {}
+  
   @Override
   public String toString() {
-    return name
-        + " [ID: "
-        + productId
-        + ", $"
-        + String.format("%.2f", getCurrentPrice())
-        + ", Stock: "
-        + stock
-        + ", Discount: "
-        + discountPercent
-        + "%]";
+    return name + " ($" + price + ")";
   }
 }
