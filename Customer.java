@@ -1,21 +1,13 @@
 public class Customer extends User {
-  private String name;
-  private String customerId;
   private ShoppingCart cart;
   private String paymentMethod;
 
+
+  public Customer(String userID, String name,  int phoneNumber, String address){
+    super(userID, name, phoneNumber, address);
+  }
+
   // getters and setters
-  public void setCustomerID(String customerId) {
-    this.customerId = customerId;
-  }
-
-  public Customer(String name, String customerId) {
-    // need to call on super();
-    super(customerId, name, "", name.toLowerCase() + "@gmail.com", "", "");
-    this.name = name;
-    this.customerId = customerId;
-  }
-
   public ShoppingCart getCart() {
     return cart;
   }
@@ -28,7 +20,14 @@ public class Customer extends User {
     this.paymentMethod = paymentMethod;
   }
 
-  public void placeOrder() {}
+  public void setCart(ShoppingCart cart){
+    this.cart = cart;
+  }
+
+  public void placeOrder() {
+
+
+  }
 
   public void addProduct(Product p, int qty) {
     cart.addProduct(p, qty);
