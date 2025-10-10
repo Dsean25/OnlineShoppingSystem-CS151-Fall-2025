@@ -1,36 +1,35 @@
 public class TestProduct {
   public static void main(String[] args) {
-    // Create new product
-    Product apple = new Product("P001", "Apple", "Fruit", 50, 0.99);
-    System.out.println("Created product: " + apple);
+      try {
+          Product apple = new Product("P001", "Apple", "Fruit", 50, 0.99);
+          Product milk = new Product("P002", "Milk", "Dairy", 25, 3.49);
 
-    // Apply discount
-    apple.applyDiscount(10);
-    System.out.println("After discount: " + apple);
+          System.out.println("Initial products:");
+          System.out.println(apple);
+          System.out.println(milk);
 
-    // Reduce stock
-    apple.reduceStock(5);
-    System.out.println("After selling 5 apples: " + apple);
+          apple.applyDiscount(10);
+          System.out.println("\nAfter applying 10% discount to apple:");
+          System.out.println(apple);
 
-    // Restock
-    apple.restock(20);
-    System.out.println("After restocking: " + apple);
+          milk.setPrice(3.99);
+          System.out.println("\nUpdated milk price:");
+          System.out.println(milk);
 
-    // Delete product
-    apple.deleteProduct();
-    System.out.println("After deletion: " + apple);
+          apple.reduceStock(5);
+          System.out.println("\nReduced apple stock by 5:");
+          System.out.println(apple);
 
-    // Try invalid actions
-    try {
-      apple.applyDiscount(120); // invalid
-    } catch (Exception e) {
-      System.out.println("Error caught: " + e.getMessage());
-    }
+          apple.restock(10);
+          System.out.println("\nRestocked apple by 10:");
+          System.out.println(apple);
 
-    try {
-      apple.reduceStock(999); // not enough stock
-    } catch (Exception e) {
-      System.out.println("Error caught: " + e.getMessage());
-    }
+          milk.deleteProduct();
+          System.out.println("\nDeleted milk (set stock to 0):");
+          System.out.println(milk);
+
+      } catch (InvalidPriceException | InvalidStockException e) {
+          System.out.println("Error: " + e.getMessage());
+      }
   }
 }
