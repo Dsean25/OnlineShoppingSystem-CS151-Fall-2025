@@ -1,4 +1,4 @@
-package grocery;
+// package grocery;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -164,7 +164,7 @@ public class Order {
     for (Map.Entry<Product, Integer> entry : productOrdered.entrySet()) {
       Product product = entry.getKey();
       int quantity = entry.getValue();
-      totalCost += product.getPrice() * quantity;
+      totalCost += product.getCurrentPrice() * quantity;
     }
 
     // Calculate tax
