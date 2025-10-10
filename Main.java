@@ -78,14 +78,28 @@ public class Main {
     System.out.println("Welcome to Customer Menu!");
     System.out.print("What is your user ID?");
     String customerID = scanner.nextLine();
+
     // If they haven't created their profile, create one.
+    if (customerID == null) {
+      System.out.println("Customer does not exist. Please try again.");
+      return;
+    }
+
     // Access shopping cart
+
+
     // Place an order
+
+
     // Go back
   }
 
   // sellerMenu() Method:
-  // Seller can perform actions including ...
+  // Seller can perform actions including:
+  // 1) View products
+  // 2) Change product price
+  // 3) Add product
+  // 4) Remove product
   private static void sellerMenu() {
     boolean exit = false;
 
