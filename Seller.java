@@ -4,15 +4,8 @@ public class Seller extends User {
   private String storeName;
   private HashMap<String, Product> productMap;
 
-  public Seller(
-      String userID,
-      String firstName,
-      String lastName,
-      String email,
-      String phoneNumber,
-      String address,
-      String storeName) {
-    super(userID, firstName, lastName, email, phoneNumber, address);
+  public Seller(String userID, String name, String phoneNumber, String address, String storeName) {
+    super(userID, name, phoneNumber, address);
     this.storeName = storeName;
     this.productMap = new HashMap<>();
   }

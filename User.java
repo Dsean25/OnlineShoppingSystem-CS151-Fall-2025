@@ -1,23 +1,14 @@
 public abstract class User {
   private String userID;
-  private String firstName;
-  private String lastName;
-  private String email;
-  private String phonenumber;
+  private String name;
+  private String phoneNumber;
   private String address;
 
-  public User(
-      String userID,
-      String firstName,
-      String lastName,
-      String email,
-      String phonenumber,
-      String address) {
+  public User(String userID, String name, String phoneNumber, String address) {
     this.userID = userID;
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.email = email;
-    this.phonenumber = phonenumber;
+    this.name = name;
+
+    this.phoneNumber = phoneNumber;
     this.address = address;
   }
 
@@ -25,20 +16,12 @@ public abstract class User {
     return userID;
   }
 
-  public String getFirstName() {
-    return firstName;
-  }
-
-  public String getLastName() {
-    return lastName;
-  }
-
-  public String getEmail() {
-    return email;
+  public String getName() {
+    return name;
   }
 
   public String getPhoneNumber() {
-    return phonenumber;
+    return phoneNumber;
   }
 
   public String getAddress() {
@@ -46,19 +29,18 @@ public abstract class User {
   }
 
   public void updatePhoneNumber(String newPhoneNumber) {
-    this.phonenumber = newPhoneNumber;
+    this.phoneNumber = newPhoneNumber;
   }
 
   public void updateAddress(String newAddress) {
     this.address = newAddress;
   }
 
-  public void updateEmail(String newEmail) {
-    this.email = newEmail;
+  public void updateName(String newName) {
+    this.name = newName;
   }
 
-  public void updateName(String newFirst, String newLast) {
-    this.firstName = newFirst;
-    this.lastName = newLast;
+  public void updateUserID(String userID) {
+    this.userID = userID;
   }
 }
