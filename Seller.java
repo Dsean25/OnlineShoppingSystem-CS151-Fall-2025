@@ -54,8 +54,12 @@ public class Seller extends User {
     try {
       p.setPrice(newPrice);
       System.out.println("Price updated for product: " + p.getName());
-  } catch (InvalidPriceException e) {
+    } catch (InvalidPriceException e) {
       System.out.println("Error updating price: " + e.getMessage());
+    }
   }
+
+  public Product getProductById(String productId) {
+    return productMap.get(productId);
   }
 }
