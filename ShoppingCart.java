@@ -73,7 +73,7 @@ public class ShoppingCart
     for (HashMap.Entry<Product, Integer> entry : productsList.entrySet()) {
       Product product = entry.getKey();
       int quantity = entry.getValue();
-      sum += product.getPrice() * quantity;
+      sum += product.getCurrentPrice() * quantity;
     }
     System.out.println("Total: $" + sum);
   }
