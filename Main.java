@@ -116,10 +116,13 @@ public class Main {
       System.out.println("Welcome to store " + seller1.getStoreName() + "!");
       System.out.println("1. View my product");
       System.out.println("2. Change product price");
-      System.out.println("3. Add product");
-      System.out.println("4. Remove product");
-      System.out.println("5. Exit");
-      System.out.print("Enter a choice (1 - 5): ");
+      System.out.println("3. Check product discount");
+      System.out.println("4. Apply product discount");
+      System.out.println("5. Clear product discount");
+      System.out.println("6. Add product");
+      System.out.println("7. Remove product");
+      System.out.println("8. Exit");
+      System.out.print("Enter a choice (1 - 8): ");
       int choice = scanner.nextInt();
       scanner.nextLine();
 
@@ -130,20 +133,62 @@ public class Main {
         case 2: // Change product price
           System.out.print("What is the productID? ");
           String idPriceChange = scanner.nextLine();
-          System.out.print("What is the new price? ");
-          double newPrice = scanner.nextDouble();
-          scanner.nextLine();
-          seller1.changeProductPrice(idPriceChange, newPrice);
+          if (!seller1.hasProduct(idPriceChange)) {
+            System.out.println("Product does not exist. Please try again.");
+          } else {
+            System.out.print("What is the new price? ");
+            double newPrice = scanner.nextDouble();
+            scanner.nextLine();
+            seller1.changeProductPrice(idPriceChange, newPrice);
+          }
           break;
-        case 3: // Add product
-          // Need to add
+        case 3: // Check product discount
+          System.out.print("What is the productID? ");
+          String idDiscountCheck = scanner.nextLine();
+          if (!seller1.hasProduct(idDiscountCheck)) {
+            System.out.println("Product does not exist. Please try again.");
+          } else {
+            Product p = seller1.getProductById(idDiscountCheck);
+            System.out.printf(
+                "Product: %s (ID: %s) %nCurrent Discount: %.1f%%, Current Price: $%.2f%n",
+                p.getName(), p.getProductId(), p.getDiscountPercent(), p.getCurrentPrice());
+          }
           break;
-        case 4: // Remove product
+        case 4: // Apply product discount
+          System.out.print("What is the productID? ");
+          String idDiscount = scanner.nextLine();
+          if (!seller1.hasProduct(idDiscount)) {
+            System.out.println("Product does not exist. Please try again.");
+          } else {
+            Product p = seller1.getProductById(idDiscount);
+            System.out.print("What is the discount %? ");
+            double discountPercent = scanner.nextDouble();
+            scanner.nextLine();
+            p.applyDiscount(discountPercent);
+            System.out.printf(
+                "Applied %.1f%% discount to %s. New price: $%.2f%n",
+                discountPercent, p.getName(), p.getCurrentPrice());
+          }
+          break;
+        case 5: // Clear discount
+          System.out.print("What is the productID? ");
+          String idClearDiscount = scanner.nextLine();
+          if (!seller1.hasProduct(idClearDiscount)) {
+            System.out.println("Product does not exist. Please try again.");
+          } else {
+            Product p = seller1.getProductById(idClearDiscount);
+            p.clearDiscount();
+            System.out.printf("Discount cleared. New price: $%.2f%n", p.getCurrentPrice());
+          }
+          break;
+        case 6: // Add product
+        // Need to add
+        case 7: // Remove product
           System.out.print("What is the productID? ");
           String idRemove = scanner.nextLine();
           seller1.removeProduct(idRemove);
           break;
-        case 5:
+        case 8: // Exit
           exit = true;
           break;
       }
@@ -153,79 +198,75 @@ public class Main {
   private static void initialProductSetup() {
     // Products
     try {
-    // Fruits
-    Product apple = new Product("P001", "Apple", "Fruit", 50, 0.99);
-    Product banana = new Product("P002", "Banana", "Fruit", 50, 0.50);
-    Product orange = new Product("P003", "Orange", "Fruit", 50, 0.50);
-    Product blueberries = new Product("P004", "Blueberries", "Fruit", 50, 5.99);
-    Product grapes = new Product("P005", "Banana", "Fruit", 50, 2.49);
+      // Fruits
+      Product apple = new Product("P001", "Apple", "Fruit", 50, 0.99);
+      Product banana = new Product("P002", "Banana", "Fruit", 50, 0.50);
+      Product orange = new Product("P003", "Orange", "Fruit", 50, 0.50);
+      Product blueberries = new Product("P004", "Blueberries", "Fruit", 50, 5.99);
+      Product grapes = new Product("P005", "Banana", "Fruit", 50, 2.49);
 
-    // Dairy
-    Product milk = new Product("P006", "Milk", "Dairy", 25, 3.49);
-    Product cheese = new Product("P007", "Cheese", "Dairy", 15, 4.99);
-    Product yogurt = new Product("P008", "Yogurt", "Dairy", 30, 1.29);
-    Product eggs = new Product("P009", "Eggs", "Dairy", 40, 2.99);
+      // Dairy
+      Product milk = new Product("P006", "Milk", "Dairy", 25, 3.49);
+      Product cheese = new Product("P007", "Cheese", "Dairy", 15, 4.99);
+      Product yogurt = new Product("P008", "Yogurt", "Dairy", 30, 1.29);
+      Product eggs = new Product("P009", "Eggs", "Dairy", 40, 2.99);
 
-    // Bakery
-    Product whiteBread = new Product("P010", "White bread", "Bakery", 20, 2.49);
-    Product bagel = new Product("P011", "Bagel", "Bakery", 25, 1.99);
-    Product muffin = new Product("P012", "Muffin", "Bakery", 15, 2.29);
+      // Bakery
+      Product whiteBread = new Product("P010", "White bread", "Bakery", 20, 2.49);
+      Product bagel = new Product("P011", "Bagel", "Bakery", 25, 1.99);
+      Product muffin = new Product("P012", "Muffin", "Bakery", 15, 2.29);
 
-    // Beverages
-    Product water = new Product("P013", "Bottled Water", "Beverage", 100, 0.99);
-    Product appleJuice = new Product("P014", "Apple Juice", "Beverage", 30, 3.49);
-    Product coke = new Product("P015", "Coke (can)", "Beverage", 60, 1.19);
+      // Beverages
+      Product water = new Product("P013", "Bottled Water", "Beverage", 100, 0.99);
+      Product appleJuice = new Product("P014", "Apple Juice", "Beverage", 30, 3.49);
+      Product coke = new Product("P015", "Coke (can)", "Beverage", 60, 1.19);
 
-    // Snacks
-    Product chips = new Product("P016", "Potato Chips", "Snack", 40, 2.79);
-    Product chocoCookies = new Product("P017", "Chocolate chip cookies", "Snack", 35, 3.29);
-    Product vanillaCookies = new Product("P018", "Vanilla cookies", "Snack", 35, 3.29);
-    Product candy = new Product("P019", "Gummy Bears", "Snack", 50, 1.49);
-    Product proteinBar = new Product("P020", "Protein bar", "Snack", 35, 3.29);
+      // Snacks
+      Product chips = new Product("P016", "Potato Chips", "Snack", 40, 2.79);
+      Product chocoCookies = new Product("P017", "Chocolate chip cookies", "Snack", 35, 3.29);
+      Product vanillaCookies = new Product("P018", "Vanilla cookies", "Snack", 35, 3.29);
+      Product candy = new Product("P019", "Gummy Bears", "Snack", 50, 1.49);
+      Product proteinBar = new Product("P020", "Protein bar", "Snack", 35, 3.29);
 
-    // Pantry
-    Product rice = new Product("P021", "White rice", "Pantry", 80, 1.09);
-    Product pasta = new Product("P022", "Spaghetti pasta", "Pantry", 60, 1.59);
-    Product beans = new Product("P023", "Canned Beans", "Pantry", 40, 1.39);
+      // Pantry
+      Product rice = new Product("P021", "White rice", "Pantry", 80, 1.09);
+      Product pasta = new Product("P022", "Spaghetti pasta", "Pantry", 60, 1.59);
+      Product beans = new Product("P023", "Canned Beans", "Pantry", 40, 1.39);
 
-    products.add(apple);
-    products.add(banana);
-    products.add(orange);
-    products.add(blueberries);
-    products.add(grapes);
-    products.add(milk);
-    products.add(cheese);
-    products.add(yogurt);
-    products.add(eggs);
-    products.add(whiteBread);
-    products.add(bagel);
-    products.add(muffin);
-    products.add(water);
-    products.add(appleJuice);
-    products.add(coke);
-    products.add(chips);
-    products.add(chocoCookies);
-    products.add(vanillaCookies);
-    products.add(candy);
-    products.add(proteinBar);
-    products.add(rice);
-    products.add(pasta);
-    products.add(beans);
+      products.add(apple);
+      products.add(banana);
+      products.add(orange);
+      products.add(blueberries);
+      products.add(grapes);
+      products.add(milk);
+      products.add(cheese);
+      products.add(yogurt);
+      products.add(eggs);
+      products.add(whiteBread);
+      products.add(bagel);
+      products.add(muffin);
+      products.add(water);
+      products.add(appleJuice);
+      products.add(coke);
+      products.add(chips);
+      products.add(chocoCookies);
+      products.add(vanillaCookies);
+      products.add(candy);
+      products.add(proteinBar);
+      products.add(rice);
+      products.add(pasta);
+      products.add(beans);
 
-    // Assign products to Seller
-    seller1 =
-        new Seller(
-            "S001",
-            "Bush Nguyen",
-            "111-222-3344",
-            "123 Main St, San Jose, CA",
-            "FreshMart");
+      // Assign products to Seller
+      seller1 =
+          new Seller(
+              "S001", "Bush Nguyen", "111-222-3344", "123 Main St, San Jose, CA", "FreshMart");
 
-    for (Product product : products) {
-      seller1.addProduct(product);
+      for (Product product : products) {
+        seller1.addProduct(product);
+      }
+    } catch (InvalidPriceException | InvalidStockException e) {
+      System.out.println("Error creating product: " + e.getMessage());
     }
-  } catch (InvalidPriceException | InvalidStockException e) {
-    System.out.println("Error creating product: " + e.getMessage());
-}
   }
 }
