@@ -2,9 +2,9 @@ public class Customer extends User {
   private ShoppingCart cart;
   private String paymentMethod;
 
-
-  public Customer(String userID, String name,  int phoneNumber, String address){
+  public Customer(String userID, String name, String phoneNumber, String address) {
     super(userID, name, phoneNumber, address);
+    this.cart = new ShoppingCart(userID);
   }
 
   // getters and setters
@@ -20,14 +20,11 @@ public class Customer extends User {
     this.paymentMethod = paymentMethod;
   }
 
-  public void setCart(ShoppingCart cart){
+  public void setCart(ShoppingCart cart) {
     this.cart = cart;
   }
 
-  public void placeOrder() {
-
-
-  }
+  public void placeOrder() {}
 
   public void addProduct(Product p, int qty) {
     cart.addProduct(p, qty);

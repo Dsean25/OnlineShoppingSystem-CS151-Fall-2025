@@ -132,6 +132,7 @@ public class Main {
           String idPriceChange = scanner.nextLine();
           System.out.print("What is the new price? ");
           double newPrice = scanner.nextDouble();
+          scanner.nextLine();
           seller1.changeProductPrice(idPriceChange, newPrice);
           break;
         case 3: // Add product
@@ -215,11 +216,9 @@ public class Main {
     seller1 =
         new Seller(
             "S001",
-            "Bush",
-            "Nguyen",
-            "bush_nguyen@gmail.com",
+            "Bush Nguyen",
             "111-222-3344",
-            "123 Main St",
+            "123 Main St, San Jose, CA",
             "FreshMart");
 
     for (Product product : products) {
