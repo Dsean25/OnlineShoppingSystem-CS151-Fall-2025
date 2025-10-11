@@ -115,17 +115,17 @@ public class Main {
     while (!exit) {
       System.out.println("Welcome to store " + seller1.getStoreName() + "!");
       System.out.println("1. View all my product");
-      // System.out.println("View product details");
-      System.out.println("2. Change product price");
-      System.out.println("3. Check product discount");
-      System.out.println("4. Apply product discount");
-      System.out.println("5. Clear product discount");
-      System.out.println("6. Add product");
-      System.out.println("7. Remove product");
-      System.out.println("8. Restock");
-      System.out.println("9. Reduce stock");
-      System.out.println("10. Exit");
-      System.out.print("Enter a choice (1 - 10): ");
+      System.out.println("2. View single product");
+      System.out.println("3. Change product price");
+      System.out.println("4. Check product discount");
+      System.out.println("5. Apply product discount");
+      System.out.println("6. Clear product discount");
+      System.out.println("7. Add product");
+      System.out.println("8. Remove product");
+      System.out.println("9. Restock");
+      System.out.println("10. Reduce stock");
+      System.out.println("11. Exit");
+      System.out.print("Enter a choice (1 - 11): ");
       int choice = scanner.nextInt();
       scanner.nextLine();
 
@@ -133,7 +133,16 @@ public class Main {
         case 1: // View products
           seller1.viewProducts();
           break;
-        case 2: // Change product price
+        case 2: // View single product
+          System.out.print("What is the productID? ");
+          String viewSingleProd = scanner.nextLine();
+          if (!seller1.hasProduct(viewSingleProd)) {
+            System.out.println("Product does not exist. Please try again.");
+          } else {
+            System.out.println(seller1.getProductById(viewSingleProd));
+          }
+          break;
+        case 3: // Change product price
           System.out.print("What is the productID? ");
           String idPriceChange = scanner.nextLine();
           if (!seller1.hasProduct(idPriceChange)) {
@@ -145,7 +154,7 @@ public class Main {
             seller1.changeProductPrice(idPriceChange, newPrice);
           }
           break;
-        case 3: // Check product discount
+        case 4: // Check product discount
           System.out.print("What is the productID? ");
           String idDiscountCheck = scanner.nextLine();
           if (!seller1.hasProduct(idDiscountCheck)) {
@@ -157,7 +166,7 @@ public class Main {
                 p.getName(), p.getProductId(), p.getDiscountPercent(), p.getCurrentPrice());
           }
           break;
-        case 4: // Apply product discount
+        case 5: // Apply product discount
           System.out.print("What is the productID? ");
           String idDiscount = scanner.nextLine();
           if (!seller1.hasProduct(idDiscount)) {
@@ -173,7 +182,7 @@ public class Main {
                 discountPercent, p.getName(), p.getCurrentPrice());
           }
           break;
-        case 5: // Clear discount
+        case 6: // Clear discount
           System.out.print("What is the productID? ");
           String idClearDiscount = scanner.nextLine();
           if (!seller1.hasProduct(idClearDiscount)) {
@@ -184,14 +193,14 @@ public class Main {
             System.out.printf("Discount cleared. New price: $%.2f%n", p.getCurrentPrice());
           }
           break;
-        case 6: // Add product
+        case 7: // Add product
         // Need to add
-        case 7: // Remove product
+        case 8: // Remove product
           System.out.print("What is the productID? ");
           String idRemove = scanner.nextLine();
           seller1.removeProduct(idRemove);
           break;
-        case 8: // Add stock
+        case 9: // Add stock
           System.out.print("What is the productID? ");
           String idAddStock = scanner.nextLine();
           if (!seller1.hasProduct(idAddStock)) {
@@ -211,7 +220,7 @@ public class Main {
             }
           }
           break;
-        case 9: // Reduce stock
+        case 10: // Reduce stock
           System.out.print("What is the productID? ");
           String idReduceStock = scanner.nextLine();
           if (!seller1.hasProduct(idReduceStock)) {
@@ -231,7 +240,7 @@ public class Main {
             }
           }
           break;
-        case 10: // Exit
+        case 11: // Exit
           exit = true;
           break;
       }
