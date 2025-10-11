@@ -114,15 +114,18 @@ public class Main {
 
     while (!exit) {
       System.out.println("Welcome to store " + seller1.getStoreName() + "!");
-      System.out.println("1. View my product");
+      System.out.println("1. View all my product");
+      // System.out.println("View product details");
       System.out.println("2. Change product price");
       System.out.println("3. Check product discount");
       System.out.println("4. Apply product discount");
       System.out.println("5. Clear product discount");
       System.out.println("6. Add product");
       System.out.println("7. Remove product");
-      System.out.println("8. Exit");
-      System.out.print("Enter a choice (1 - 8): ");
+      System.out.println("8. Restock");
+      System.out.println("9. Reduce stock");
+      System.out.println("10. Exit");
+      System.out.print("Enter a choice (1 - 10): ");
       int choice = scanner.nextInt();
       scanner.nextLine();
 
@@ -188,7 +191,47 @@ public class Main {
           String idRemove = scanner.nextLine();
           seller1.removeProduct(idRemove);
           break;
-        case 8: // Exit
+        case 8: // Add stock
+          System.out.print("What is the productID? ");
+          String idAddStock = scanner.nextLine();
+          if (!seller1.hasProduct(idAddStock)) {
+            System.out.println("Product does not exist. Please try again.");
+          } else {
+            Product p = seller1.getProductById(idAddStock);
+            System.out.printf(
+                "Current stock of %s (ID: %s) is %d. Add how many? ",
+                p.getName(), p.getProductId(), p.getStock());
+            int newStock = scanner.nextInt();
+            scanner.nextLine();
+            try {
+              p.restock(newStock);
+              System.out.printf("New stock is %d.%n", p.getStock());
+            } catch (InvalidStockException e) {
+              System.out.println(e.getMessage());
+            }
+          }
+          break;
+        case 9: // Reduce stock
+          System.out.print("What is the productID? ");
+          String idReduceStock = scanner.nextLine();
+          if (!seller1.hasProduct(idReduceStock)) {
+            System.out.println("Product does not exist. Please try again.");
+          } else {
+            Product p = seller1.getProductById(idReduceStock);
+            System.out.printf(
+                "Current stock of %s (ID: %s) is %d. Reduce how many? ",
+                p.getName(), p.getProductId(), p.getStock());
+            int newStock = scanner.nextInt();
+            scanner.nextLine();
+            try {
+              p.reduceStock(newStock);
+              System.out.printf("New stock is %d.%n", p.getStock());
+            } catch (InvalidStockException e) {
+              System.out.println(e.getMessage());
+            }
+          }
+          break;
+        case 10: // Exit
           exit = true;
           break;
       }
