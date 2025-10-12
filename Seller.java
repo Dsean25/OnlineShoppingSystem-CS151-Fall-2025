@@ -4,8 +4,14 @@ public class Seller extends User {
   private String storeName;
   private HashMap<String, Product> productMap;
 
-  public Seller(String userID, String name, String phoneNumber, String address, String storeName) {
-    super(userID, name, phoneNumber, address);
+  public Seller(
+      String userID,
+      String name,
+      String phoneNumber,
+      String address,
+      String storeName,
+      String password) {
+    super(userID, name, phoneNumber, address, password);
     this.storeName = storeName;
     this.productMap = new HashMap<>();
   }
@@ -42,9 +48,9 @@ public class Seller extends User {
     }
   }
 
-  public void changeProductPrice(String productId, double newPrice) {
+  public void changeProductPrice(String productId, double newPrice) throws InvalidPriceException {
     if (newPrice < 0) {
-      throw new IllegalArgumentException("The new price must be >= 0");
+      throw new InvalidPriceException("The new price must be >= 0");
     }
     if (!hasProduct(productId)) {
       System.out.println("Product with ID " + productId + " is not found in " + storeName);
@@ -61,5 +67,26 @@ public class Seller extends User {
 
   public Product getProductById(String productId) {
     return productMap.get(productId);
+  }
+
+  @Override
+  public HashMap<String, Product> searchProducts(
+      String category,
+      double minPrice,
+      double maxPrice,
+      boolean isAvailable,
+      boolean discountAvailable) {
+    HashMap<String, Product> results = new HashMap<>();
+
+    for (Product product : productMap.values()) {
+      if (product.getCategory().equals(category)
+          && product.getPrice() >= minPrice
+          && product.getPrice() <= maxPrice
+          && product.isAvailable() == isAvailable
+          && product.isDiscountAvailable() == discountAvailable) {
+        results.put(product.getProductId(), product);
+      }
+    }
+    return results;
   }
 }

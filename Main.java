@@ -80,10 +80,18 @@ public class Main {
     System.out.println("Welcome to Customer Menu!");
     System.out.print("What is your user ID? ");
     String customerID = scanner.nextLine();
+    System.out.print("What is your password? ");
+    String password = scanner.nextLine();
 
     // If they haven't created their profile, create one.
     if (customerID == null || !customers.containsKey(customerID)) {
       System.out.println("Customer does not exist. Please try again.");
+      return;
+    }
+    if (customers.get(customerID).login(customerID, password)) {
+      System.out.println("Login successful!");
+    } else {
+      System.out.println("Login failed. Please try again.");
       return;
     }
 
@@ -223,13 +231,26 @@ public class Main {
     System.out.println("Welcome to Seller Menu!");
     System.out.print("What is your seller ID? ");
     String sellerID = scanner.nextLine();
-    System.out.println();
-
-    // check valid seller ID before allowing them to make changes
-    if (sellerID == null || !sellerID.equals(seller1.getUserID())) {
+    System.out.println("Please log in to continue.");
+    System.out.print("Enter your password here:");
+    String password = scanner.nextLine();
+    if (sellerID == null) {
       System.out.println("Seller does not exist. Please try again.");
       return;
     }
+    if (seller1.login(sellerID, password)) {
+      System.out.println("Login successful!");
+    } else {
+      System.out.println("Login failed. Please try again.");
+      return;
+    }
+    // i'll comment out this part for now, we can maybe implement it into login later?
+
+    // check valid seller ID before allowing them to make changes
+    // if (sellerID == null || !sellerID.equals(seller1.getUserID())) {
+    //   System.out.println("Seller does not exist. Please try again.");
+    //   return;
+    // }
 
     while (!exit) {
       System.out.println("Welcome to store " + seller1.getStoreName() + "!");
@@ -270,7 +291,11 @@ public class Main {
             System.out.print("What is the new price? ");
             double newPrice = scanner.nextDouble();
             scanner.nextLine();
-            seller1.changeProductPrice(idPriceChange, newPrice);
+            try {
+              seller1.changeProductPrice(idPriceChange, newPrice);
+            } catch (InvalidPriceException e) {
+              System.out.println("Error changing product price: " + e.getMessage());
+            }
           }
           break;
         case 4: // Check product discount
@@ -431,18 +456,35 @@ public class Main {
       // Assign products to Seller
       seller1 =
           new Seller(
-              "S001", "Bush Nguyen", "111-222-3344", "1 Washington Sq, San Jose, CA", "FreshMart");
+              "S001",
+              "Bush Nguyen ",
+              "111-222-3344",
+              "1 Washington Sq, San Jose, CA",
+              "FreshMart",
+              "password123");
+
       for (Product product : products) {
         seller1.addProduct(product);
       }
 
       // Create customers
       Customer c1 =
-          new Customer("C001", "Toey Lui", "406-123-1111", "1 Washington Sq, San Jose, CA");
+          new Customer(
+              "C001", "Toey Lui", "406-123-1111", "1 Washington Sq, San Jose, CA", "password123");
       Customer c2 =
-          new Customer("C002", "Sweksha Shaw", "406-123-2222", "1 Washington Sq, San Jose, CA");
+          new Customer(
+              "C002",
+              "Sweksha Shaw",
+              "406-123-2222",
+              "1 Washington Sq, San Jose, CA",
+              "password123");
       Customer c3 =
-          new Customer("C003", "Matthew Yeh", "406-123-3333", "1 Washington Sq, San Jose, CA");
+          new Customer(
+              "C003",
+              "Matthew Yeh",
+              "406-123-3333",
+              "1 Washington Sq, San Jose, CA",
+              "password123");
 
       customers.put(c1.getUserID(), c1);
       customers.put(c2.getUserID(), c2);
