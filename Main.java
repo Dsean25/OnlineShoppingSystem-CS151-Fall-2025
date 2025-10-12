@@ -188,21 +188,11 @@ public class Main {
       System.out.println("12. Create a return");
       System.out.println("13. Complete a return");
       System.out.println("14. Check refund status");
-      System.out.println("15. Logout");
-      System.out.println("16. Exit");
-      System.out.print("Enter a choice (1 - 16): ");
+      System.out.println("15. Search products");
+      System.out.println("16. Logout");
+      System.out.println("17. Exit");
+      System.out.print("Enter a choice (1 - 17): ");
       // Scan user choice input
-      System.out.println("5. View payment method");
-      System.out.println("6. Update payment method");
-      System.out.println("7. Place an order");
-      System.out.println("8. Confirm order delivery");
-      System.out.println("9. View my orders");
-      System.out.println("10. Cancel an order");
-      System.out.println("11. Create a return");
-      System.out.println("12. Complete a return");
-      System.out.println("13. Search products");
-      System.out.println("15. Exit");
-      System.out.print("Enter a choice (1 - 13): ");
       int choice = scanner.nextInt();
       scanner.nextLine();
 
@@ -328,11 +318,48 @@ public class Main {
           checkExit(refundID);
           customer.checkRefund(refundID);
           break;
-        case 15: // Logout
+        case 15:
+        System.out.print("Enter category to search (or leave blank for all): ");
+        String category = scanner.nextLine();
+        if (category.isBlank()) category = null;
+
+        System.out.print("Enter minimum price: ");
+        double minPrice = scanner.nextDouble();
+        System.out.print("Enter maximum price: ");
+        double maxPrice = scanner.nextDouble();
+        scanner.nextLine();
+
+        System.out.print("Only show available products? (yes/no): ");
+        boolean isAvailable = scanner.nextLine().equalsIgnoreCase("yes");
+
+        System.out.print("Only show products with discount? (yes/no): ");
+        boolean discountAvailable = scanner.nextLine().equalsIgnoreCase("yes");
+
+        HashMap<String, Product> results = customer.searchProducts(
+        category, minPrice, maxPrice, isAvailable, discountAvailable
+       );
+        if (results.isEmpty()) {
+      System.out.println("No products match your search criteria.");
+      } else {
+      System.out.printf("%-5s %-25s %-10s %-10s %-10s%n", "ID", "Name", "Price($)", "Stock", "Discount");
+      System.out.println("---------------------------------------------------------------");
+      for (Product p : results.values()) {
+          System.out.printf(
+              "%-5s %-25s %-10.2f %-10d %-10.1f%%%n",
+              p.getProductId(),
+              p.getName(),
+              p.getCurrentPrice(),
+              p.getStock(),
+              p.getDiscountPercent()
+                );
+              }
+              }
+          break;
+        case 16: // Logout
           customer.logout();
           exit = true;
           break;
-        case 16: // Exit
+        case 17: // Exit
           exit = true;
           break;
         default:
@@ -438,12 +465,10 @@ public class Main {
       System.out.println("8. Remove product");
       System.out.println("9. Restock");
       System.out.println("10. Reduce stock");
+      System.out.println("11. Search Inventory");
       System.out.println("12. Logout");
       System.out.println("13. Exit");
       System.out.print("Enter a choice (1 - 13): ");
-      System.out.println("11. Search Inventory");
-      System.out.println("13. Exit");
-      System.out.print("Enter a choice (1 - 11): ");
       int choice = scanner.nextInt();
       scanner.nextLine();
 
@@ -602,18 +627,6 @@ public class Main {
             }
           }
           break;
-        case 12: // Logout
-          sellers.get(sellerID).logout();
-          exit = true;
-          break;
-        case 13: // Exit
-          exit = true;
-          break;
-        default:
-          System.out.println("Invalid choice. Try again.");
-        case 13: // Exit
-          exit = true;
-          break;
           case 11: // Search Inventory
           System.out.print("Enter category to search (or leave blank for all): ");
           String searchCategory = scanner.nextLine();
@@ -627,8 +640,8 @@ public class Main {
           boolean searchAvailable = scanner.nextLine().equalsIgnoreCase("yes");
           System.out.print("Only show products with discount? (yes/no): ");
           boolean searchDiscount = scanner.nextLine().equalsIgnoreCase("yes");
-          HashMap<String, Product> searchResults = seller1.searchProducts(
-              searchCategory, searchMinPrice, searchMaxPrice, searchAvailable, searchDiscount
+          HashMap<String, Product> searchResults = sellers.get(sellerID).searchProducts(
+            searchCategory, searchMinPrice, searchMaxPrice, searchAvailable, searchDiscount
           );
           if (searchResults.isEmpty()) {
               System.out.println("No products match your search criteria.");
@@ -641,6 +654,15 @@ public class Main {
             }
           }
           break;
+        case 12: // Logout
+          sellers.get(sellerID).logout();
+          exit = true;
+          break;
+        case 13: // Exit
+          exit = true;
+          break;
+        default:
+          System.out.println("Invalid choice. Try again.");
       }
     }
   }

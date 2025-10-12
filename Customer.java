@@ -83,16 +83,6 @@ public class Customer extends User implements Operations {
     cart.removeProduct(p, qty);
   }
 
-  @Override
-  public HashMap<String, Product> searchProducts(
-      String category,
-      double minPrice,
-      double maxPrice,
-      boolean isAvailable,
-      boolean discountAvailable) {
-    throw new UnsupportedOperationException("Unimplemented method 'searchProducts'");
-  }
-
   // Order-related functions
   public void placeOrder() {
     if (this.cart.getproductsList().isEmpty()) {
@@ -144,11 +134,6 @@ public class Customer extends User implements Operations {
 
     if (orders.isEmpty()) {
       System.out.println("You have no orders. Please place an order first.");
-      return;
-    }
-
-    if (found == null) {
-      System.out.println("Order not found.");
       return;
     }
 
@@ -250,6 +235,8 @@ public class Customer extends User implements Operations {
     }
 
     found.refundStatus();
+
+  }
   @Override
   public HashMap<String, Product> searchProducts(String category, double minPrice, double maxPrice, boolean isAvailable, boolean discountAvailable) {
         HashMap<String, Product> out = new HashMap<>();
