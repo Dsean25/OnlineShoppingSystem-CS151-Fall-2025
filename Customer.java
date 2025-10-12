@@ -1,4 +1,4 @@
-public class Customer extends User {
+public class Customer extends User implements Operations {
   private ShoppingCart cart;
   private String paymentMethod;
 
@@ -26,11 +26,13 @@ public class Customer extends User {
 
   public void placeOrder() {}
 
+  @Override
   public void addProduct(Product p, int qty) {
     cart.addProduct(p, qty);
     // print statements are in addtocart
   }
 
+  @Override
   public void removeProduct(Product p, int qty) {
     cart.removeProduct(p, qty);
   }
