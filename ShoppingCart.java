@@ -29,12 +29,6 @@ public class ShoppingCart
     this.productsList = productsList;
   }
 
-  /*
-  questions:
-  - how do i set products except adding and subtracting
-  - do getters and setters and methods have to be static
-   */
-
   @Override
   public void addProduct(Product p, int quantity) {
     boolean hasproduct = productsList.containsKey(p);
