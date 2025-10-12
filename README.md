@@ -18,7 +18,7 @@ to create a functional and interactive system that models real-life online shopp
 ## Design
 **Classes:**
 
-1. `Customer`: Inherits from `User`, owns a `ShoppingCart`, and implements `Operations` to manage products.
+1. `Customer`: Inherits from `User`, owns a `ShoppingCart` and a list of `Order`, and implements `Operations` to manage products.
 2. `Seller`: Inherits from `User` and manages a list of `Product` objects for sale.
 3. `Product`: Represents an item with a price and implements `Discountable` to apply discounts.
 4. `ShoppingCart`: Holds `Product` items for a `Customer` and implements `Operations` for cart management.
@@ -41,12 +41,6 @@ to create a functional and interactive system that models real-life online shopp
        - To format your code, press Ctrl + Alt + L
     - VS Code Setup:
        - Extensions → Google Java Format → Install → Settings
-       - Add this to the setting:
-         ```
-           {
-             "editor.defaultFormatter": "google.google-java-format",
-             "editor.formatOnSave": true
-           }
        - Save settings and reload VS Code
 3. Run `Main.java`
 
@@ -55,9 +49,9 @@ to create a functional and interactive system that models real-life online shopp
 We have created some instances for Users, including Seller and Customer for sample use case.
 You can use these to test out the system.
 - Seller ID: `S001`, password: `password123`
-- Customer ID: `C001`, password: ``
-- Customer ID: `C002`, password: ``
-- Customer ID: `C003`, password: ``
+- Customer ID: `C001`, password: `password123`
+- Customer ID: `C002`, password: `password123`
+- Customer ID: `C003`, password: `password123`
 
 **Main Menu:**
 - **Goal:** Display a list of submenus
@@ -84,7 +78,7 @@ You can use these to test out the system.
 - **1. View products:** View all products available to be ordered
 - **2. View shopping cart:** View current state of the shopping cart - 1) What's in the shopping cart? 2) Estimated cost before tax?
 - **3. Add to cart:** Add a product to a shopping cart
-- **4. Remove from cart: **Remove a product from the shopping cart
+- **4. Remove from cart:** Remove a product from the shopping cart
 - **5. View payment method:** View current credit card saved on file
 - **6. Update payment method:** Update/Add credit card saved on file
 - **7. Place an order:** Place an order based on the latest shopping cart with a final after-tax cost displayed
@@ -110,7 +104,8 @@ You can use these to test out the system.
 **Bush Nguyen (`bush-nguyen`):**
 - Classes: Created and Worked on Product
 - Interface: Discountable
-- Added exception handling
+- Exception handling
+- MAX_INSTANCES
 - Created tests to test class
 
 **Sweksha Shaw (`sweksha-cloud`):**
