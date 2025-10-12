@@ -200,6 +200,7 @@ public class Customer extends User implements Operations {
             if (category != null && !category.equalsIgnoreCase(p.getCategory())) continue;
             if (p.getPrice() < minPrice || p.getPrice() > maxPrice) continue;
             if (isAvailable && !p.isAvailable()) continue;
+            if (discountAvailable && p.getDiscountPercent() <= 0) continue;
             out.put(p.getProductId(), p);
         }
         return out;
