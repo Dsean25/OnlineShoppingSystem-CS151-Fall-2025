@@ -50,11 +50,22 @@ public abstract class User {
   }
 
   public void setPassword(String password) {
+    if(PasswordStrengthTest(password)) {
     this.password = password;
+    }
   }
+
 
   public boolean isLoggedIn() {
     return loggedIn;
+  }
+
+  public boolean PasswordStrengthTest(String password) {
+    if(password.length()<10) {
+      System.out.println("Password must be at least 10 characters long.");
+      return false;
+    }
+    return true;
   }
 
   public boolean login(String userID, String password) {
@@ -70,7 +81,7 @@ public abstract class User {
       loggedIn = false;
     }
   }
-
+  
   public abstract HashMap<String, Product> searchProducts(
       String category,
       double minPrice,
@@ -78,5 +89,5 @@ public abstract class User {
       boolean isAvailable,
       boolean discountAvailable);
 
-  public abstract Order viewOrder(String orderId);
+  
 }

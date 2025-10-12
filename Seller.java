@@ -80,9 +80,4 @@ public class Seller extends User {
     }
     return results;
   }
-
-  @Override
-  public Order viewOrder(String orderId) {
-    return null;
-  }
 }
