@@ -6,7 +6,7 @@
 
 **Semester:** Fall 2025
 
-**Team Members:** Toey Lui, Bush Nguyen, Matthew Yeh, Sweksha Shaw
+**Team Members:** Toey Lui, Bush Nguyen, , Sweksha Shaw, Matthew Yeh
 
 ## Overview
 This online grocery shopping system is a Java-based console application that simulates an e-commerce grocery platform.
@@ -99,32 +99,26 @@ You can use these to test out the system.
 ## Contributions
 **Toey Lui (`toeyldev`):**
 - Initialized GitHub repo
-- Class: Worked on Order + updated Customer, Seller, User, Shopping Cart
+- Classes: Worked on Order and Main, updated Customer, Seller, User, Shopping Cart, Main
 - Interface: Updated Discountable and Operations implementation
-- Created UI/UX structure with functional menus
+- Created and worked on UI/UX structure with functional menus
+- Co-authored README
 - Fixed compilation, syntax, and logical errors
-- README
 
 **Bush Nguyen (`bush-nguyen`):**
-- Class: Created and Worked on Product
+- Classes: Created and Worked on Product
 - Interface: Discountable
 - Added exception handling
 - Created tests to test class
-- Fixed compilation, syntax, and logical errors
-- Participated in collaborative coding sessions
-
-**Matthew Yeh (`mattthewyeh`):**
-- Class: Worked on User, Seller + updated Main
-- Abstract class: Created and updated User
-- Interface:
-- Fixed compilation, syntax, and logical errors
-- Participated in collaborative coding sessions
 
 **Sweksha Shaw (`sweksha-cloud`):**
-- Class: Worked on Shopping Cart and Customer
-- Abstract class: Created and updated User
+- Classes: Created and worked on Shopping Cart and Customer, updated User 
 - Interface: Operations
-- Added search function to UI/UX menu
-- README
-- Fixed compilation, syntax, and logical errors
-- Participated in collaborative coding sessions
+- Co-authored README
+- Ensured smooth UI/UX
+
+**Matthew Yeh (`mattthewyeh`):**
+- Classes: Created and worked on User and Seller, updated Main
+- Abstract class: Created and updated User
+- Ensured smooth UI/UX
+
