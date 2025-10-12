@@ -32,10 +32,10 @@ public class Main {
       // Read user input to proceed
       int input = scanner.nextInt();
       scanner.nextLine();
-      System.out.println(input);
 
       switch (input) {
         case 1: // Product menu
+          System.out.println("Welcome to Product Menu!");
           productMenu();
           break;
         case 2: // Customer menu
@@ -69,7 +69,6 @@ public class Main {
   // productMenu():
   // Display a table of products
   private static void productMenu() {
-    System.out.println("Welcome to Product Menu!");
     System.out.printf("%-5s %-25s %-10s %-10s%n", "ID", "Name", "Price($)", "Stock");
     System.out.println("----------------------------------------------------");
 
@@ -91,33 +90,52 @@ public class Main {
     String customerID = scanner.nextLine();
 
     // Allow customer to create new profile, if they don't have an existing profile
-    if (customerID == null || !customers.containsKey(customerID)) {
-      System.out.println("Customer does not exist. Please sign up by entering the following:");
-      System.out.print("Name: ");
-      String name = scanner.nextLine();
-      System.out.print("Phone number: ");
-      String phoneNumber = scanner.nextLine();
-      System.out.print("Address: ");
-      String address = scanner.nextLine();
-      System.out.print("Payment method (credit card number): ");
-      String paymentMethod = scanner.nextLine();
-      Customer customer = new Customer(customerID, name, phoneNumber, address, "placeholder");
-      ((Customer) customer).setPaymentMethod(paymentMethod);
-      customers.put(customerID, (Customer) customer);
-      System.out.print("Almost there! Now, make a password with at least 10 characters: ");
-      String password = scanner.nextLine();
-      while (!customer.PasswordStrengthTest(password)) {
-        password = scanner.nextLine();
+    while (customerID == null || !customers.containsKey(customerID)) {
+      System.out.print("Customer does not exist. Do you have an account? (y/n) : ");
+      String accountExists = scanner.nextLine().toLowerCase();
+      if (accountExists.startsWith("y")) {
+        System.out.print("Enter your user ID again: ");
+        customerID = scanner.nextLine();
+        continue;
+      } else {
+        System.out.println("Please sign up by entering the following:");
+
+        System.out.print("Choose a user ID: ");
+        customerID = scanner.nextLine();
+        while (customerID.isBlank() || customers.containsKey(customerID)) {
+          System.out.print("That user ID is invalid or already taken. Choose another: ");
+          customerID = scanner.nextLine();
+        }
+
+        System.out.print("Name: ");
+        String name = scanner.nextLine();
+        System.out.print("Phone number: ");
+        String phoneNumber = scanner.nextLine();
+        System.out.print("Address: ");
+        String address = scanner.nextLine();
+        System.out.print("Payment method (16-digit credit card number): ");
+        String paymentMethod = scanner.nextLine();
+
+        Customer customer = new Customer(customerID, name, phoneNumber, address, "placeholder");
+        customer.setPaymentMethod(paymentMethod);
+
+        System.out.print("Almost there! Now, make a password with at least 10 characters: ");
+        String password = scanner.nextLine();
+
+        while (!customer.PasswordStrengthTest(password)) {
+          System.out.print("Try again: ");
+          password = scanner.nextLine();
+        }
+        customer.setPassword(password);
+        customers.put(customerID, customer);
+
+        System.out.println(
+            "Account created! Your user ID is "
+                + customerID
+                + " and your current password is "
+                + password
+                + ". Please log in.");
       }
-      customer.setPassword(password);
-      System.out.println(
-          "Account created! Your user ID is "
-              + customerID
-              + " and your current password is "
-              + password
-              + ". Please log in again.");
-      System.out.print("What is your user ID? ");
-      customerID = scanner.nextLine();
     }
 
     // Perform login
@@ -149,7 +167,7 @@ public class Main {
       System.out.println("10. Cancel an order");
       System.out.println("11. Create a return");
       System.out.println("12. Complete a return");
-      // System.out.println("Check refund status");
+      System.out.println("13. Check refund status");
       System.out.println("14. Logout");
       System.out.println("15. Exit");
       System.out.print("Enter a choice (1 - 15): ");
@@ -159,17 +177,8 @@ public class Main {
 
       switch (choice) {
         case 1: // View products
-          System.out.printf("%-5s %-25s %-10s %-10s%n", "ID", "Name", "Price($)", "Stock");
-          System.out.println("----------------------------------------------------");
-          for (Product product : products) {
-            System.out.printf(
-                "%-5s %-25s %-10.2f %-10d%n",
-                product.getProductId(),
-                product.getName(),
-                product.getCurrentPrice(),
-                product.getStock());
-            System.out.println("----------------------------------------------------");
-          }
+          System.out.println("Here are the list of products: ");
+          productMenu();
           break;
         case 2: // View shopping cart
           // Return shopping cart
@@ -253,6 +262,11 @@ public class Main {
           String completeReturnID = scanner.nextLine();
           customer.completeReturn(completeReturnID);
           break;
+        case 13: // Check refund status
+          System.out.print("What is the order ID? ");
+          String refundID = scanner.nextLine();
+          customer.checkRefund(refundID);
+          break;
         case 14: // Logout
           customer.logout();
           exit = true;
@@ -274,34 +288,54 @@ public class Main {
     String sellerID = scanner.nextLine();
 
     // Allow seller to create new profile, if they don't have an existing profile
-    if (sellerID == null || !sellers.containsKey(sellerID)) {
-      System.out.println("Seller does not exist. Please sign up by entering the following:");
-      System.out.print("Name: ");
-      String sellerName = scanner.nextLine();
-      System.out.print("Phone number: ");
-      String sellerPhoneNumber = scanner.nextLine();
-      System.out.print("Address: ");
-      String sellerAddress = scanner.nextLine();
-      System.out.print("Store Name: ");
-      String storeName = scanner.nextLine();
-      Seller seller =
-          new Seller(
-              sellerID, sellerName, sellerPhoneNumber, sellerAddress, storeName, "placeholder");
-      sellers.put(sellerID, (Seller) (seller));
-      System.out.print("Almost there! Now, make a password with at least 10 characters: ");
-      String sellerPassword = scanner.nextLine();
-      while (!seller.PasswordStrengthTest(sellerPassword)) {
-        sellerPassword = scanner.nextLine();
+    while (sellerID == null || !sellers.containsKey(sellerID)) {
+      System.out.print("Customer does not exist. Do you have an account? (y/n) : ");
+      String sellerAccountExists = scanner.nextLine().toLowerCase();
+      if (sellerAccountExists.startsWith("y")) {
+        System.out.print("Enter your user ID again: ");
+        sellerID = scanner.nextLine();
+        continue;
+      } else {
+        System.out.println("Please sign up by entering the following:");
+
+        System.out.print("Choose a user ID: ");
+        sellerID = scanner.nextLine();
+        while (sellerID.isBlank() || sellers.containsKey(sellerID)) {
+          System.out.print("That user ID is invalid or already taken. Choose another: ");
+          sellerID = scanner.nextLine();
+        }
+
+        System.out.print("Name: ");
+        String sellerName = scanner.nextLine();
+        System.out.print("Phone number: ");
+        String sellerPhoneNumber = scanner.nextLine();
+        System.out.print("Address: ");
+        String sellerAddress = scanner.nextLine();
+        System.out.print("Store Name: ");
+        String storeName = scanner.nextLine();
+        Seller seller =
+            new Seller(
+                sellerID, sellerName, sellerPhoneNumber, sellerAddress, storeName, "placeholder");
+
+        System.out.print("Almost there! Now, make a password with at least 10 characters: ");
+        String sellerPassword = scanner.nextLine();
+
+        while (!seller.PasswordStrengthTest(sellerPassword)) {
+          System.out.print("Try again: ");
+          sellerPassword = scanner.nextLine();
+        }
+
+        seller.setPassword(sellerPassword);
+
+        sellers.put(sellerID, seller);
+
+        System.out.println(
+            "Account created! Your user ID is "
+                + sellerID
+                + " and your current password is "
+                + sellerPassword
+                + ". Please log in.");
       }
-      seller.setPassword(sellerPassword);
-      System.out.println(
-          "Account created! Your user ID is "
-              + sellerID
-              + " and your current password is "
-              + sellerPassword
-              + ". Please log in again.");
-      System.out.print("What is your user ID? ");
-      sellerID = scanner.nextLine();
     }
 
     // Perform login

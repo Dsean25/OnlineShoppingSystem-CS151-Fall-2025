@@ -214,4 +214,26 @@ public class Customer extends User implements Operations {
 
     found.completeReturn();
   }
+
+  public void checkRefund(String orderID) {
+    if (orders.isEmpty()) {
+      System.out.println("You have no orders. Please place an order first.");
+      return;
+    }
+
+    Order found = null;
+    for (Order o : orders) {
+      if (o.getOrderId().equals(orderID)) {
+        found = o;
+        break;
+      }
+    }
+
+    if (found == null) {
+      System.out.println("Order not found.");
+      return;
+    }
+
+    found.refundStatus();
+  }
 }
