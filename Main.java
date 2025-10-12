@@ -282,13 +282,6 @@ public class Main {
       System.out.println("Login failed. Please try again.");
       return;
     }
-    // i'll comment out this part for now, we can maybe implement it into login later?
-
-    // check valid seller ID before allowing them to make changes
-    // if (sellerID == null || !sellerID.equals(seller1.getUserID())) {
-    //   System.out.println("Seller does not exist. Please try again.");
-    //   return;
-    // }
 
     while (!exit) {
       System.out.println("Welcome to store " + seller1.getStoreName() + "!");
@@ -302,7 +295,8 @@ public class Main {
       System.out.println("8. Remove product");
       System.out.println("9. Restock");
       System.out.println("10. Reduce stock");
-      System.out.println("11. Exit");
+      System.out.println("11. Search Inventory");
+      System.out.println("13. Exit");
       System.out.print("Enter a choice (1 - 11): ");
       int choice = scanner.nextInt();
       scanner.nextLine();
@@ -422,8 +416,35 @@ public class Main {
             }
           }
           break;
-        case 11: // Exit
+        case 13: // Exit
           exit = true;
+          break;
+          case 11: // Search Inventory
+          System.out.print("Enter category to search (or leave blank for all): ");
+          String searchCategory = scanner.nextLine();
+          if (searchCategory.isBlank()) searchCategory = null;
+          System.out.print("Enter minimum price: ");
+          double searchMinPrice = scanner.nextDouble();
+          System.out.print("Enter maximum price: ");
+          double searchMaxPrice = scanner.nextDouble();
+          scanner.nextLine(); // consume newline
+          System.out.print("Only show available products? (yes/no): ");
+          boolean searchAvailable = scanner.nextLine().equalsIgnoreCase("yes");
+          System.out.print("Only show products with discount? (yes/no): ");
+          boolean searchDiscount = scanner.nextLine().equalsIgnoreCase("yes");
+          HashMap<String, Product> searchResults = seller1.searchProducts(
+              searchCategory, searchMinPrice, searchMaxPrice, searchAvailable, searchDiscount
+          );
+          if (searchResults.isEmpty()) {
+              System.out.println("No products match your search criteria.");
+          } 
+          else {
+            System.out.printf("%-5s %-25s %-10s %-10s %-10s%n", "ID", "Name", "Price($)", "Stock", "Discount");
+           System.out.println("---------------------------------------------------------------");
+           for (Product p : searchResults.values()) {
+              System.out.printf("%-5s %-25s %-10.2f %-10d %-10.1f%%%n",p.getProductId(),p.getName(),p.getCurrentPrice(),p.getStock(), p.getDiscountPercent());
+            }
+          }
           break;
       }
     }
