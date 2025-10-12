@@ -1,5 +1,5 @@
-import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class Customer extends User implements Operations {
   private ShoppingCart cart;
@@ -191,6 +191,4 @@ public class Customer extends User implements Operations {
     setPaymentMethod(paymentMethod);
     System.out.printf("Your payment method was changed to %s!%n", paymentMethod);
   }
-  
-
 }
