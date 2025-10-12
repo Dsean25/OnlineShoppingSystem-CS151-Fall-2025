@@ -97,6 +97,10 @@ public class ShoppingCart implements Operations {
     }
   }
 
+public boolean hasProduct(Product p) {
+    return productsList.containsKey(p);
+}
+
   public void clearCart() {
     this.productsList.clear();
   }

@@ -6,7 +6,7 @@
 
 **Semester:** Fall 2025
 
-**Team Members:** Toey Lui, Bush Nguyen, Matthew Yeh, Sweksha Shaw
+**Team Members:** Toey Lui, Bush Nguyen, Sweksha Shaw, Matthew Yeh
 
 ## Overview
 This online grocery shopping system is a Java-based console application that simulates an e-commerce grocery platform.
@@ -17,18 +17,20 @@ to create a functional and interactive system that models real-life online shopp
 
 ## Design
 **Classes:**
-1. `Customer`
-2. `Seller`
-3. `Product`
-4. `ShoppingCart`
-5. `Order`
+
+1. `Customer`: Inherits from `User`, owns a `ShoppingCart`, and implements `Operations` to manage products.
+2. `Seller`: Inherits from `User` and manages a list of `Product` objects for sale.
+3. `Product`: Represents an item with a price and implements `Discountable` to apply discounts.
+4. `ShoppingCart`: Holds `Product` items for a `Customer` and implements `Operations` for cart management.
+5. `Order`: Records purchased `Product`s, the `Customer`, and the total amount after checkout.
 
 **Abstract Class:**
-1. `User`
+1. `User`: Defines shared attributes and behaviors for `Customer` and `Seller`.
 
-**Interface:**
-1. `Discountable`
-2. `Operations`
+**Interfaces:**
+1. `Discountable`: Specifies a method to apply discounts to prices.
+2. `Operations`: Defines methods to add and remove product.
+
 
 ## Installation Instructions
 1. Clone the repository
@@ -50,12 +52,75 @@ to create a functional and interactive system that models real-life online shopp
 
 ## Usage
 
+We have created some instances for Users, including Seller and Customer for sample use case.
+You can use these to test out the system.
+- Seller ID: `S001`, password: `password123`
+- Customer ID: `C001`, password: ``
+- Customer ID: `C002`, password: ``
+- Customer ID: `C003`, password: ``
+
+**Main Menu:**
+- **Goal:** Display a list of submenus
+
+**Product Menu:**
+- **Goal:** Display a list of available products with name, price, and stock for quick overview.
+
+**Seller Menu:** 
+- **Goal:** Display actions for sellers to take
+- **1. View all my product:** View all product available in the seller's shop
+- **2. View single product:** View details of a single product
+- **3. Change product price:** Change the price of a single product
+- **4. Check product discount:** Check discount percentage of a single product
+- **5. Apply product discount:** Apply discount percentage of a single product
+- **6. Clear product discount:** Clear discount percentage of a single product
+- **7. Add product:** Add a new product
+- **8. Remove product:** Remove an existing product in the seller's shop
+- **9. Restock:** Restock a product
+- **10. Reduce stock:** Reduce stock of a product
+- **11. Exit:** Exit Seller Menu
+
+**3. User Menu:**
+- **Goal:** Display actions for users to take
+- **1. View products:** View all products available to be ordered
+- **2. View shopping cart:** View current state of the shopping cart - 1) What's in the shopping cart? 2) Estimated cost before tax?
+- **3. Add to cart:** Add a product to a shopping cart
+- **4. Remove from cart: **Remove a product from the shopping cart
+- **5. View payment method:** View current credit card saved on file
+- **6. Update payment method:** Update/Add credit card saved on file
+- **7. Place an order:** Place an order based on the latest shopping cart with a final after-tax cost displayed
+- **8. Confirm order delivery:** A customer manually confirm that order has been received
+- **9. View my orders:** View a list of order history
+- **10. Cancel an order:** Cancel an existing order
+- **11. Create a return:** Create a return for an order
+- **12. Complete a return:** Complete a return for an order
+- **13. Exit:** Exit User Menu
+
+**4. Exit**
+- **Goal:** Allow user to safely exit the system
 
 ## Contributions
 **Toey Lui (`toeyldev`):**
+- Initialized GitHub repo
+- Classes: Worked on Order and Main, updated Customer, Seller, User, Shopping Cart, Main
+- Interface: Updated Discountable and Operations implementation
+- Created and worked on UI/UX structure with functional menus
+- Co-authored README
+- Fixed compilation, syntax, and logical errors
 
 **Bush Nguyen (`bush-nguyen`):**
-
-**Matthew Yeh (`mattthewyeh`):**
+- Classes: Created and Worked on Product
+- Interface: Discountable
+- Added exception handling
+- Created tests to test class
 
 **Sweksha Shaw (`sweksha-cloud`):**
+- Classes: Created and worked on Shopping Cart and Customer, updated Seller and User 
+- Interface: Operations
+- Co-authored README
+- Ensured smooth UI/UX, implemented searching
+
+**Matthew Yeh (`mattthewyeh`):**
+- Classes: Created and worked on User and Seller, updated Main
+- Abstract class: Created and updated User
+- Ensured smooth UI/UX, implemented login and logout
+
