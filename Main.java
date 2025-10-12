@@ -248,7 +248,8 @@ public class Main {
 
           // Remove Product from cart
           customer.removeProduct(pRemove, removeQty);
-          System.out.printf("%d %s has been removed from cart successfully.%n", removeQty, pRemove.getName());
+          System.out.printf(
+              "%d %s has been removed from cart successfully.%n", removeQty, pRemove.getName());
           break;
         case 5: // Clear cart
           customer.getCart().clearCart();
@@ -319,41 +320,40 @@ public class Main {
           customer.checkRefund(refundID);
           break;
         case 15:
-        System.out.print("Enter category to search (or leave blank for all): ");
-        String category = scanner.nextLine();
-        if (category.isBlank()) category = null;
+          System.out.print("Enter category to search (or leave blank for all): ");
+          String category = scanner.nextLine();
+          if (category.isBlank()) category = null;
 
-        System.out.print("Enter minimum price: ");
-        double minPrice = scanner.nextDouble();
-        System.out.print("Enter maximum price: ");
-        double maxPrice = scanner.nextDouble();
-        scanner.nextLine();
+          System.out.print("Enter minimum price: ");
+          double minPrice = scanner.nextDouble();
+          System.out.print("Enter maximum price: ");
+          double maxPrice = scanner.nextDouble();
+          scanner.nextLine();
 
-        System.out.print("Only show available products? (yes/no): ");
-        boolean isAvailable = scanner.nextLine().equalsIgnoreCase("yes");
+          System.out.print("Only show available products? (yes/no): ");
+          boolean isAvailable = scanner.nextLine().equalsIgnoreCase("yes");
 
-        System.out.print("Only show products with discount? (yes/no): ");
-        boolean discountAvailable = scanner.nextLine().equalsIgnoreCase("yes");
+          System.out.print("Only show products with discount? (yes/no): ");
+          boolean discountAvailable = scanner.nextLine().equalsIgnoreCase("yes");
 
-        HashMap<String, Product> results = customer.searchProducts(
-        category, minPrice, maxPrice, isAvailable, discountAvailable
-       );
-        if (results.isEmpty()) {
-      System.out.println("No products match your search criteria.");
-      } else {
-      System.out.printf("%-5s %-25s %-10s %-10s %-10s%n", "ID", "Name", "Price($)", "Stock", "Discount");
-      System.out.println("---------------------------------------------------------------");
-      for (Product p : results.values()) {
-          System.out.printf(
-              "%-5s %-25s %-10.2f %-10d %-10.1f%%%n",
-              p.getProductId(),
-              p.getName(),
-              p.getCurrentPrice(),
-              p.getStock(),
-              p.getDiscountPercent()
-                );
-              }
-              }
+          HashMap<String, Product> results =
+              customer.searchProducts(category, minPrice, maxPrice, isAvailable, discountAvailable);
+          if (results.isEmpty()) {
+            System.out.println("No products match your search criteria.");
+          } else {
+            System.out.printf(
+                "%-5s %-25s %-10s %-10s %-10s%n", "ID", "Name", "Price($)", "Stock", "Discount");
+            System.out.println("---------------------------------------------------------------");
+            for (Product p : results.values()) {
+              System.out.printf(
+                  "%-5s %-25s %-10.2f %-10d %-10.1f%%%n",
+                  p.getProductId(),
+                  p.getName(),
+                  p.getCurrentPrice(),
+                  p.getStock(),
+                  p.getDiscountPercent());
+            }
+          }
           break;
         case 16: // Logout
           customer.logout();
@@ -627,7 +627,7 @@ public class Main {
             }
           }
           break;
-          case 11: // Search Inventory
+        case 11: // Search Inventory
           System.out.print("Enter category to search (or leave blank for all): ");
           String searchCategory = scanner.nextLine();
           if (searchCategory.isBlank()) searchCategory = null;
@@ -640,17 +640,29 @@ public class Main {
           boolean searchAvailable = scanner.nextLine().equalsIgnoreCase("yes");
           System.out.print("Only show products with discount? (yes/no): ");
           boolean searchDiscount = scanner.nextLine().equalsIgnoreCase("yes");
-          HashMap<String, Product> searchResults = sellers.get(sellerID).searchProducts(
-            searchCategory, searchMinPrice, searchMaxPrice, searchAvailable, searchDiscount
-          );
+          HashMap<String, Product> searchResults =
+              sellers
+                  .get(sellerID)
+                  .searchProducts(
+                      searchCategory,
+                      searchMinPrice,
+                      searchMaxPrice,
+                      searchAvailable,
+                      searchDiscount);
           if (searchResults.isEmpty()) {
-              System.out.println("No products match your search criteria.");
-          } 
-          else {
-            System.out.printf("%-5s %-25s %-10s %-10s %-10s%n", "ID", "Name", "Price($)", "Stock", "Discount");
-           System.out.println("---------------------------------------------------------------");
-           for (Product p : searchResults.values()) {
-              System.out.printf("%-5s %-25s %-10.2f %-10d %-10.1f%%%n",p.getProductId(),p.getName(),p.getCurrentPrice(),p.getStock(), p.getDiscountPercent());
+            System.out.println("No products match your search criteria.");
+          } else {
+            System.out.printf(
+                "%-5s %-25s %-10s %-10s %-10s%n", "ID", "Name", "Price($)", "Stock", "Discount");
+            System.out.println("---------------------------------------------------------------");
+            for (Product p : searchResults.values()) {
+              System.out.printf(
+                  "%-5s %-25s %-10.2f %-10d %-10.1f%%%n",
+                  p.getProductId(),
+                  p.getName(),
+                  p.getCurrentPrice(),
+                  p.getStock(),
+                  p.getDiscountPercent());
             }
           }
           break;

@@ -109,7 +109,7 @@ public class Seller extends User {
       double maxPrice,
       boolean isAvailable,
       boolean discountAvailable) {
-      HashMap<String, Product> results = new HashMap<>();
+    HashMap<String, Product> results = new HashMap<>();
     for (Product product : productMap.values()) {
       if (category != null && !category.equalsIgnoreCase(product.getCategory())) {
         continue;
