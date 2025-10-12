@@ -12,6 +12,8 @@
 import java.util.HashMap;
 
 public class ShoppingCart implements Operations {
+  private static final int MAX_INSTANCES = 100;
+  private static int instanceCount = 0;
 
   private String customerId;
   private HashMap<Product, Integer> productsList;
@@ -19,6 +21,12 @@ public class ShoppingCart implements Operations {
   public ShoppingCart(String customerId) {
     this.customerId = customerId;
     productsList = new HashMap<>();
+
+    if (instanceCount >= MAX_INSTANCES) {
+      throw new IllegalStateException("Reached max Customer limit " + MAX_INSTANCES);
+    }
+
+    instanceCount++;
   }
 
   // Getters and setters
@@ -91,5 +99,9 @@ public class ShoppingCart implements Operations {
 
   public void clearCart() {
     this.productsList.clear();
+  }
+
+  public static int getInstanceCount() {
+    return instanceCount;
   }
 }
