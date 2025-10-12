@@ -114,7 +114,7 @@ You can use these to test out the system.
 - Created tests to test class
 
 **Sweksha Shaw (`sweksha-cloud`):**
-- Classes: Created and worked on Shopping Cart and Customer, updated User 
+- Classes: Created and worked on Shopping Cart and Customer, updated Seller and User 
 - Interface: Operations
 - Co-authored README
 - Ensured smooth UI/UX, implemented searching
