@@ -39,4 +39,26 @@ public class Customer extends User {
     setPaymentMethod(paymentMethod);
     System.out.printf("Your payment method was changed to %s!%n", paymentMethod);
   }
+  /* 
+  @Override
+    public Order viewOrder(String orderId){
+        return 
+    }
+        */
+  @Override
+  public HashMap<String, Product> searchProducts(String category, double minPrice, double maxPrice, boolean isAvailable, boolean discountAvailable) {
+    HashMap<String, Product> results = new HashMap<>();
+    for (Product p : ProductDatabase.getAllProducts()) {
+      if (p.getCategory().equals(category) && p.getPrice() >= minPrice && p.getPrice() <= maxPrice && p.isAvailable() == isAvailable && p.hasDiscount() == discountAvailable) {
+        results.put(p.getId(), p);
+      }
+    }
+    return results;
+  }
+
+  
+
+   
+
+    
 }
