@@ -1,13 +1,17 @@
+<<<<<<< HEAD
 import java.util.ArrayList;
 import java.util.Map;
+=======
+import java.util.HashMap;
+>>>>>>> 8fcdc70 (overriding abstractmethod search products)
 
 public class Customer extends User implements Operations {
   private ShoppingCart cart;
   private String paymentMethod;
   private ArrayList<Order> orders;
 
-  public Customer(String userID, String name, String phoneNumber, String address) {
-    super(userID, name, phoneNumber, address);
+  public Customer(String userID, String name, String phoneNumber, String address, String password) {
+    super(userID, name, phoneNumber, address, password);
     this.cart = new ShoppingCart(userID);
     this.orders = new ArrayList<>();
   }
@@ -191,13 +195,45 @@ public class Customer extends User implements Operations {
     setPaymentMethod(paymentMethod);
     System.out.printf("Your payment method was changed to %s!%n", paymentMethod);
   }
-  /* 
+  
   @Override
     public Order viewOrder(String orderId){
-        return 
+        return null;
     }
-        */
-  @Override
+    @Override
+    public HashMap<String, Product> searchProducts(String category, double minPrice, double maxPrice, 
+                                               boolean isAvailable, boolean discountAvailable) {
+    HashMap<String, Product> result = new HashMap<>();
+    HashMap<String, Product> cartProducts = cart.getproductsList(); // assumes this method exists
+
+    for (Product p : cartProducts.values()) {
+        boolean matchesCategory = (category == null || category.isEmpty() || p.getCategory().equalsIgnoreCase(category));
+        boolean matchesPrice = p.getPrice() >= minPrice && p.getPrice() <= maxPrice;
+        boolean matchesAvailability = p.isAvailable() == isAvailable;
+        boolean matchesDiscount = p.isDiscountAvailable() == discountAvailable;
+
+        if (matchesCategory && matchesPrice && matchesAvailability && matchesDiscount) {
+            result.put(p.getProductId(), p);
+        }
+    }
+
+    return result;
+}
+
+  
+      
+
+  
+  }
+
+
+
+
+   
+
+    
+}
+/*@Override
   public HashMap<String, Product> searchProducts(String category, double minPrice, double maxPrice, boolean isAvailable, boolean discountAvailable) {
     HashMap<String, Product> results = new HashMap<>();
     for (Product p : ProductDatabase.getAllProducts()) {
@@ -205,12 +241,4 @@ public class Customer extends User implements Operations {
         results.put(p.getId(), p);
       }
     }
-    return results;
-  }
-
-  
-
-   
-
-    
-}
+    return results;*/
