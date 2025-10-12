@@ -98,11 +98,13 @@ public class Main {
       System.out.println("5. View payment method");
       System.out.println("6. Update payment method");
       System.out.println("7. Place an order");
-      System.out.println("8. Cancel an order");
-      System.out.println("9. Create a return");
-      System.out.println("10. Complete a return");
-      System.out.println("11. Exit");
-      System.out.print("Enter a choice (1 - 11): ");
+      System.out.println("8. Confirm order delivery");
+      System.out.println("9. View my orders");
+      System.out.println("10. Cancel an order");
+      System.out.println("11. Create a return");
+      System.out.println("12. Complete a return");
+      System.out.println("13. Exit");
+      System.out.print("Enter a choice (1 - 13): ");
       int choice = scanner.nextInt();
       scanner.nextLine();
 
@@ -121,8 +123,10 @@ public class Main {
           }
           break;
         case 2: // View shopping cart
-          // check customer map to get their shopping cart, return cart?
+          // Return shopping cart
           customer.getCart().viewProducts();
+          // Display estimated total cost
+          customer.getCart().calculateTotal();
           break;
         case 3: // Add to cart
           // Get product ID
@@ -174,14 +178,27 @@ public class Main {
           customer.changePaymentMethod(newCardNo);
           break;
         case 7: // Place an order
+          customer.placeOrder();
           break;
-        case 8: // Cancel an order
+        case 8: // Confirm order delivery
+          System.out.print("What is the order ID? ");
+          String orderID = scanner.nextLine();
+          customer.confirmDelivery(orderID);
           break;
-        case 9: // Create a return
+        case 9: // View my orders
+          System.out.println("Your order history:");
+          customer.getOrders();
           break;
-        case 10: // Complete a return
+        case 10: // Cancel an order
+          System.out.print("What is the order ID? ");
+          String cancelOrderID = scanner.nextLine();
+          customer.cancelOrder(cancelOrderID);
           break;
-        case 11: // Exit
+        case 11: // Create a return
+          break;
+        case 12: // Complete a return
+          break;
+        case 13: // Exit
           exit = true;
           break;
       }
