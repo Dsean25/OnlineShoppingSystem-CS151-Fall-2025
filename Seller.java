@@ -56,7 +56,6 @@ public class Seller extends User {
 
   public void addProduct(Product product) {
     productMap.put(product.getProductId(), product);
-    System.out.println("Product " + product.getName() + " added to " + storeName);
   }
 
   public void removeProduct(String productId) {
