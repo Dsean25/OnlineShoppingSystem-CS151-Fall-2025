@@ -194,9 +194,15 @@ public class Customer extends User implements Operations {
   }
 
   @Override
-  public HashMap<String, Product> searchProducts(String category, double minPrice, double maxPrice, boolean isAvailable,
-      boolean discountAvailable) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'searchProducts'");
+  public HashMap<String, Product> searchProducts(String category, double minPrice, double maxPrice, boolean isAvailable, boolean discountAvailable) {
+        HashMap<String, Product> out = new HashMap<>();
+        for (Product p : Main.products) {            // <- static access
+            if (category != null && !category.equalsIgnoreCase(p.getCategory())) continue;
+            if (p.getPrice() < minPrice || p.getPrice() > maxPrice) continue;
+            if (isAvailable && !p.isAvailable()) continue;
+            out.put(p.getProductId(), p);
+        }
+        return out;
   }
+
 }

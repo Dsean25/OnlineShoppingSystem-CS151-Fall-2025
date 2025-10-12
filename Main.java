@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Main {
 
-  private static final ArrayList<Product> products = new ArrayList<>();
+  public static final ArrayList<Product> products = new ArrayList<>();
   private static Scanner scanner = new Scanner(System.in);
   private static Seller seller1;
   private static HashMap<String, Customer> customers = new HashMap<>();
