@@ -6,7 +6,7 @@
 
 **Semester:** Fall 2025
 
-**Team Members:** Toey Lui, Bush Nguyen, , Sweksha Shaw, Matthew Yeh
+**Team Members:** Toey Lui, Bush Nguyen, Sweksha Shaw, Matthew Yeh
 
 ## Overview
 This online grocery shopping system is a Java-based console application that simulates an e-commerce grocery platform.
