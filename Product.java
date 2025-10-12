@@ -1,6 +1,10 @@
 import java.time.LocalDate;
 
 public class Product implements Discountable {
+
+private static final int MAX_INSTANCES = 100;
+private static int instanceCount = 0;
+      
   private String productId;
   private String name;
   private String category;
@@ -14,6 +18,11 @@ public class Product implements Discountable {
   // Constructor
   public Product(String productId, String name, String category, int stock, double price)
       throws InvalidPriceException, InvalidStockException {
+
+    if (instanceCount >= MAX_INSTANCES) {
+        throw new IllegalStateException("Reached max Product limit " + MAX_INSTANCES);
+    }
+
     if (price < 0) {
       throw new InvalidPriceException("Price cannot be negative.");
     }
@@ -30,6 +39,12 @@ public class Product implements Discountable {
     this.discountAvailable = false;
     this.isAvailable = stock > 0;
     this.lastUpdated = LocalDate.now().toString();
+
+    instanceCount++;
+  }
+
+  public static int getInstanceCount() {
+    return instanceCount;
   }
 
   @Override

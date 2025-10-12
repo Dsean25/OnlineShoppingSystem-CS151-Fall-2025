@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Order {
+  private static final int MAX_INSTANCES = 100;
+  private static int instanceCount = 0;
+
   private static int orderCount = 0;
   private String orderId;
   private String paymentId;
@@ -21,10 +24,20 @@ public class Order {
 
   // Constructor
   public Order() {
+    if (instanceCount >= MAX_INSTANCES) {
+      throw new IllegalStateException("Reached max Order limit (" + MAX_INSTANCES + ")");
+    }
+
     productOrdered = new HashMap<>();
     orderCount++;
     this.orderId = "#" + orderCount;
     this.taxRate = 0.05;
+
+    instanceCount++;
+  }
+
+  public static int getInstanceCount() {
+    return instanceCount;
   }
 
   // Getters and setters

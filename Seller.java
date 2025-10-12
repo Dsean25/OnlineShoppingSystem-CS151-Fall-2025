@@ -1,13 +1,28 @@
 import java.util.HashMap;
 
 public class Seller extends User {
+
+  private static final int MAX_INSTANCES = 100;
+  private static int instanceCount = 0;
+
   private String storeName;
   private HashMap<String, Product> productMap;
 
   public Seller(String userID, String name, String phoneNumber, String address, String storeName) {
     super(userID, name, phoneNumber, address);
+
+    if (instanceCount >= MAX_INSTANCES) {
+      throw new IllegalStateException("Reached max Seller limit " + MAX_INSTANCES);
+    }
+
     this.storeName = storeName;
     this.productMap = new HashMap<>();
+    
+    instanceCount++;
+  }
+
+  public static int getInstanceCount() {
+    return instanceCount;
   }
 
   public String getStoreName() {
