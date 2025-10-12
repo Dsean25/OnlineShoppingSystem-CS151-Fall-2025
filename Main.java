@@ -456,6 +456,11 @@ public class Main {
           try {
             Product newProduct = new Product(idAdd, nameAdd, categoryAdd, stockAdd, priceAdd);
             sellers.get(sellerID).addProduct(newProduct);
+            System.out.println(
+                "Product "
+                    + newProduct.getName()
+                    + " added to "
+                    + sellers.get(sellerID).getStoreName());
           } catch (InvalidPriceException | InvalidStockException e) {
             System.out.println("Error adding product: " + e.getMessage());
           }
@@ -525,7 +530,7 @@ public class Main {
       Product banana = new Product("P002", "Banana", "Fruit", 50, 0.50);
       Product orange = new Product("P003", "Orange", "Fruit", 50, 0.50);
       Product blueberries = new Product("P004", "Blueberries", "Fruit", 50, 5.99);
-      Product grapes = new Product("P005", "Banana", "Fruit", 50, 2.49);
+      Product grapes = new Product("P005", "Grapes", "Fruit", 50, 2.49);
 
       // Dairy
       Product milk = new Product("P006", "Milk", "Dairy", 25, 3.49);
