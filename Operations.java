@@ -3,5 +3,5 @@ public interface Operations {
 
   void removeProduct(Product product, int quantity);
 
-  void calculateTotal();
+  // not using this temporarily - void calculateTotal();
 }

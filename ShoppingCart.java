@@ -67,7 +67,7 @@ public class ShoppingCart
     }
   }
 
-  @Override
+  // not included in interface for now - @Override
   public void calculateTotal() {
     double sum = 0;
     for (HashMap.Entry<Product, Integer> entry : productsList.entrySet()) {

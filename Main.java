@@ -1,11 +1,13 @@
-import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Scanner;
 
 public class Main {
 
   private static ArrayList<Product> products = new ArrayList<>();
   private static Scanner scanner = new Scanner(System.in);
   private static Seller seller1;
+  private static HashMap<String, Customer> customers = new HashMap<>();
 
   public static void main(String[] args) {
     boolean exit = false;
@@ -69,27 +71,121 @@ public class Main {
     }
 
     System.out.println("----------------------------------------------------");
-    System.out.println("To place an order, ....");
   }
 
   // customerMenu() Method:
-  // Customer can perform actions including ...
+  // Customer can perform actions
   private static void customerMenu() {
+    boolean exit = false;
     System.out.println("Welcome to Customer Menu!");
-    System.out.print("What is your user ID?");
+    System.out.print("What is your user ID? ");
     String customerID = scanner.nextLine();
 
     // If they haven't created their profile, create one.
-    if (customerID == null) {
+    if (customerID == null || !customers.containsKey(customerID)) {
       System.out.println("Customer does not exist. Please try again.");
       return;
     }
 
-    // Access shopping cart
+    Customer customer = customers.get(customerID);
 
-    // Place an order
+    while (!exit) {
+      System.out.println("Welcome, " + customer.getName() + "!");
+      System.out.println("1. View products");
+      System.out.println("2. View shopping cart");
+      System.out.println("3. Add to cart");
+      System.out.println("4. Remove from cart");
+      System.out.println("5. View payment method");
+      System.out.println("6. Update payment method");
+      System.out.println("7. Place an order");
+      System.out.println("8. Cancel an order");
+      System.out.println("9. Create a return");
+      System.out.println("10. Complete a return");
+      System.out.println("11. Exit");
+      System.out.print("Enter a choice (1 - 11): ");
+      int choice = scanner.nextInt();
+      scanner.nextLine();
 
-    // Go back
+      switch (choice) {
+        case 1: // View products
+          System.out.printf("%-5s %-25s %-10s %-10s%n", "ID", "Name", "Price($)", "Stock");
+          System.out.println("----------------------------------------------------");
+          for (Product product : products) {
+            System.out.printf(
+                "%-5s %-25s %-10.2f %-10d%n",
+                product.getProductId(),
+                product.getName(),
+                product.getCurrentPrice(),
+                product.getStock());
+            System.out.println("----------------------------------------------------");
+          }
+          break;
+        case 2: // View shopping cart
+          // check customer map to get their shopping cart, return cart?
+          customer.getCart().viewProducts();
+          break;
+        case 3: // Add to cart
+          // Get product ID
+          System.out.print("What is the product ID? ");
+          String productAdd = scanner.nextLine();
+          Product pAdd = seller1.getProductById(productAdd);
+
+          // Get quantity
+          System.out.print("What is the quantity? ");
+          int addQty = scanner.nextInt();
+          scanner.nextLine();
+
+          // Add Product to cart
+          customer.addProduct(pAdd, addQty);
+          break;
+        case 4: // Remove from cart
+          // Get product ID
+          System.out.print("What is the product ID? ");
+          String productRemove = scanner.nextLine();
+          Product pRemove = seller1.getProductById(productRemove);
+
+          // Get quantity
+          System.out.print("What is the quantity? ");
+          int removeQty = scanner.nextInt();
+          scanner.nextLine();
+
+          // Remove Product from cart
+          customer.removeProduct(pRemove, removeQty);
+          break;
+        case 5: // View payment method
+          String cardNo = customer.getPaymentMethod();
+          if (cardNo == null) {
+            System.out.println("No credit card on file.");
+            break;
+          }
+          String last4 = cardNo.substring(cardNo.length() - 4);
+          System.out.printf("Current credit card number: **** **** **** %s%n", last4);
+          break;
+        case 6: // Update payment method
+          String currentCardNo = customer.getPaymentMethod();
+          if (currentCardNo == null) {
+            System.out.println("No credit card on file.");
+          } else {
+            String lastFour = currentCardNo.substring(currentCardNo.length() - 4);
+            System.out.printf("Current credit card number: **** **** **** %s%n", lastFour);
+          }
+          System.out.print("What is your new credit card number? ");
+          String newCardNo = scanner.nextLine();
+          customer.changePaymentMethod(newCardNo);
+          break;
+        case 7: // Place an order
+          break;
+        case 8: // Cancel an order
+          break;
+        case 9: // Create a return
+          break;
+        case 10: // Complete a return
+          break;
+        case 11: // Exit
+          exit = true;
+          break;
+      }
+    }
   }
 
   // sellerMenu() Method:
@@ -115,17 +211,17 @@ public class Main {
     while (!exit) {
       System.out.println("Welcome to store " + seller1.getStoreName() + "!");
       System.out.println("1. View all my product");
-      // System.out.println("View product details");
-      System.out.println("2. Change product price");
-      System.out.println("3. Check product discount");
-      System.out.println("4. Apply product discount");
-      System.out.println("5. Clear product discount");
-      System.out.println("6. Add product");
-      System.out.println("7. Remove product");
-      System.out.println("8. Restock");
-      System.out.println("9. Reduce stock");
-      System.out.println("10. Exit");
-      System.out.print("Enter a choice (1 - 10): ");
+      System.out.println("2. View single product");
+      System.out.println("3. Change product price");
+      System.out.println("4. Check product discount");
+      System.out.println("5. Apply product discount");
+      System.out.println("6. Clear product discount");
+      System.out.println("7. Add product");
+      System.out.println("8. Remove product");
+      System.out.println("9. Restock");
+      System.out.println("10. Reduce stock");
+      System.out.println("11. Exit");
+      System.out.print("Enter a choice (1 - 11): ");
       int choice = scanner.nextInt();
       scanner.nextLine();
 
@@ -133,7 +229,16 @@ public class Main {
         case 1: // View products
           seller1.viewProducts();
           break;
-        case 2: // Change product price
+        case 2: // View single product
+          System.out.print("What is the productID? ");
+          String viewSingleProd = scanner.nextLine();
+          if (!seller1.hasProduct(viewSingleProd)) {
+            System.out.println("Product does not exist. Please try again.");
+          } else {
+            System.out.println(seller1.getProductById(viewSingleProd));
+          }
+          break;
+        case 3: // Change product price
           System.out.print("What is the productID? ");
           String idPriceChange = scanner.nextLine();
           if (!seller1.hasProduct(idPriceChange)) {
@@ -145,7 +250,7 @@ public class Main {
             seller1.changeProductPrice(idPriceChange, newPrice);
           }
           break;
-        case 3: // Check product discount
+        case 4: // Check product discount
           System.out.print("What is the productID? ");
           String idDiscountCheck = scanner.nextLine();
           if (!seller1.hasProduct(idDiscountCheck)) {
@@ -157,7 +262,7 @@ public class Main {
                 p.getName(), p.getProductId(), p.getDiscountPercent(), p.getCurrentPrice());
           }
           break;
-        case 4: // Apply product discount
+        case 5: // Apply product discount
           System.out.print("What is the productID? ");
           String idDiscount = scanner.nextLine();
           if (!seller1.hasProduct(idDiscount)) {
@@ -173,7 +278,7 @@ public class Main {
                 discountPercent, p.getName(), p.getCurrentPrice());
           }
           break;
-        case 5: // Clear discount
+        case 6: // Clear discount
           System.out.print("What is the productID? ");
           String idClearDiscount = scanner.nextLine();
           if (!seller1.hasProduct(idClearDiscount)) {
@@ -184,14 +289,14 @@ public class Main {
             System.out.printf("Discount cleared. New price: $%.2f%n", p.getCurrentPrice());
           }
           break;
-        case 6: // Add product
+        case 7: // Add product
         // Need to add
-        case 7: // Remove product
+        case 8: // Remove product
           System.out.print("What is the productID? ");
           String idRemove = scanner.nextLine();
           seller1.removeProduct(idRemove);
           break;
-        case 8: // Add stock
+        case 9: // Add stock
           System.out.print("What is the productID? ");
           String idAddStock = scanner.nextLine();
           if (!seller1.hasProduct(idAddStock)) {
@@ -211,7 +316,7 @@ public class Main {
             }
           }
           break;
-        case 9: // Reduce stock
+        case 10: // Reduce stock
           System.out.print("What is the productID? ");
           String idReduceStock = scanner.nextLine();
           if (!seller1.hasProduct(idReduceStock)) {
@@ -231,7 +336,7 @@ public class Main {
             }
           }
           break;
-        case 10: // Exit
+        case 11: // Exit
           exit = true;
           break;
       }
@@ -303,11 +408,23 @@ public class Main {
       // Assign products to Seller
       seller1 =
           new Seller(
-              "S001", "Bush Nguyen", "111-222-3344", "123 Main St, San Jose, CA", "FreshMart");
-
+              "S001", "Bush Nguyen", "111-222-3344", "1 Washington Sq, San Jose, CA", "FreshMart");
       for (Product product : products) {
         seller1.addProduct(product);
       }
+
+      // Create customers
+      Customer c1 =
+          new Customer("C001", "Toey Lui", "406-123-1111", "1 Washington Sq, San Jose, CA");
+      Customer c2 =
+          new Customer("C002", "Sweksha Shaw", "406-123-2222", "1 Washington Sq, San Jose, CA");
+      Customer c3 =
+          new Customer("C003", "Matthew Yeh", "406-123-3333", "1 Washington Sq, San Jose, CA");
+
+      customers.put(c1.getUserID(), c1);
+      customers.put(c2.getUserID(), c2);
+      customers.put(c3.getUserID(), c3);
+
     } catch (InvalidPriceException | InvalidStockException e) {
       System.out.println("Error creating product: " + e.getMessage());
     }
