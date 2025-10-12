@@ -1,10 +1,20 @@
-// package grocery;
+/*
+ Class: Order.java
+
+ Purpose:
+ - Represents an order placed by a customer in the online shopping system
+ - Manages the full order cycle: processing -> cancellation (optional) -> delivery -> returns
+ - Update Product stock accordingly based on order status
+*/
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Order {
+  private static final int MAX_INSTANCES = 100;
+  private static int instanceCount = 0;
+
   private static int orderCount = 0;
   private String orderId;
   private String paymentId;
@@ -21,10 +31,20 @@ public class Order {
 
   // Constructor
   public Order() {
+    if (instanceCount >= MAX_INSTANCES) {
+      throw new IllegalStateException("Reached max Order limit (" + MAX_INSTANCES + ")");
+    }
+
     productOrdered = new HashMap<>();
     orderCount++;
     this.orderId = "#" + orderCount;
     this.taxRate = 0.05;
+
+    instanceCount++;
+  }
+
+  public static int getInstanceCount() {
+    return instanceCount;
   }
 
   // Getters and setters
@@ -32,111 +52,113 @@ public class Order {
     return orderId;
   }
 
-  public void setOrderId(String orderId) {
-    this.orderId = orderId;
-  }
-
   public String getPaymentId() {
     return paymentId;
-  }
-
-  public void setPaymentId(String paymentId) {
-    this.paymentId = paymentId;
   }
 
   public HashMap<Product, Integer> getProductOrdered() {
     return productOrdered;
   }
 
-  public void setProductOrdered(HashMap<Product, Integer> productOrdered) {
-    this.productOrdered = new HashMap<>(productOrdered);
-  }
-
   public double getTotalCost() {
     return totalCost;
-  }
-
-  public void setTotalCost(double totalCost) {
-    this.totalCost = computeTotalCost();
   }
 
   public double getTaxRate() {
     return taxRate;
   }
 
-  public void setTaxRate(double taxRate) {
-    this.taxRate = taxRate;
-  }
-
   public Date getOrderDate() {
     return orderDate;
-  }
-
-  public void setOrderDate(Date orderDate) {
-    this.orderDate = orderDate;
   }
 
   public Date getDeliveryDate() {
     return deliveryDate;
   }
 
-  public void setDeliveryDate(Date deliveryDate) {
-    this.deliveryDate = deliveryDate;
+  public static int getOrderCount() {
+    return orderCount;
   }
 
   public boolean isConfirmed() {
     return confirmed;
   }
 
-  public void setConfirmed(boolean confirmed) {
-    this.confirmed = confirmed;
-  }
-
   public boolean isCanceled() {
     return canceled;
-  }
-
-  public void setCanceled(boolean canceled) {
-    this.canceled = canceled;
   }
 
   public boolean isDelivered() {
     return delivered;
   }
 
-  public void setDelivered(boolean delivered) {
-    this.delivered = delivered;
-  }
-
   public boolean isReturnInitiated() {
     return returnInitiated;
-  }
-
-  public void setReturnInitiated(boolean returnInitiated) {
-    this.returnInitiated = returnInitiated;
   }
 
   public boolean isReturnCompleted() {
     return returnCompleted;
   }
 
+  public void setOrderId(String orderId) {
+    this.orderId = orderId;
+  }
+
+  public void setPaymentId(String paymentId) {
+    this.paymentId = paymentId;
+  }
+
+  public void setProductOrdered(HashMap<Product, Integer> productOrdered) {
+    this.productOrdered = new HashMap<>(productOrdered);
+  }
+
+  public void setTotalCost(double totalCost) {
+    this.totalCost = computeTotalCost();
+  }
+
+  public void setTaxRate(double taxRate) {
+    this.taxRate = taxRate;
+  }
+
+  public void setOrderDate(Date orderDate) {
+    this.orderDate = orderDate;
+  }
+
+  public void setDeliveryDate(Date deliveryDate) {
+    this.deliveryDate = deliveryDate;
+  }
+
+  public void setConfirmed(boolean confirmed) {
+    this.confirmed = confirmed;
+  }
+
+  public void setCanceled(boolean canceled) {
+    this.canceled = canceled;
+  }
+
+  public void setDelivered(boolean delivered) {
+    this.delivered = delivered;
+  }
+
+  public void setReturnInitiated(boolean returnInitiated) {
+    this.returnInitiated = returnInitiated;
+  }
+
   public void setReturnCompleted(boolean returnCompleted) {
     this.returnCompleted = returnCompleted;
   }
 
-  public static int getOrderCount() {
-    return orderCount;
-  }
-
   // Methods
-  // processOrder() processes and confirms order and update Product stock according
+  // processOrder():
+  // processes and confirms order
+  // update Product stock according
   public void processOrder() {
     if (confirmed) {
       System.out.println("Order has already been confirmed.");
       return;
     }
 
-    // Check if there is enough stock for all the products ordered
+    // Check: enough stock for all the products ordered
     for (Map.Entry<Product, Integer> entry : productOrdered.entrySet()) {
       Product product = entry.getKey();
       int quantity = entry.getValue();
@@ -147,7 +169,7 @@ public class Order {
       }
     }
 
-    // Update product stock accordingly
+    // Update Product stock accordingly
     for (Map.Entry<Product, Integer> entry : productOrdered.entrySet()) {
       Product product = entry.getKey();
       int quantity = entry.getValue();
@@ -165,7 +187,8 @@ public class Order {
     System.out.println("Order has been confirmed successfully.");
   }
 
-  // computeTotalCost() calculates the total cost of all products in the order, including tax
+  // computeTotalCost():
+  // calculates the finalized total cost of the order (including tax)
   public double computeTotalCost() {
     if (!confirmed) {
       System.out.println("Order is not confirmed. Please process order first.");
@@ -190,7 +213,8 @@ public class Order {
     return totalCost;
   }
 
-  // cancelOrder()
+  // cancelOrder():
+  // Cancel order only under this condition: confirmed and not delivered
   public void cancelOrder() {
     if (!confirmed) {
       System.out.println("Order is not confirmed. Cancellation is not allowed.");
@@ -211,7 +235,8 @@ public class Order {
     System.out.println("Order has been canceled successfully.");
   }
 
-  // initiateReturn() allows user to initiate a return
+  // initiateReturn():
+  // allow Customer to initiate a return only under this condition: order confirmed and delivered
   public void initiateReturn() {
     if (!confirmed) {
       System.out.println("Order is not confirmed. Return is not allowed.");
@@ -233,15 +258,17 @@ public class Order {
     System.out.println("Return initiated successfully.");
   }
 
-  // completeReturn() allows user to confirm they have returned the order
-  // Add to Product stock
+  // completeReturn():
+  // allows Customer to manually record a completed return only under this condition: return
+  // initiated
+  // adds returned product(s) back to Product stock
   public void completeReturn() {
     if (!returnInitiated) {
       System.out.println("Return has not been initiated. Please create a return first.");
       return;
     }
 
-    // Add returned product(s) back to product stock
+    // Add returned product(s) back to Product stock
     for (Map.Entry<Product, Integer> entry : productOrdered.entrySet()) {
       Product product = entry.getKey();
       int quantity = entry.getValue();
@@ -260,7 +287,8 @@ public class Order {
     System.out.println("Return has been completed successfully.");
   }
 
-  // refundStatus()
+  // refundStatus():
+  // allows customer to check their refund status
   public void refundStatus() {
     if (!returnCompleted) {
       System.out.println("Return has not been completed. Please return the order for a refund.");

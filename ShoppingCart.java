@@ -1,7 +1,19 @@
+/*
+ Class: ShoppingCart.java
+
+ Purpose:
+ - Represents a customer's shopping cart the online shopping system
+ - Stores products and their quantities
+ - Implements Operations interface for add/remove products
+ - Manages cart operations such as viewing, clearing, and calculating estimated cost
+ - Extends User class for seller-specific attributes
+*/
+
 import java.util.HashMap;
 
-public class ShoppingCart
-    implements Operations { 
+public class ShoppingCart implements Operations {
+  private static final int MAX_INSTANCES = 100;
+  private static int instanceCount = 0;
 
   private String customerId;
   private HashMap<Product, Integer> productsList;
@@ -9,18 +21,23 @@ public class ShoppingCart
   public ShoppingCart(String customerId) {
     this.customerId = customerId;
     productsList = new HashMap<>();
+
+    if (instanceCount >= MAX_INSTANCES) {
+      throw new IllegalStateException("Reached max Customer limit " + MAX_INSTANCES);
+    }
+
+    instanceCount++;
   }
 
-  // getters
+  // Getters and setters
   public String getcustomerId() {
-    return customerId;
+    return this.customerId;
   }
 
   public HashMap<Product, Integer> getproductsList() {
-    return productsList;
+    return this.productsList;
   }
 
-  // setters
   public void setcustomerId(String customerId) {
     this.customerId = customerId;
   }
@@ -29,6 +46,7 @@ public class ShoppingCart
     this.productsList = productsList;
   }
 
+  // Cart-related methods
   @Override
   public void addProduct(Product p, int quantity) {
     boolean hasproduct = productsList.containsKey(p);
@@ -46,6 +64,7 @@ public class ShoppingCart
 
   @Override
   public void removeProduct(Product p, int quantity) {
+
     if (quantity > productsList.get(p)) {
       System.out.println(
           "The amount you want to remove greater than the amount of this product in cart");
@@ -84,5 +103,9 @@ public boolean hasProduct(Product p) {
 
   public void clearCart() {
     this.productsList.clear();
+  }
+
+  public static int getInstanceCount() {
+    return instanceCount;
   }
 }

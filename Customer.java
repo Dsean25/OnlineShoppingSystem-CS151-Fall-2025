@@ -1,25 +1,61 @@
+/*
+ Class: Customer.java
+
+ Purpose:
+ - Represents a customer in the online shopping system
+ - Manages the customer's shopping cart, payment method, and orders
+  - Extends User class for customer-specific attributes
+*/
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Customer extends User implements Operations {
+
+  private static final int MAX_INSTANCES = 100;
+  private static int instanceCount = 0;
+
   private ShoppingCart cart;
   private String paymentMethod;
   private ArrayList<Order> orders;
 
+  // Constructor
   public Customer(String userID, String name, String phoneNumber, String address, String password) {
     super(userID, name, phoneNumber, address, password);
+
+    if (instanceCount >= MAX_INSTANCES) {
+      throw new IllegalStateException("Reached max Customer limit " + MAX_INSTANCES);
+    }
+
     this.cart = new ShoppingCart(userID);
     this.orders = new ArrayList<>();
+
+    instanceCount++;
   }
 
-  // getters and setters
+  public static int getInstanceCount() {
+    return instanceCount;
+  }
+
+  // Getters and setters
   public ShoppingCart getCart() {
     return cart;
   }
 
   public String getPaymentMethod() {
     return paymentMethod;
+  }
+
+  public void getOrders() {
+    if (orders.isEmpty()) {
+      System.out.println("You have no orders yet.");
+      return;
+    }
+
+    for (Order o : orders) {
+      System.out.println(o.getOrderId());
+    }
   }
 
   public void setPaymentMethod(String paymentMethod) {
@@ -30,6 +66,34 @@ public class Customer extends User implements Operations {
     this.cart = cart;
   }
 
+  // Customer-related functions
+  public void changePaymentMethod(String paymentMethod) {
+    setPaymentMethod(paymentMethod);
+    System.out.printf("Your payment method was changed to %s!%n", paymentMethod);
+  }
+
+  // Product-related functions
+  @Override
+  public void addProduct(Product p, int qty) {
+    cart.addProduct(p, qty);
+  }
+
+  @Override
+  public void removeProduct(Product p, int qty) {
+    cart.removeProduct(p, qty);
+  }
+
+  @Override
+  public HashMap<String, Product> searchProducts(
+      String category,
+      double minPrice,
+      double maxPrice,
+      boolean isAvailable,
+      boolean discountAvailable) {
+    throw new UnsupportedOperationException("Unimplemented method 'searchProducts'");
+  }
+
+  // Order-related functions
   public void placeOrder() {
     if (this.cart.getproductsList().isEmpty()) {
       System.out.println("Your cart is empty. Please add items before placing an order.");
@@ -99,17 +163,6 @@ public class Customer extends User implements Operations {
     System.out.println("Your order has been marked as delivered.");
   }
 
-  public void getOrders() {
-    if (orders.isEmpty()) {
-      System.out.println("You have no orders yet.");
-      return;
-    }
-
-    for (Order o : orders) {
-      System.out.println(o.getOrderId());
-    }
-  }
-
   public void cancelOrder(String orderID) {
     if (orders.isEmpty()) {
       System.out.println("You have no orders. Please place an order first.");
@@ -177,22 +230,26 @@ public class Customer extends User implements Operations {
     found.completeReturn();
   }
 
-  @Override
-  public void addProduct(Product p, int qty) {
-    cart.addProduct(p, qty);
-    // print statements are in addtocart
-  }
+  public void checkRefund(String orderID) {
+    if (orders.isEmpty()) {
+      System.out.println("You have no orders. Please place an order first.");
+      return;
+    }
 
-  @Override
-  public void removeProduct(Product p, int qty) {
-    cart.removeProduct(p, qty);
-  }
+    Order found = null;
+    for (Order o : orders) {
+      if (o.getOrderId().equals(orderID)) {
+        found = o;
+        break;
+      }
+    }
 
-  public void changePaymentMethod(String paymentMethod) {
-    setPaymentMethod(paymentMethod);
-    System.out.printf("Your payment method was changed to %s!%n", paymentMethod);
-  }
+    if (found == null) {
+      System.out.println("Order not found.");
+      return;
+    }
 
+    found.refundStatus();
   @Override
   public HashMap<String, Product> searchProducts(String category, double minPrice, double maxPrice, boolean isAvailable, boolean discountAvailable) {
         HashMap<String, Product> out = new HashMap<>();

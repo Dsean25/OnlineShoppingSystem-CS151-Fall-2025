@@ -1,9 +1,22 @@
+/*
+ Class: Seller.java
+
+ Purpose:
+ - Represents a seller the online shopping system
+ - Manages the store's product and operations
+ - Extends User class for seller-specific attributes
+*/
+
 import java.util.HashMap;
 
 public class Seller extends User {
+  private static final int MAX_INSTANCES = 100;
+  private static int instanceCount = 0;
+
   private String storeName;
   private HashMap<String, Product> productMap;
 
+  // Constructor
   public Seller(
       String userID,
       String name,
@@ -12,18 +25,39 @@ public class Seller extends User {
       String storeName,
       String password) {
     super(userID, name, phoneNumber, address, password);
+
+    if (instanceCount >= MAX_INSTANCES) {
+      throw new IllegalStateException("Reached max Seller limit " + MAX_INSTANCES);
+    }
+
     this.storeName = storeName;
     this.productMap = new HashMap<>();
+
+    instanceCount++;
   }
 
+  public static int getInstanceCount() {
+    return instanceCount;
+  }
+
+  // Getters and setters
   public String getStoreName() {
-    return storeName;
+    return this.storeName;
+  }
+
+  public HashMap<String, Product> getproductMap() {
+    return this.productMap;
   }
 
   public void setStoreName(String storeName) {
     this.storeName = storeName;
   }
 
+  public void setproductMap(HashMap<String, Product> productMap) {
+    this.productMap = productMap;
+  }
+
+  // Product-related methods
   public void viewProducts() {
     for (Product product : productMap.values()) {
       System.out.println(product);
@@ -36,7 +70,6 @@ public class Seller extends User {
 
   public void addProduct(Product product) {
     productMap.put(product.getProductId(), product);
-    System.out.println("Product " + product.getName() + " added to " + storeName);
   }
 
   public void removeProduct(String productId) {
@@ -80,7 +113,7 @@ public class Seller extends User {
     for (Product product : productMap.values()) {
       if (category != null && !category.equalsIgnoreCase(product.getCategory())) {
         continue;
-      } 
+      }
       if (product.getPrice() < minPrice || product.getPrice() > maxPrice) {
         continue;
       }
@@ -91,7 +124,7 @@ public class Seller extends User {
         continue;
       }
       results.put(product.getProductId(), product);
-      }
+    }
     return results;
   }
 }
