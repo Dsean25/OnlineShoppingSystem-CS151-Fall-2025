@@ -8,11 +8,7 @@ public abstract class User {
   private String password;
   private boolean loggedIn;
 
-<<<<<<< HEAD
   public User(String userID, String name, String phoneNumber, String address, String password) {
-=======
-  public User(String userID, String name, String phoneNumber, String address) {
->>>>>>> 814eb1a3f4c60c33a4c1804280843fa3bb6488ff
     this.userID = userID;
     this.name = name;
 
@@ -54,18 +50,17 @@ public abstract class User {
   }
 
   public void setPassword(String password) {
-    if(PasswordStrengthTest(password)) {
-    this.password = password;
+    if (PasswordStrengthTest(password)) {
+      this.password = password;
     }
   }
-
 
   public boolean isLoggedIn() {
     return loggedIn;
   }
 
   public boolean PasswordStrengthTest(String password) {
-    if(password.length()<10) {
+    if (password.length() < 10) {
       System.out.println("Password must be at least 10 characters long.");
       return false;
     }
@@ -85,13 +80,11 @@ public abstract class User {
       loggedIn = false;
     }
   }
-  
+
   public abstract HashMap<String, Product> searchProducts(
       String category,
       double minPrice,
       double maxPrice,
       boolean isAvailable,
       boolean discountAvailable);
-
-  
 }

@@ -1,8 +1,5 @@
 import java.util.ArrayList;
-<<<<<<< HEAD
-=======
 import java.util.HashMap;
->>>>>>> 814eb1a3f4c60c33a4c1804280843fa3bb6488ff
 import java.util.Scanner;
 
 public class Main {
@@ -10,11 +7,7 @@ public class Main {
   private static ArrayList<Product> products = new ArrayList<>();
   private static Scanner scanner = new Scanner(System.in);
   private static Seller seller1;
-<<<<<<< HEAD
-  private static Customer customer1;
-=======
   private static HashMap<String, Customer> customers = new HashMap<>();
->>>>>>> 814eb1a3f4c60c33a4c1804280843fa3bb6488ff
 
   public static void main(String[] args) {
     boolean exit = false;
@@ -87,20 +80,15 @@ public class Main {
     System.out.println("Welcome to Customer Menu!");
     System.out.print("What is your user ID? ");
     String customerID = scanner.nextLine();
-<<<<<<< HEAD
-    System.out.println("Please log in to continue.");
-    System.out.print("Enter your password here:");
+    System.out.print("What is your password? ");
     String password = scanner.nextLine();
-    if (customerID == null) {
-=======
 
     // If they haven't created their profile, create one.
     if (customerID == null || !customers.containsKey(customerID)) {
->>>>>>> 814eb1a3f4c60c33a4c1804280843fa3bb6488ff
       System.out.println("Customer does not exist. Please try again.");
       return;
     }
-    if (customer1.login(customerID, password)) {
+    if (customers.get(customerID).login(customerID, password)) {
       System.out.println("Login successful!");
     } else {
       System.out.println("Login failed. Please try again.");
@@ -461,12 +449,6 @@ public class Main {
       products.add(pasta);
       products.add(beans);
 
-<<<<<<< HEAD
-    // Assign products to Seller
-    seller1 =
-        new Seller(
-            "S001", "Bush Nguyen", "111-222-3344", "123 Main St", "FreshMart", "password123");
-=======
       // Assign products to Seller
       seller1 =
           new Seller(
@@ -474,7 +456,6 @@ public class Main {
       for (Product product : products) {
         seller1.addProduct(product);
       }
->>>>>>> 814eb1a3f4c60c33a4c1804280843fa3bb6488ff
 
       // Create customers
       Customer c1 =
