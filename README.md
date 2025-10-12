@@ -17,18 +17,20 @@ to create a functional and interactive system that models real-life online shopp
 
 ## Design
 **Classes:**
-1. `Customer`:
-2. `Seller`: 
-3. `Product`: 
-4. `ShoppingCart`:
-5. `Order`: 
+
+1. `Customer`: Inherits from `User`, owns a `ShoppingCart`, and implements `Operations` to manage products.
+2. `Seller`: Inherits from `User` and manages a list of `Product` objects for sale.
+3. `Product`: Represents an item with a price and implements `Discountable` to apply discounts.
+4. `ShoppingCart`: Holds `Product` items for a `Customer` and implements `Operations` for cart management.
+5. `Order`: Records purchased `Product`s, the `Customer`, and the total amount after checkout.
 
 **Abstract Class:**
-1. `User`
+1. `User`: Defines shared attributes and behaviors for `Customer` and `Seller`.
 
-**Interface:**
-1. `Discountable`
-2. `Operations`
+**Interfaces:**
+1. `Discountable`: Specifies a method to apply discounts to prices.
+2. `Operations`: Defines methods to add and remove product.
+
 
 ## Installation Instructions
 1. Clone the repository
