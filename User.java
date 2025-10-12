@@ -43,4 +43,6 @@ public abstract class User {
   public void setUserID(String userID) {
     this.userID = userID;
   }
+
+  // abstract method - public void searchProduct(?);
 }
