@@ -293,7 +293,7 @@ public class Main {
           break;
         case 10: // View my orders
           System.out.println("Your order history:");
-          customer.getOrders();
+          customer.displayOrders();
           break;
         case 11: // Cancel an order
           System.out.print("What is the order ID? (Include#): ");

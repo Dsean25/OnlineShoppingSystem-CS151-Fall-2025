@@ -14,7 +14,6 @@ import java.util.HashMap;
 public class ShoppingCart implements Operations {
   private static final int MAX_INSTANCES = 100;
   private static int instanceCount = 0;
-
   private String customerId;
   private HashMap<Product, Integer> productsList;
 
@@ -30,6 +29,14 @@ public class ShoppingCart implements Operations {
   }
 
   // Getters and setters
+  public int getMaxInstances() {
+    return MAX_INSTANCES;
+  }
+
+  public int getinstanceCount() {
+    return instanceCount;
+  }
+
   public String getcustomerId() {
     return this.customerId;
   }

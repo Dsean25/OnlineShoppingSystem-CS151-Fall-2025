@@ -13,7 +13,6 @@ public class Product implements Discountable {
 
   private static final int MAX_INSTANCES = 100;
   private static int instanceCount = 0;
-
   private String productId;
   private String name;
   private String category;
@@ -52,13 +51,13 @@ public class Product implements Discountable {
     instanceCount++;
   }
 
-  public static int getInstanceCount() {
-    return instanceCount;
+  // Getters and setters
+  public static int getMaxInstances() {
+    return MAX_INSTANCES;
   }
 
-  // Getters and setters
-  public double getCurrentPrice() {
-    return price * (1 - discountPercent / 100);
+  public static int getInstanceCount() {
+    return instanceCount;
   }
 
   public String getProductId() {
@@ -81,6 +80,10 @@ public class Product implements Discountable {
     return price;
   }
 
+  public double getCurrentPrice() {
+    return price * (1 - discountPercent / 100);
+  }
+
   public boolean isAvailable() {
     return isAvailable;
   }
@@ -91,6 +94,34 @@ public class Product implements Discountable {
 
   public String getLastUpdated() {
     return lastUpdated;
+  }
+
+  public void setProductId(String productId) {
+    this.productId = productId;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public void setCategory(String category) {
+    this.category = category;
+  }
+
+  public void setDiscountPercent(double discountPercent) {
+    this.discountPercent = discountPercent;
+  }
+
+  public void setAvailable(boolean isAvailable) {
+    this.isAvailable = isAvailable;
+  }
+
+  public void setDiscountAvailable(boolean isDiscountAvailable) {
+    this.discountAvailable = isDiscountAvailable;
+  }
+
+  public void setLastUpdated(String lastUpdated) {
+    this.lastUpdated = lastUpdated;
   }
 
   public void setPrice(double price) throws InvalidPriceException {

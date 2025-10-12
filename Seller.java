@@ -12,7 +12,6 @@ import java.util.HashMap;
 public class Seller extends User {
   private static final int MAX_INSTANCES = 100;
   private static int instanceCount = 0;
-
   private String storeName;
   private HashMap<String, Product> productMap;
 
@@ -36,11 +35,15 @@ public class Seller extends User {
     instanceCount++;
   }
 
+  // Getters and setters
+  public static int getMaxInstances() {
+    return MAX_INSTANCES;
+  }
+
   public static int getInstanceCount() {
     return instanceCount;
   }
 
-  // Getters and setters
   public String getStoreName() {
     return this.storeName;
   }

@@ -15,7 +15,6 @@ public class Customer extends User implements Operations {
 
   private static final int MAX_INSTANCES = 100;
   private static int instanceCount = 0;
-
   private ShoppingCart cart;
   private String paymentMethod;
   private ArrayList<Order> orders;
@@ -34,11 +33,15 @@ public class Customer extends User implements Operations {
     instanceCount++;
   }
 
+  // Getters and setters
+  public static int getMaxInstances() {
+    return MAX_INSTANCES;
+  }
+
   public static int getInstanceCount() {
     return instanceCount;
   }
 
-  // Getters and setters
   public ShoppingCart getCart() {
     return cart;
   }
@@ -47,23 +50,20 @@ public class Customer extends User implements Operations {
     return paymentMethod;
   }
 
-  public void getOrders() {
-    if (orders.isEmpty()) {
-      System.out.println("You have no orders yet.");
-      return;
-    }
+  public ArrayList<Order> getOrders() {
+    return orders;
+  }
 
-    for (Order o : orders) {
-      System.out.println(o.getOrderId());
-    }
+  public void setCart(ShoppingCart cart) {
+    this.cart = cart;
   }
 
   public void setPaymentMethod(String paymentMethod) {
     this.paymentMethod = paymentMethod;
   }
 
-  public void setCart(ShoppingCart cart) {
-    this.cart = cart;
+  public void setOrders(ArrayList<Order> orders) {
+    this.orders = orders;
   }
 
   // Customer-related functions
@@ -84,6 +84,17 @@ public class Customer extends User implements Operations {
   }
 
   // Order-related functions
+  public void displayOrders() {
+    if (orders.isEmpty()) {
+      System.out.println("You have no orders yet.");
+      return;
+    }
+
+    for (Order o : orders) {
+      System.out.println(o.getOrderId());
+    }
+  }
+
   public void placeOrder() {
     if (this.cart.getproductsList().isEmpty()) {
       System.out.println("Your cart is empty. Please add items before placing an order.");

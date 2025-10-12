@@ -14,7 +14,6 @@ import java.util.Map;
 public class Order {
   private static final int MAX_INSTANCES = 100;
   private static int instanceCount = 0;
-
   private static int orderCount = 0;
   private String orderId;
   private String paymentId;
@@ -43,11 +42,19 @@ public class Order {
     instanceCount++;
   }
 
+  // Getters and setters
+  public static int getMaxInstances() {
+    return MAX_INSTANCES;
+  }
+
   public static int getInstanceCount() {
     return instanceCount;
   }
 
-  // Getters and setters
+  public static int getOrderCount() {
+    return orderCount;
+  }
+
   public String getOrderId() {
     return orderId;
   }
@@ -74,10 +81,6 @@ public class Order {
 
   public Date getDeliveryDate() {
     return deliveryDate;
-  }
-
-  public static int getOrderCount() {
-    return orderCount;
   }
 
   public boolean isConfirmed() {
