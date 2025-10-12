@@ -15,7 +15,6 @@ public class Main {
   private static final ArrayList<Product> products = new ArrayList<>();
   private static Scanner scanner = new Scanner(System.in);
   private static HashMap<String, Seller> sellers = new HashMap<>();
-  private static Seller seller2;
   private static HashMap<String, Customer> customers = new HashMap<>();
 
   public static void main(String[] args) {
@@ -46,6 +45,9 @@ public class Main {
           break;
         case 4: // Exit
           exit = true;
+          break;
+        default:
+          System.out.println("Invalid choice. Try again.");
           break;
       }
     }
@@ -159,18 +161,19 @@ public class Main {
       System.out.println("2. View shopping cart");
       System.out.println("3. Add to cart");
       System.out.println("4. Remove from cart");
-      System.out.println("5. View payment method");
-      System.out.println("6. Update payment method");
-      System.out.println("7. Place an order");
-      System.out.println("8. Confirm order delivery");
-      System.out.println("9. View my orders");
-      System.out.println("10. Cancel an order");
-      System.out.println("11. Create a return");
-      System.out.println("12. Complete a return");
-      System.out.println("13. Check refund status");
-      System.out.println("14. Logout");
-      System.out.println("15. Exit");
-      System.out.print("Enter a choice (1 - 15): ");
+      System.out.println("5. Clear cart");
+      System.out.println("6. View payment method");
+      System.out.println("7. Update payment method");
+      System.out.println("8. Place an order");
+      System.out.println("9. Confirm order delivery");
+      System.out.println("10. View my orders");
+      System.out.println("11. Cancel an order");
+      System.out.println("12. Create a return");
+      System.out.println("13. Complete a return");
+      System.out.println("14. Check refund status");
+      System.out.println("15. Logout");
+      System.out.println("16. Exit");
+      System.out.print("Enter a choice (1 - 16): ");
       // Scan user choice input
       int choice = scanner.nextInt();
       scanner.nextLine();
@@ -190,7 +193,7 @@ public class Main {
           // Get product ID
           System.out.print("What is the product ID? ");
           String productAdd = scanner.nextLine();
-          Product pAdd = seller2.getProductById(productAdd);
+          Product pAdd = sellers.get("S001").getProductById(productAdd);
 
           // Get quantity
           System.out.print("What is the quantity? ");
@@ -204,7 +207,7 @@ public class Main {
           // Get product ID
           System.out.print("What is the product ID? ");
           String productRemove = scanner.nextLine();
-          Product pRemove = seller2.getProductById(productRemove);
+          Product pRemove = sellers.get("S001").getProductById(productRemove);
 
           // Get quantity
           System.out.print("What is the quantity? ");
@@ -214,7 +217,10 @@ public class Main {
           // Remove Product from cart
           customer.removeProduct(pRemove, removeQty);
           break;
-        case 5: // View payment method
+        case 5: // Clear cart
+          customer.getCart().clearCart();
+          break;
+        case 6: // View payment method
           String cardNo = customer.getPaymentMethod();
           if (cardNo == null) {
             System.out.println("No credit card on file.");
@@ -223,7 +229,7 @@ public class Main {
           String last4 = cardNo.substring(cardNo.length() - 4);
           System.out.printf("Current credit card number: **** **** **** %s%n", last4);
           break;
-        case 6: // Update payment method
+        case 7: // Update payment method
           String currentCardNo = customer.getPaymentMethod();
           if (currentCardNo == null) {
             System.out.println("No credit card on file.");
@@ -239,44 +245,47 @@ public class Main {
           }
           customer.changePaymentMethod(newCardNo);
           break;
-        case 7: // Place an order
+        case 8: // Place an order
           customer.placeOrder();
           break;
-        case 8: // Confirm order delivery
+        case 9: // Confirm order delivery
           System.out.print("What is the order ID? ");
           String orderID = scanner.nextLine();
           customer.confirmDelivery(orderID);
           break;
-        case 9: // View my orders
+        case 10: // View my orders
           System.out.println("Your order history:");
           customer.getOrders();
           break;
-        case 10: // Cancel an order
+        case 11: // Cancel an order
           System.out.print("What is the order ID? ");
           String cancelOrderID = scanner.nextLine();
           customer.cancelOrder(cancelOrderID);
           break;
-        case 11: // Create a return
+        case 12: // Create a return
           System.out.print("What is the order ID? ");
           String returnOrderID = scanner.nextLine();
           customer.returnOrder(returnOrderID);
           break;
-        case 12: // Complete a return
+        case 13: // Complete a return
           System.out.print("What is the order ID? ");
           String completeReturnID = scanner.nextLine();
           customer.completeReturn(completeReturnID);
           break;
-        case 13: // Check refund status
+        case 14: // Check refund status
           System.out.print("What is the order ID? ");
           String refundID = scanner.nextLine();
           customer.checkRefund(refundID);
           break;
-        case 14: // Logout
+        case 15: // Logout
           customer.logout();
           exit = true;
           break;
-        case 15: // Exit
+        case 16: // Exit
           exit = true;
+          break;
+        default:
+          System.out.println("Invalid choice. Try again.");
           break;
       }
     }
@@ -522,6 +531,9 @@ public class Main {
           break;
         case 13: // Exit
           exit = true;
+          break;
+        default:
+          System.out.println("Invalid choice. Try again.");
           break;
       }
     }
