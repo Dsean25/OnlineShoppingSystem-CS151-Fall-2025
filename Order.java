@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Order {
+  private static int orderCount = 0;
   private String orderId;
   private String paymentId;
   private HashMap<Product, Integer> productOrdered;
@@ -21,6 +22,9 @@ public class Order {
   // Constructor
   public Order() {
     productOrdered = new HashMap<>();
+    orderCount++;
+    this.orderId = "#" + orderCount;
+    this.taxRate = 0.05;
   }
 
   // Getters and setters
@@ -45,7 +49,7 @@ public class Order {
   }
 
   public void setProductOrdered(HashMap<Product, Integer> productOrdered) {
-    this.productOrdered = productOrdered;
+    this.productOrdered = new HashMap<>(productOrdered);
   }
 
   public double getTotalCost() {
@@ -120,6 +124,10 @@ public class Order {
     this.returnCompleted = returnCompleted;
   }
 
+  public static int getOrderCount() {
+    return orderCount;
+  }
+
   // Methods
   // processOrder() processes and confirms order and update Product stock according
   public void processOrder() {
@@ -146,13 +154,14 @@ public class Order {
       int currentStock = product.getStock();
       try {
         product.setStock(currentStock - quantity);
-    } catch (InvalidStockException e) {
+      } catch (InvalidStockException e) {
         System.out.println("Error updating stock for " + product.getName() + ": " + e.getMessage());
         return;
-    }
+      }
     }
 
     confirmed = true;
+    this.orderDate = new java.util.Date();
     System.out.println("Order has been confirmed successfully.");
   }
 
@@ -174,6 +183,9 @@ public class Order {
 
     // Calculate tax
     totalCost = totalCost * (1 + taxRate);
+
+    // Round to 2 decimals
+    totalCost = Math.round(totalCost * 100.0) / 100.0;
 
     return totalCost;
   }
@@ -236,9 +248,9 @@ public class Order {
       int restocked = product.getStock() + quantity;
       try {
         product.setStock(restocked);
-    } catch (InvalidStockException e) {
+      } catch (InvalidStockException e) {
         System.out.println("Error restocking product " + product.getName() + ": " + e.getMessage());
-    }
+      }
     }
 
     returnCompleted = true;
