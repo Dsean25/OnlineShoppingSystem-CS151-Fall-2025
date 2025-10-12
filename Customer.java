@@ -12,6 +12,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Customer extends User implements Operations {
+
+  private static final int MAX_INSTANCES = 100;
+  private static int instanceCount = 0;
+
   private ShoppingCart cart;
   private String paymentMethod;
   private ArrayList<Order> orders;
@@ -19,8 +23,19 @@ public class Customer extends User implements Operations {
   // Constructor
   public Customer(String userID, String name, String phoneNumber, String address, String password) {
     super(userID, name, phoneNumber, address, password);
+
+    if (instanceCount >= MAX_INSTANCES) {
+        throw new IllegalStateException("Reached max Customer limit " + MAX_INSTANCES);
+      }
+
     this.cart = new ShoppingCart(userID);
     this.orders = new ArrayList<>();
+
+    instanceCount++;
+  }
+
+  public static int getInstanceCount() {
+    return instanceCount;
   }
 
   // Getters and setters
