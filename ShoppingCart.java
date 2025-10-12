@@ -82,7 +82,7 @@ public class ShoppingCart
     if (productsList.isEmpty()) {
       System.out.println("Your cart is empty.");
     } else {
-      System.out.println("Cart for Customer ID: " + customerId);
+      System.out.println("Your cart:");
       for (HashMap.Entry<Product, Integer> entry : productsList.entrySet()) {
         System.out.println(entry.getKey() + " x " + entry.getValue());
       }
