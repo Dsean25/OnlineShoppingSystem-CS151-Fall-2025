@@ -259,7 +259,8 @@ public class Order {
   }
 
   // completeReturn():
-  // allows Customer to manually record a completed return only under this condition: return initiated
+  // allows Customer to manually record a completed return only under this condition: return
+  // initiated
   // adds returned product(s) back to Product stock
   public void completeReturn() {
     if (!returnInitiated) {

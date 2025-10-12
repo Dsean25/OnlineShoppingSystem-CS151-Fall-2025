@@ -29,7 +29,7 @@ public class Product implements Discountable {
       throws InvalidPriceException, InvalidStockException {
 
     if (instanceCount >= MAX_INSTANCES) {
-            throw new IllegalStateException("Reached max Product limit " + MAX_INSTANCES);
+      throw new IllegalStateException("Reached max Product limit " + MAX_INSTANCES);
     }
 
     if (price < 0) {

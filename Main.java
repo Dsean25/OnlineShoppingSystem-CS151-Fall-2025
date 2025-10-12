@@ -90,43 +90,59 @@ public class Main {
     System.out.println("Welcome to Customer Menu!");
     System.out.print("What is your user ID? ");
     String customerID = scanner.nextLine();
+    checkExit(customerID);
 
     // Allow customer to create new profile, if they don't have an existing profile
     while (customerID == null || !customers.containsKey(customerID)) {
       System.out.print("Customer does not exist. Do you have an account? (y/n) : ");
       String accountExists = scanner.nextLine().toLowerCase();
+      checkExit(accountExists);
       if (accountExists.startsWith("y")) {
         System.out.print("Enter your user ID again: ");
         customerID = scanner.nextLine();
+        checkExit(customerID);
         continue;
       } else {
         System.out.println("Please sign up by entering the following:");
 
         System.out.print("Choose a user ID: ");
         customerID = scanner.nextLine();
+        checkExit(customerID);
         while (customerID.isBlank() || customers.containsKey(customerID)) {
           System.out.print("That user ID is invalid or already taken. Choose another: ");
           customerID = scanner.nextLine();
+          checkExit(customerID);
         }
 
         System.out.print("Name: ");
         String name = scanner.nextLine();
+        checkExit(name);
         System.out.print("Phone number: ");
         String phoneNumber = scanner.nextLine();
+        checkExit(phoneNumber);
         System.out.print("Address: ");
         String address = scanner.nextLine();
+        checkExit(address);
         System.out.print("Payment method (16-digit credit card number): ");
         String paymentMethod = scanner.nextLine();
+        checkExit(paymentMethod);
+        while (!paymentMethod.matches("\\d{16}")) {
+          System.out.print("Must be 16 digit long and digits only. Enter card number again: ");
+          paymentMethod = scanner.nextLine();
+          checkExit(paymentMethod);
+        }
 
         Customer customer = new Customer(customerID, name, phoneNumber, address, "placeholder");
         customer.setPaymentMethod(paymentMethod);
 
         System.out.print("Almost there! Now, make a password with at least 10 characters: ");
         String password = scanner.nextLine();
+        checkExit(password);
 
         while (!customer.PasswordStrengthTest(password)) {
           System.out.print("Try again: ");
           password = scanner.nextLine();
+          checkExit(password);
         }
         customer.setPassword(password);
         customers.put(customerID, customer);
@@ -143,6 +159,7 @@ public class Main {
     // Perform login
     System.out.print("Enter your password: ");
     String password = scanner.nextLine();
+    checkExit(password);
 
     if (customers.get(customerID).login(customerID, password)) {
       System.out.println("Login successful!");
@@ -193,12 +210,25 @@ public class Main {
           // Get product ID
           System.out.print("What is the product ID? ");
           String productAdd = scanner.nextLine();
+          checkExit(productAdd);
           Product pAdd = sellers.get("S001").getProductById(productAdd);
 
           // Get quantity
           System.out.print("What is the quantity? ");
           int addQty = scanner.nextInt();
           scanner.nextLine();
+
+          if (addQty <= 0) {
+            System.out.println("Quantity must be greater than 0.");
+            break;
+          }
+
+          int availableStock = pAdd.getStock();
+          if (addQty > availableStock) {
+            System.out.printf(
+                "Only %d %s are available. Please enter a lower quantity.%n",
+                availableStock, pAdd.getName());
+          }
 
           // Add Product to cart
           customer.addProduct(pAdd, addQty);
@@ -207,6 +237,7 @@ public class Main {
           // Get product ID
           System.out.print("What is the product ID? ");
           String productRemove = scanner.nextLine();
+          checkExit(password);
           Product pRemove = sellers.get("S001").getProductById(productRemove);
 
           // Get quantity
@@ -216,9 +247,11 @@ public class Main {
 
           // Remove Product from cart
           customer.removeProduct(pRemove, removeQty);
+          System.out.printf("%d %s has been removed from cart successfully.%n", removeQty, pRemove.getName());
           break;
         case 5: // Clear cart
           customer.getCart().clearCart();
+          System.out.println("Cart has been cleared successfully.");
           break;
         case 6: // View payment method
           String cardNo = customer.getPaymentMethod();
@@ -239,9 +272,11 @@ public class Main {
           }
           System.out.print("What is your new credit card number? ");
           String newCardNo = scanner.nextLine();
+          checkExit(newCardNo);
           while (!newCardNo.matches("\\d{16}")) {
             System.out.print("Must be 16 digit long and digits only. Enter card number again: ");
             newCardNo = scanner.nextLine();
+            checkExit(newCardNo);
           }
           customer.changePaymentMethod(newCardNo);
           break;
@@ -249,8 +284,9 @@ public class Main {
           customer.placeOrder();
           break;
         case 9: // Confirm order delivery
-          System.out.print("What is the order ID? ");
+          System.out.print("What is the order ID? (Include#): ");
           String orderID = scanner.nextLine();
+          checkExit(orderID);
           customer.confirmDelivery(orderID);
           break;
         case 10: // View my orders
@@ -258,23 +294,27 @@ public class Main {
           customer.getOrders();
           break;
         case 11: // Cancel an order
-          System.out.print("What is the order ID? ");
+          System.out.print("What is the order ID? (Include#): ");
           String cancelOrderID = scanner.nextLine();
+          checkExit(cancelOrderID);
           customer.cancelOrder(cancelOrderID);
           break;
         case 12: // Create a return
-          System.out.print("What is the order ID? ");
+          System.out.print("What is the order ID? (Include#): ");
           String returnOrderID = scanner.nextLine();
+          checkExit(returnOrderID);
           customer.returnOrder(returnOrderID);
           break;
         case 13: // Complete a return
-          System.out.print("What is the order ID? ");
+          System.out.print("What is the order ID? (Include#): ");
           String completeReturnID = scanner.nextLine();
+          checkExit(completeReturnID);
           customer.completeReturn(completeReturnID);
           break;
         case 14: // Check refund status
-          System.out.print("What is the order ID? ");
+          System.out.print("What is the order ID? (Include#): ");
           String refundID = scanner.nextLine();
+          checkExit(refundID);
           customer.checkRefund(refundID);
           break;
         case 15: // Logout
@@ -299,43 +339,54 @@ public class Main {
     System.out.println("Welcome to Seller Menu!");
     System.out.print("What is your seller ID? ");
     String sellerID = scanner.nextLine();
+    checkExit(sellerID);
 
     // Allow seller to create new profile, if they don't have an existing profile
     while (sellerID == null || !sellers.containsKey(sellerID)) {
       System.out.print("Customer does not exist. Do you have an account? (y/n) : ");
       String sellerAccountExists = scanner.nextLine().toLowerCase();
+      checkExit(sellerAccountExists);
       if (sellerAccountExists.startsWith("y")) {
         System.out.print("Enter your user ID again: ");
         sellerID = scanner.nextLine();
+        checkExit(sellerID);
         continue;
       } else {
         System.out.println("Please sign up by entering the following:");
 
         System.out.print("Choose a user ID: ");
         sellerID = scanner.nextLine();
+        checkExit(sellerID);
         while (sellerID.isBlank() || sellers.containsKey(sellerID)) {
           System.out.print("That user ID is invalid or already taken. Choose another: ");
           sellerID = scanner.nextLine();
+          checkExit(sellerID);
         }
 
         System.out.print("Name: ");
         String sellerName = scanner.nextLine();
+        checkExit(sellerName);
         System.out.print("Phone number: ");
         String sellerPhoneNumber = scanner.nextLine();
+        checkExit(sellerPhoneNumber);
         System.out.print("Address: ");
         String sellerAddress = scanner.nextLine();
+        checkExit(sellerAddress);
         System.out.print("Store Name: ");
         String storeName = scanner.nextLine();
+        checkExit(storeName);
         Seller seller =
             new Seller(
                 sellerID, sellerName, sellerPhoneNumber, sellerAddress, storeName, "placeholder");
 
         System.out.print("Almost there! Now, make a password with at least 10 characters: ");
         String sellerPassword = scanner.nextLine();
+        checkExit(sellerPassword);
 
         while (!seller.PasswordStrengthTest(sellerPassword)) {
           System.out.print("Try again: ");
           sellerPassword = scanner.nextLine();
+          checkExit(sellerPassword);
         }
 
         seller.setPassword(sellerPassword);
@@ -354,6 +405,7 @@ public class Main {
     // Perform login
     System.out.print("Enter your password: ");
     String sellerPassword = scanner.nextLine();
+    checkExit(sellerPassword);
 
     if (sellers.get(sellerID).login(sellerID, sellerPassword)) {
       System.out.println("Login successful!");
@@ -388,6 +440,7 @@ public class Main {
         case 2: // View single product
           System.out.print("What is the productID? ");
           String viewSingleProd = scanner.nextLine();
+          checkExit(viewSingleProd);
           if (!sellers.get(sellerID).hasProduct(viewSingleProd)) {
             System.out.println("Product does not exist. Please try again.");
           } else {
@@ -397,6 +450,7 @@ public class Main {
         case 3: // Change product price
           System.out.print("What is the productID? ");
           String idPriceChange = scanner.nextLine();
+          checkExit(idPriceChange);
           if (!sellers.get(sellerID).hasProduct(idPriceChange)) {
             System.out.println("Product does not exist. Please try again.");
           } else {
@@ -413,6 +467,7 @@ public class Main {
         case 4: // Check product discount
           System.out.print("What is the productID? ");
           String idDiscountCheck = scanner.nextLine();
+          checkExit(idDiscountCheck);
           if (!sellers.get(sellerID).hasProduct(idDiscountCheck)) {
             System.out.println("Product does not exist. Please try again.");
           } else {
@@ -425,6 +480,7 @@ public class Main {
         case 5: // Apply product discount
           System.out.print("What is the productID? ");
           String idDiscount = scanner.nextLine();
+          checkExit(idDiscount);
           if (!sellers.get(sellerID).hasProduct(idDiscount)) {
             System.out.println("Product does not exist. Please try again.");
           } else {
@@ -441,6 +497,7 @@ public class Main {
         case 6: // Clear discount
           System.out.print("What is the productID? ");
           String idClearDiscount = scanner.nextLine();
+          checkExit(idClearDiscount);
           if (!sellers.get(sellerID).hasProduct(idClearDiscount)) {
             System.out.println("Product does not exist. Please try again.");
           } else {
@@ -452,14 +509,17 @@ public class Main {
         case 7: // Add product
           System.out.print("What is the productID? ");
           String idAdd = scanner.nextLine();
+          checkExit(idAdd);
           if (sellers.get(sellerID).hasProduct(idAdd)) {
             System.out.println("Product already exists. Please try again.");
             break;
           }
           System.out.print("What is the product name? ");
           String nameAdd = scanner.nextLine();
+          checkExit(nameAdd);
           System.out.print("What is the product category? ");
           String categoryAdd = scanner.nextLine();
+          checkExit(categoryAdd);
           System.out.print("What is the initial stock? ");
           int stockAdd = scanner.nextInt();
           scanner.nextLine();
@@ -482,12 +542,14 @@ public class Main {
         case 8: // Remove product
           System.out.print("What is the productID? ");
           String idRemove = scanner.nextLine();
+          checkExit(idRemove);
           sellers.get(sellerID).removeProduct(idRemove);
           products.removeIf(p -> p.getProductId().equals(idRemove));
           break;
         case 9: // Add stock
           System.out.print("What is the productID? ");
           String idAddStock = scanner.nextLine();
+          checkExit(idAddStock);
           if (!sellers.get(sellerID).hasProduct(idAddStock)) {
             System.out.println("Product does not exist. Please try again.");
           } else {
@@ -508,6 +570,7 @@ public class Main {
         case 10: // Reduce stock
           System.out.print("What is the productID? ");
           String idReduceStock = scanner.nextLine();
+          checkExit(idReduceStock);
           if (!sellers.get(sellerID).hasProduct(idReduceStock)) {
             System.out.println("Product does not exist. Please try again.");
           } else {
@@ -536,6 +599,14 @@ public class Main {
           System.out.println("Invalid choice. Try again.");
           break;
       }
+    }
+  }
+
+  private static void checkExit(String input) {
+    if (input != null && input.equalsIgnoreCase("exit")) {
+      System.out.println("Exiting program...");
+      scanner.close();
+      System.exit(0);
     }
   }
 

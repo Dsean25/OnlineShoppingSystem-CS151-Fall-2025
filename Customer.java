@@ -25,8 +25,8 @@ public class Customer extends User implements Operations {
     super(userID, name, phoneNumber, address, password);
 
     if (instanceCount >= MAX_INSTANCES) {
-        throw new IllegalStateException("Reached max Customer limit " + MAX_INSTANCES);
-      }
+      throw new IllegalStateException("Reached max Customer limit " + MAX_INSTANCES);
+    }
 
     this.cart = new ShoppingCart(userID);
     this.orders = new ArrayList<>();
