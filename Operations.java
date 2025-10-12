@@ -3,5 +3,4 @@ public interface Operations {
 
   void removeProduct(Product product, int quantity);
 
-  void calculateTotal();
 }

@@ -1,7 +1,7 @@
 import java.util.HashMap;
 
 public class ShoppingCart
-    implements Operations { // only want to be able to make one instance per customer
+    implements Operations {
 
   private String customerId;
   private HashMap<Product, Integer> productsList;
@@ -29,12 +29,7 @@ public class ShoppingCart
     this.productsList = productsList;
   }
 
-  /*
-  questions:
-  - how do i set products except adding and subtracting
-  - do getters and setters and methods have to be static
-   */
-
+ 
   @Override
   public void addProduct(Product p, int quantity) {
     boolean hasproduct = productsList.containsKey(p);
@@ -52,11 +47,8 @@ public class ShoppingCart
 
   @Override
   public void removeProduct(Product p, int quantity) {
-    // should we add smt for when product is not in cart? or is the user simply selecting  based off
-    // what they see
 
     if (quantity > productsList.get(p)) {
-      // throw exception?
       System.out.println(
           "The amount you want to remove greater than the amount of this product in cart");
     } else if (productsList.get(p) == quantity) {
@@ -67,13 +59,12 @@ public class ShoppingCart
     }
   }
 
-  @Override
   public void calculateTotal() {
     double sum = 0;
     for (HashMap.Entry<Product, Integer> entry : productsList.entrySet()) {
       Product product = entry.getKey();
       int quantity = entry.getValue();
-      sum += product.getPrice() * quantity;
+      sum += product.getCurrentPrice() * quantity;
     }
     System.out.println("Total: $" + sum);
   }
@@ -82,7 +73,7 @@ public class ShoppingCart
     if (productsList.isEmpty()) {
       System.out.println("Your cart is empty.");
     } else {
-      System.out.println("Cart for Customer ID: " + customerId);
+      System.out.println("Your cart:");
       for (HashMap.Entry<Product, Integer> entry : productsList.entrySet()) {
         System.out.println(entry.getKey() + " x " + entry.getValue());
       }

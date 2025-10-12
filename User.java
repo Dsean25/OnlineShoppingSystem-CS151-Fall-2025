@@ -8,7 +8,11 @@ public abstract class User {
   private String password;
   private boolean loggedIn;
 
+<<<<<<< HEAD
   public User(String userID, String name, String phoneNumber, String address, String password) {
+=======
+  public User(String userID, String name, String phoneNumber, String address) {
+>>>>>>> 814eb1a3f4c60c33a4c1804280843fa3bb6488ff
     this.userID = userID;
     this.name = name;
 
