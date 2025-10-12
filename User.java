@@ -11,7 +11,6 @@ public abstract class User {
   public User(String userID, String name, String phoneNumber, String address, String password) {
     this.userID = userID;
     this.name = name;
-
     this.phoneNumber = phoneNumber;
     this.address = address;
     this.password = password;
@@ -55,6 +54,8 @@ public abstract class User {
     }
   }
 
+
+
   public boolean isLoggedIn() {
     return loggedIn;
   }
@@ -66,6 +67,8 @@ public abstract class User {
     }
     return true;
   }
+
+  
 
   public boolean login(String userID, String password) {
     if (this.userID.equals(userID) && this.password.equals(password)) {

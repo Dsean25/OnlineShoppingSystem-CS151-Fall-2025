@@ -6,7 +6,8 @@ public class Main {
 
   private static final ArrayList<Product> products = new ArrayList<>();
   private static Scanner scanner = new Scanner(System.in);
-  private static Seller seller1;
+  private static HashMap<String, Seller> sellers = new HashMap<>();
+  private static Seller seller2;
   private static HashMap<String, Customer> customers = new HashMap<>();
 
   public static void main(String[] args) {
@@ -73,21 +74,47 @@ public class Main {
     System.out.println("----------------------------------------------------");
   }
 
-  // customerMenu() Method:
+ // customerMenu() Method:
   // Customer can perform actions
   private static void customerMenu() {
     boolean exit = false;
     System.out.println("Welcome to Customer Menu!");
     System.out.print("What is your user ID? ");
     String customerID = scanner.nextLine();
-    System.out.print("What is your password? ");
-    String password = scanner.nextLine();
 
     // If they haven't created their profile, create one.
     if (customerID == null || !customers.containsKey(customerID)) {
-      System.out.println("Customer does not exist. Please try again.");
-      return;
+      System.out.println("Customer does not exist. Please sign up by entering the following:");
+      System.out.print("Name: ");
+      String name = scanner.nextLine();
+      System.out.print("Phone number: ");
+      String phoneNumber = scanner.nextLine();
+      System.out.print("Address: ");
+      String address = scanner.nextLine();
+      System.out.print("Payment method (credit card number): ");
+      String paymentMethod = scanner.nextLine();
+      Customer customer = new Customer(customerID, name, phoneNumber, address, "placeholder");
+      ((Customer) customer).setPaymentMethod(paymentMethod);
+      customers.put(customerID, (Customer) customer);
+      System.out.print("Almost there! Now, make a password with at least 10 characters: ");
+      String password = scanner.nextLine();
+      while (!customer.PasswordStrengthTest(password)) {
+        password = scanner.nextLine();
+      }
+      customer.setPassword(password);
+      System.out.println(
+          "Account created! Your user ID is "
+              + customerID
+              + " and your current password is "
+              + password
+              + ". Please log in again.");
+      System.out.print("What is your user ID? ");
+      customerID = scanner.nextLine();
     }
+
+    System.out.print("Enter your password here: ");
+    String password = scanner.nextLine();
+
     if (customers.get(customerID).login(customerID, password)) {
       System.out.println("Login successful!");
     } else {
@@ -111,8 +138,9 @@ public class Main {
       System.out.println("10. Cancel an order");
       System.out.println("11. Create a return");
       System.out.println("12. Complete a return");
-      System.out.println("13. Exit");
-      System.out.print("Enter a choice (1 - 13): ");
+      System.out.println("14. Logout");
+      System.out.println("15. Exit");
+      System.out.print("Enter a choice (1 - 15): ");
       int choice = scanner.nextInt();
       scanner.nextLine();
 
@@ -140,7 +168,7 @@ public class Main {
           // Get product ID
           System.out.print("What is the product ID? ");
           String productAdd = scanner.nextLine();
-          Product pAdd = seller1.getProductById(productAdd);
+          Product pAdd = seller2.getProductById(productAdd);
 
           // Get quantity
           System.out.print("What is the quantity? ");
@@ -154,7 +182,7 @@ public class Main {
           // Get product ID
           System.out.print("What is the product ID? ");
           String productRemove = scanner.nextLine();
-          Product pRemove = seller1.getProductById(productRemove);
+          Product pRemove = seller2.getProductById(productRemove);
 
           // Get quantity
           System.out.print("What is the quantity? ");
@@ -212,13 +240,16 @@ public class Main {
           String completeReturnID = scanner.nextLine();
           customer.completeReturn(completeReturnID);
           break;
-        case 13: // Exit
+        case 14: //logout
+          customer.logout();
+          exit = true;
+          break;
+        case 15: // Exit
           exit = true;
           break;
       }
     }
   }
-
   // sellerMenu() Method:
   // Seller can perform actions including:
   // 1) View products
@@ -231,29 +262,48 @@ public class Main {
     System.out.println("Welcome to Seller Menu!");
     System.out.print("What is your seller ID? ");
     String sellerID = scanner.nextLine();
-    System.out.println("Please log in to continue.");
-    System.out.print("Enter your password here:");
-    String password = scanner.nextLine();
-    if (sellerID == null) {
-      System.out.println("Seller does not exist. Please try again.");
-      return;
+    if (sellerID == null || !sellers.containsKey(sellerID)) {
+      System.out.println("Seller does not exist. Please sign up by entering the following:");
+      System.out.print("Name: ");
+      String sellerName = scanner.nextLine();
+      System.out.print("Phone number: ");
+      String sellerPhoneNumber = scanner.nextLine();
+      System.out.print("Address: ");
+      String sellerAddress = scanner.nextLine();
+      System.out.print("Store Name: ");
+      String storeName = scanner.nextLine();
+      Seller seller =
+          new Seller(
+              sellerID, sellerName, sellerPhoneNumber, sellerAddress, storeName, "placeholder");
+      sellers.put(sellerID, (Seller) (seller));
+      System.out.print("Almost there! Now, make a password with at least 10 characters: ");
+      String sellerPassword = scanner.nextLine();
+      while (!seller.PasswordStrengthTest(sellerPassword)) {
+        sellerPassword = scanner.nextLine();
+      }
+      seller.setPassword(sellerPassword);
+      System.out.println(
+          "Account created! Your user ID is "
+              + sellerID
+              + " and your current password is "
+              + sellerPassword
+              + ". Please log in again.");
+      System.out.print("What is your user ID? ");
+      sellerID = scanner.nextLine();
     }
-    if (seller1.login(sellerID, password)) {
+
+    System.out.print("Enter your password here: ");
+    String sellerPassword = scanner.nextLine();
+
+    if (sellers.get(sellerID).login(sellerID, sellerPassword)) {
       System.out.println("Login successful!");
     } else {
       System.out.println("Login failed. Please try again.");
       return;
     }
-    // i'll comment out this part for now, we can maybe implement it into login later?
-
-    // check valid seller ID before allowing them to make changes
-    // if (sellerID == null || !sellerID.equals(seller1.getUserID())) {
-    //   System.out.println("Seller does not exist. Please try again.");
-    //   return;
-    // }
 
     while (!exit) {
-      System.out.println("Welcome to store " + seller1.getStoreName() + "!");
+      System.out.println("Welcome to store " + sellers.get(sellerID).getStoreName() + "!");
       System.out.println("1. View all my product");
       System.out.println("2. View single product");
       System.out.println("3. Change product price");
@@ -264,35 +314,36 @@ public class Main {
       System.out.println("8. Remove product");
       System.out.println("9. Restock");
       System.out.println("10. Reduce stock");
-      System.out.println("11. Exit");
-      System.out.print("Enter a choice (1 - 11): ");
+      System.out.println("12. Logout");
+      System.out.println("13. Exit");
+      System.out.print("Enter a choice (1 - 13): ");
       int choice = scanner.nextInt();
       scanner.nextLine();
 
       switch (choice) {
         case 1: // View products
-          seller1.viewProducts();
+          sellers.get(sellerID).viewProducts();
           break;
         case 2: // View single product
           System.out.print("What is the productID? ");
           String viewSingleProd = scanner.nextLine();
-          if (!seller1.hasProduct(viewSingleProd)) {
+          if (!sellers.get(sellerID).hasProduct(viewSingleProd)) {
             System.out.println("Product does not exist. Please try again.");
           } else {
-            System.out.println(seller1.getProductById(viewSingleProd));
+            System.out.println(sellers.get(sellerID).getProductById(viewSingleProd));
           }
           break;
         case 3: // Change product price
           System.out.print("What is the productID? ");
           String idPriceChange = scanner.nextLine();
-          if (!seller1.hasProduct(idPriceChange)) {
+          if (!sellers.get(sellerID).hasProduct(idPriceChange)) {
             System.out.println("Product does not exist. Please try again.");
           } else {
             System.out.print("What is the new price? ");
             double newPrice = scanner.nextDouble();
             scanner.nextLine();
             try {
-              seller1.changeProductPrice(idPriceChange, newPrice);
+              sellers.get(sellerID).changeProductPrice(idPriceChange, newPrice);
             } catch (InvalidPriceException e) {
               System.out.println("Error changing product price: " + e.getMessage());
             }
@@ -301,10 +352,10 @@ public class Main {
         case 4: // Check product discount
           System.out.print("What is the productID? ");
           String idDiscountCheck = scanner.nextLine();
-          if (!seller1.hasProduct(idDiscountCheck)) {
+          if (!sellers.get(sellerID).hasProduct(idDiscountCheck)) {
             System.out.println("Product does not exist. Please try again.");
           } else {
-            Product p = seller1.getProductById(idDiscountCheck);
+            Product p = sellers.get(sellerID).getProductById(idDiscountCheck);
             System.out.printf(
                 "Product: %s (ID: %s) %nCurrent Discount: %.1f%%, Current Price: $%.2f%n",
                 p.getName(), p.getProductId(), p.getDiscountPercent(), p.getCurrentPrice());
@@ -313,10 +364,10 @@ public class Main {
         case 5: // Apply product discount
           System.out.print("What is the productID? ");
           String idDiscount = scanner.nextLine();
-          if (!seller1.hasProduct(idDiscount)) {
+          if (!sellers.get(sellerID).hasProduct(idDiscount)) {
             System.out.println("Product does not exist. Please try again.");
           } else {
-            Product p = seller1.getProductById(idDiscount);
+            Product p = sellers.get(sellerID).getProductById(idDiscount);
             System.out.print("What is the discount %? ");
             double discountPercent = scanner.nextDouble();
             scanner.nextLine();
@@ -329,28 +380,52 @@ public class Main {
         case 6: // Clear discount
           System.out.print("What is the productID? ");
           String idClearDiscount = scanner.nextLine();
-          if (!seller1.hasProduct(idClearDiscount)) {
+          if (!sellers.get(sellerID).hasProduct(idClearDiscount)) {
             System.out.println("Product does not exist. Please try again.");
           } else {
-            Product p = seller1.getProductById(idClearDiscount);
+            Product p = sellers.get(sellerID).getProductById(idClearDiscount);
             p.clearDiscount();
             System.out.printf("Discount cleared. New price: $%.2f%n", p.getCurrentPrice());
           }
           break;
         case 7: // Add product
+          System.out.print("What is the productID? ");
+          String idAdd = scanner.nextLine();
+          if( sellers.get(sellerID).hasProduct(idAdd)) {
+            System.out.println("Product already exists. Please try again.");
+            break;
+          }
+          System.out.print("What is the product name? ");
+          String nameAdd = scanner.nextLine();
+          System.out.print("What is the product category? ");
+          String categoryAdd = scanner.nextLine();
+          System.out.print("What is the initial stock? ");
+          int stockAdd = scanner.nextInt();
+          scanner.nextLine();
+          System.out.print("What is the product price? ");
+          double priceAdd = scanner.nextDouble();
+          scanner.nextLine();
+          try {
+            Product newProduct = new Product(idAdd, nameAdd, categoryAdd, stockAdd, priceAdd);
+            sellers.get(sellerID).addProduct(newProduct);
+          } catch (InvalidPriceException | InvalidStockException e) {
+            System.out.println("Error adding product: " + e.getMessage());
+          }
+          break;
+
         // Need to add
         case 8: // Remove product
           System.out.print("What is the productID? ");
           String idRemove = scanner.nextLine();
-          seller1.removeProduct(idRemove);
+          sellers.get(sellerID).removeProduct(idRemove);
           break;
         case 9: // Add stock
           System.out.print("What is the productID? ");
           String idAddStock = scanner.nextLine();
-          if (!seller1.hasProduct(idAddStock)) {
+          if (!sellers.get(sellerID).hasProduct(idAddStock)) {
             System.out.println("Product does not exist. Please try again.");
           } else {
-            Product p = seller1.getProductById(idAddStock);
+            Product p = sellers.get(sellerID).getProductById(idAddStock);
             System.out.printf(
                 "Current stock of %s (ID: %s) is %d. Add how many? ",
                 p.getName(), p.getProductId(), p.getStock());
@@ -367,10 +442,10 @@ public class Main {
         case 10: // Reduce stock
           System.out.print("What is the productID? ");
           String idReduceStock = scanner.nextLine();
-          if (!seller1.hasProduct(idReduceStock)) {
+          if (!sellers.get(sellerID).hasProduct(idReduceStock)) {
             System.out.println("Product does not exist. Please try again.");
           } else {
-            Product p = seller1.getProductById(idReduceStock);
+            Product p = sellers.get(sellerID).getProductById(idReduceStock);
             System.out.printf(
                 "Current stock of %s (ID: %s) is %d. Reduce how many? ",
                 p.getName(), p.getProductId(), p.getStock());
@@ -384,12 +459,18 @@ public class Main {
             }
           }
           break;
-        case 11: // Exit
+        case 12: // Logout
+          sellers.get(sellerID).logout();
+          exit = true;
+          break;
+        case 13: // Exit
           exit = true;
           break;
       }
     }
   }
+
+ 
 
   private static void initialProductSetup() {
     // Products
@@ -454,7 +535,7 @@ public class Main {
       products.add(beans);
 
       // Assign products to Seller
-      seller1 =
+      Seller seller1 =
           new Seller(
               "S001",
               "Bush Nguyen ",
@@ -462,9 +543,11 @@ public class Main {
               "1 Washington Sq, San Jose, CA",
               "FreshMart",
               "password123");
+      String sellerID = seller1.getUserID();
+      sellers.put(sellerID, seller1);
 
       for (Product product : products) {
-        seller1.addProduct(product);
+        sellers.get(sellerID).addProduct(product);
       }
 
       // Create customers
