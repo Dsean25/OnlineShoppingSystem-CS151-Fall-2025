@@ -139,7 +139,7 @@ public class Main {
     }
 
     // Perform login
-    System.out.print("Enter your password here: ");
+    System.out.print("Enter your password: ");
     String password = scanner.nextLine();
 
     if (customers.get(customerID).login(customerID, password)) {
@@ -233,6 +233,10 @@ public class Main {
           }
           System.out.print("What is your new credit card number? ");
           String newCardNo = scanner.nextLine();
+          while (!newCardNo.matches("\\d{16}")) {
+            System.out.print("Must be 16 digit long and digits only. Enter card number again: ");
+            newCardNo = scanner.nextLine();
+          }
           customer.changePaymentMethod(newCardNo);
           break;
         case 7: // Place an order
@@ -339,7 +343,7 @@ public class Main {
     }
 
     // Perform login
-    System.out.print("Enter your password here: ");
+    System.out.print("Enter your password: ");
     String sellerPassword = scanner.nextLine();
 
     if (sellers.get(sellerID).login(sellerID, sellerPassword)) {
@@ -456,6 +460,7 @@ public class Main {
           try {
             Product newProduct = new Product(idAdd, nameAdd, categoryAdd, stockAdd, priceAdd);
             sellers.get(sellerID).addProduct(newProduct);
+            products.add(newProduct);
             System.out.println(
                 "Product "
                     + newProduct.getName()
@@ -469,6 +474,7 @@ public class Main {
           System.out.print("What is the productID? ");
           String idRemove = scanner.nextLine();
           sellers.get(sellerID).removeProduct(idRemove);
+          products.removeIf(p -> p.getProductId().equals(idRemove));
           break;
         case 9: // Add stock
           System.out.print("What is the productID? ");
