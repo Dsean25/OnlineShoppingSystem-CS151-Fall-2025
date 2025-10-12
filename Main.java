@@ -195,8 +195,14 @@ public class Main {
           customer.cancelOrder(cancelOrderID);
           break;
         case 11: // Create a return
+          System.out.print("What is the order ID? ");
+          String returnOrderID = scanner.nextLine();
+          customer.returnOrder(returnOrderID);
           break;
         case 12: // Complete a return
+          System.out.print("What is the order ID? ");
+          String completeReturnID = scanner.nextLine();
+          customer.completeReturn(completeReturnID);
           break;
         case 13: // Exit
           exit = true;
