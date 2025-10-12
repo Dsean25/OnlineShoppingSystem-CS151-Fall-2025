@@ -117,10 +117,10 @@ You can use these to test out the system.
 - Classes: Created and worked on Shopping Cart and Customer, updated User 
 - Interface: Operations
 - Co-authored README
-- Ensured smooth UI/UX
+- Ensured smooth UI/UX, implemented searching
 
 **Matthew Yeh (`mattthewyeh`):**
 - Classes: Created and worked on User and Seller, updated Main
 - Abstract class: Created and updated User
-- Ensured smooth UI/UX
+- Ensured smooth UI/UX, implemented login and logout
 
