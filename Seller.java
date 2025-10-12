@@ -76,17 +76,22 @@ public class Seller extends User {
       double maxPrice,
       boolean isAvailable,
       boolean discountAvailable) {
-    HashMap<String, Product> results = new HashMap<>();
-
+      HashMap<String, Product> results = new HashMap<>();
     for (Product product : productMap.values()) {
-      if (product.getCategory().equals(category)
-          && product.getPrice() >= minPrice
-          && product.getPrice() <= maxPrice
-          && product.isAvailable() == isAvailable
-          && product.isDiscountAvailable() == discountAvailable) {
-        results.put(product.getProductId(), product);
+      if (category != null && !category.equalsIgnoreCase(product.getCategory())) {
+        continue;
+      } 
+      if (product.getPrice() < minPrice || product.getPrice() > maxPrice) {
+        continue;
       }
-    }
+      if (isAvailable && !product.isAvailable()) {
+        continue;
+      }
+      if (discountAvailable && !product.isDiscountAvailable()) {
+        continue;
+      }
+      results.put(product.getProductId(), product);
+      }
     return results;
   }
 }
