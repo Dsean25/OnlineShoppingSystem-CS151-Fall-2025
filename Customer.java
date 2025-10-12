@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Customer extends User implements Operations {
@@ -6,8 +7,8 @@ public class Customer extends User implements Operations {
   private String paymentMethod;
   private ArrayList<Order> orders;
 
-  public Customer(String userID, String name, String phoneNumber, String address) {
-    super(userID, name, phoneNumber, address);
+  public Customer(String userID, String name, String phoneNumber, String address, String password) {
+    super(userID, name, phoneNumber, address, password);
     this.cart = new ShoppingCart(userID);
     this.orders = new ArrayList<>();
   }
@@ -190,5 +191,12 @@ public class Customer extends User implements Operations {
   public void changePaymentMethod(String paymentMethod) {
     setPaymentMethod(paymentMethod);
     System.out.printf("Your payment method was changed to %s!%n", paymentMethod);
+  }
+
+  @Override
+  public HashMap<String, Product> searchProducts(String category, double minPrice, double maxPrice, boolean isAvailable,
+      boolean discountAvailable) {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'searchProducts'");
   }
 }
