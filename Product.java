@@ -1,3 +1,12 @@
+/*
+ Class: Product.java
+
+ Purpose:
+ - Represents a product available in the online shopping system
+ - Stores and updates product details
+ - Implements Discountable interface to handle product discounts
+*/
+
 import java.time.LocalDate;
 
 public class Product implements Discountable {
@@ -32,61 +41,9 @@ public class Product implements Discountable {
     this.lastUpdated = LocalDate.now().toString();
   }
 
-  @Override
-  public void applyDiscount(double percent) {
-    if (percent < 0 || percent > 100) {
-      throw new IllegalArgumentException("Discount must be between 0 and 100.");
-    }
-    discountPercent = percent;
-    discountAvailable = true;
-    updateLastUpdated();
-  }
-
-  @Override
-  public void clearDiscount() {
-    discountPercent = 0;
-    discountAvailable = false;
-    updateLastUpdated();
-  }
-
-  @Override
-  public double getDiscountPercent() {
-    return discountPercent;
-  }
-
+  // Getters and setters
   public double getCurrentPrice() {
     return price * (1 - discountPercent / 100);
-  }
-
-  public void restock(int amount) throws InvalidStockException {
-    if (amount <= 0) {
-      throw new InvalidStockException("Restock amount must be positive.");
-    }
-    stock += amount;
-    isAvailable = true;
-    updateLastUpdated();
-  }
-
-  public void reduceStock(int amount) throws InvalidStockException {
-    if (amount <= 0) {
-      throw new InvalidStockException("Amount must be positive.");
-    }
-    if (amount > stock) {
-      throw new InvalidStockException("Not enough stock available.");
-    }
-    stock -= amount;
-    isAvailable = stock > 0;
-    updateLastUpdated();
-  }
-
-  public void deleteProduct() {
-    stock = 0;
-    isAvailable = false;
-    updateLastUpdated();
-  }
-
-  private void updateLastUpdated() {
-    lastUpdated = LocalDate.now().toString();
   }
 
   public String getProductId() {
@@ -138,6 +95,62 @@ public class Product implements Discountable {
     updateLastUpdated();
   }
 
+  // Discount-related methods
+  @Override
+  public void applyDiscount(double percent) {
+    if (percent < 0 || percent > 100) {
+      throw new IllegalArgumentException("Discount must be between 0 and 100.");
+    }
+    discountPercent = percent;
+    discountAvailable = true;
+    updateLastUpdated();
+  }
+
+  @Override
+  public void clearDiscount() {
+    discountPercent = 0;
+    discountAvailable = false;
+    updateLastUpdated();
+  }
+
+  @Override
+  public double getDiscountPercent() {
+    return discountPercent;
+  }
+
+  // Product-related methods
+  public void restock(int amount) throws InvalidStockException {
+    if (amount <= 0) {
+      throw new InvalidStockException("Restock amount must be positive.");
+    }
+    stock += amount;
+    isAvailable = true;
+    updateLastUpdated();
+  }
+
+  public void reduceStock(int amount) throws InvalidStockException {
+    if (amount <= 0) {
+      throw new InvalidStockException("Amount must be positive.");
+    }
+    if (amount > stock) {
+      throw new InvalidStockException("Not enough stock available.");
+    }
+    stock -= amount;
+    isAvailable = stock > 0;
+    updateLastUpdated();
+  }
+
+  public void deleteProduct() {
+    stock = 0;
+    isAvailable = false;
+    updateLastUpdated();
+  }
+
+  private void updateLastUpdated() {
+    lastUpdated = LocalDate.now().toString();
+  }
+
+  // toString()
   @Override
   public String toString() {
     return name

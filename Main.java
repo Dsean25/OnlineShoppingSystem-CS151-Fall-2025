@@ -1,3 +1,11 @@
+/*
+Class: Main.java
+Purpose:
+- Provides a UI for the online shopping system
+- Provides console menus for product, customer, and seller via Scanner
+- Initializes sample data
+*/
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -15,28 +23,28 @@ public class Main {
     System.out.println("Welcome to the Online Grocery Shop!");
 
     // Set up a default grocery shop
-    initialProductSetup();
+    initialSetup();
 
     while (!exit) {
       // Main menu
       displaymainMenu();
 
-      // Read user input
+      // Read user input to proceed
       int input = scanner.nextInt();
       scanner.nextLine();
       System.out.println(input);
 
       switch (input) {
-        case 1:
+        case 1: // Product menu
           productMenu();
           break;
-        case 2:
+        case 2: // Customer menu
           customerMenu();
           break;
-        case 3:
+        case 3: // Seller menu
           sellerMenu();
           break;
-        case 4:
+        case 4: // Exit
           exit = true;
           break;
       }
@@ -46,7 +54,7 @@ public class Main {
     return;
   }
 
-  // displaymainMenu() Method:
+  // displaymainMenu():
   // Display the main menu
   private static void displaymainMenu() {
     System.out.println("Main Menu");
@@ -58,7 +66,7 @@ public class Main {
     System.out.print("Enter a choice (1 - 4): ");
   }
 
-  // productMenu() Method:
+  // productMenu():
   // Display a table of products
   private static void productMenu() {
     System.out.println("Welcome to Product Menu!");
@@ -74,15 +82,15 @@ public class Main {
     System.out.println("----------------------------------------------------");
   }
 
- // customerMenu() Method:
-  // Customer can perform actions
+  // customerMenu():
+  // Display a list of customer actions
   private static void customerMenu() {
     boolean exit = false;
     System.out.println("Welcome to Customer Menu!");
     System.out.print("What is your user ID? ");
     String customerID = scanner.nextLine();
 
-    // If they haven't created their profile, create one.
+    // Allow customer to create new profile, if they don't have an existing profile
     if (customerID == null || !customers.containsKey(customerID)) {
       System.out.println("Customer does not exist. Please sign up by entering the following:");
       System.out.print("Name: ");
@@ -112,6 +120,7 @@ public class Main {
       customerID = scanner.nextLine();
     }
 
+    // Perform login
     System.out.print("Enter your password here: ");
     String password = scanner.nextLine();
 
@@ -122,9 +131,11 @@ public class Main {
       return;
     }
 
+    // Get customer information before allowing them to perform actions
     Customer customer = customers.get(customerID);
 
     while (!exit) {
+      // Display customer menu
       System.out.println("Welcome, " + customer.getName() + "!");
       System.out.println("1. View products");
       System.out.println("2. View shopping cart");
@@ -138,9 +149,11 @@ public class Main {
       System.out.println("10. Cancel an order");
       System.out.println("11. Create a return");
       System.out.println("12. Complete a return");
+      // System.out.println("Check refund status");
       System.out.println("14. Logout");
       System.out.println("15. Exit");
       System.out.print("Enter a choice (1 - 15): ");
+      // Scan user choice input
       int choice = scanner.nextInt();
       scanner.nextLine();
 
@@ -240,7 +253,7 @@ public class Main {
           String completeReturnID = scanner.nextLine();
           customer.completeReturn(completeReturnID);
           break;
-        case 14: //logout
+        case 14: // Logout
           customer.logout();
           exit = true;
           break;
@@ -250,18 +263,17 @@ public class Main {
       }
     }
   }
-  // sellerMenu() Method:
-  // Seller can perform actions including:
-  // 1) View products
-  // 2) Change product price
-  // 3) Add product
-  // 4) Remove product
+
+  // sellerMenu():
+  // Display a list of seller actions
   private static void sellerMenu() {
     boolean exit = false;
 
     System.out.println("Welcome to Seller Menu!");
     System.out.print("What is your seller ID? ");
     String sellerID = scanner.nextLine();
+
+    // Allow seller to create new profile, if they don't have an existing profile
     if (sellerID == null || !sellers.containsKey(sellerID)) {
       System.out.println("Seller does not exist. Please sign up by entering the following:");
       System.out.print("Name: ");
@@ -292,6 +304,7 @@ public class Main {
       sellerID = scanner.nextLine();
     }
 
+    // Perform login
     System.out.print("Enter your password here: ");
     String sellerPassword = scanner.nextLine();
 
@@ -303,6 +316,7 @@ public class Main {
     }
 
     while (!exit) {
+      // Display seller menu
       System.out.println("Welcome to store " + sellers.get(sellerID).getStoreName() + "!");
       System.out.println("1. View all my product");
       System.out.println("2. View single product");
@@ -391,7 +405,7 @@ public class Main {
         case 7: // Add product
           System.out.print("What is the productID? ");
           String idAdd = scanner.nextLine();
-          if( sellers.get(sellerID).hasProduct(idAdd)) {
+          if (sellers.get(sellerID).hasProduct(idAdd)) {
             System.out.println("Product already exists. Please try again.");
             break;
           }
@@ -412,8 +426,6 @@ public class Main {
             System.out.println("Error adding product: " + e.getMessage());
           }
           break;
-
-        // Need to add
         case 8: // Remove product
           System.out.print("What is the productID? ");
           String idRemove = scanner.nextLine();
@@ -470,10 +482,9 @@ public class Main {
     }
   }
 
- 
+  private static void initialSetup() {
 
-  private static void initialProductSetup() {
-    // Products
+    // Set up Products
     try {
       // Fruits
       Product apple = new Product("P001", "Apple", "Fruit", 50, 0.99);
@@ -534,7 +545,7 @@ public class Main {
       products.add(pasta);
       products.add(beans);
 
-      // Assign products to Seller
+      // Assign Products to Seller
       Seller seller1 =
           new Seller(
               "S001",
@@ -550,7 +561,7 @@ public class Main {
         sellers.get(sellerID).addProduct(product);
       }
 
-      // Create customers
+      // Set up default customers
       Customer c1 =
           new Customer(
               "C001", "Toey Lui", "406-123-1111", "1 Washington Sq, San Jose, CA", "password123");

@@ -1,9 +1,19 @@
+/*
+ Class: Seller.java
+
+ Purpose:
+ - Represents a seller the online shopping system
+ - Manages the store's product and operations
+ - Extends User class for seller-specific attributes
+*/
+
 import java.util.HashMap;
 
 public class Seller extends User {
   private String storeName;
   private HashMap<String, Product> productMap;
 
+  // Constructor
   public Seller(
       String userID,
       String name,
@@ -16,22 +26,24 @@ public class Seller extends User {
     this.productMap = new HashMap<>();
   }
 
+  // Getters and setters
   public String getStoreName() {
-    return storeName;
+    return this.storeName;
+  }
+
+  public HashMap<String, Product> getproductMap() {
+    return this.productMap;
   }
 
   public void setStoreName(String storeName) {
     this.storeName = storeName;
   }
 
-  public HashMap<String, Product> getproductMap(){
-    return productMap;
-  }
-
-  public void setproductMap(HashMap<String, Product> productMap){
+  public void setproductMap(HashMap<String, Product> productMap) {
     this.productMap = productMap;
   }
 
+  // Product-related methods
   public void viewProducts() {
     for (Product product : productMap.values()) {
       System.out.println(product);
@@ -84,12 +96,12 @@ public class Seller extends User {
       double maxPrice,
       boolean isAvailable,
       boolean discountAvailable) {
-      HashMap<String, Product> results = new HashMap<>();
+    HashMap<String, Product> results = new HashMap<>();
 
     for (Product product : productMap.values()) {
       if (category != null && !category.equalsIgnoreCase(product.getCategory())) {
         continue;
-      } 
+      }
       if (product.getPrice() < minPrice || product.getPrice() > maxPrice) {
         continue;
       }
@@ -100,7 +112,7 @@ public class Seller extends User {
         continue;
       }
       results.put(product.getProductId(), product);
-      }
+    }
     return results;
   }
 }

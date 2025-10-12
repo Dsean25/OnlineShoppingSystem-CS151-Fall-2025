@@ -1,7 +1,17 @@
+/*
+ Class: ShoppingCart.java
+
+ Purpose:
+ - Represents a customer's shopping cart the online shopping system
+ - Stores products and their quantities
+ - Implements Operations interface for add/remove products
+ - Manages cart operations such as viewing, clearing, and calculating estimated cost
+ - Extends User class for seller-specific attributes
+*/
+
 import java.util.HashMap;
 
-public class ShoppingCart
-    implements Operations { // only want to be able to make one instance per customer
+public class ShoppingCart implements Operations {
 
   private String customerId;
   private HashMap<Product, Integer> productsList;
@@ -11,16 +21,15 @@ public class ShoppingCart
     productsList = new HashMap<>();
   }
 
-  // getters
+  // Getters and setters
   public String getcustomerId() {
-    return customerId;
+    return this.customerId;
   }
 
   public HashMap<Product, Integer> getproductsList() {
-    return productsList;
+    return this.productsList;
   }
 
-  // setters
   public void setcustomerId(String customerId) {
     this.customerId = customerId;
   }
@@ -29,12 +38,7 @@ public class ShoppingCart
     this.productsList = productsList;
   }
 
-  /*
-  questions:
-  - how do i set products except adding and subtracting
-  - do getters and setters and methods have to be static
-   */
-
+  // Cart-related methods
   @Override
   public void addProduct(Product p, int quantity) {
     boolean hasproduct = productsList.containsKey(p);
@@ -52,11 +56,8 @@ public class ShoppingCart
 
   @Override
   public void removeProduct(Product p, int quantity) {
-    // should we add smt for when product is not in cart? or is the user simply selecting  based off
-    // what they see
 
     if (quantity > productsList.get(p)) {
-      // throw exception?
       System.out.println(
           "The amount you want to remove greater than the amount of this product in cart");
     } else if (productsList.get(p) == quantity) {
@@ -67,7 +68,6 @@ public class ShoppingCart
     }
   }
 
-  // not included in interface for now - @Override
   public void calculateTotal() {
     double sum = 0;
     for (HashMap.Entry<Product, Integer> entry : productsList.entrySet()) {
