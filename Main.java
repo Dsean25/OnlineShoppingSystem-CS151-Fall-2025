@@ -8,6 +8,7 @@ Purpose:
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -29,8 +30,13 @@ public class Main {
       displaymainMenu();
 
       // Read user input to proceed
-      int input = scanner.nextInt();
-      scanner.nextLine();
+      int input = -1;
+      try {
+        input = scanner.nextInt();
+        scanner.nextLine();
+      } catch (InputMismatchException e) {
+        exit();
+      }
 
       switch (input) {
         case 1: // Product menu
@@ -193,9 +199,13 @@ public class Main {
       System.out.println("17. Exit");
       System.out.print("Enter a choice (1 - 17): ");
       // Scan user choice input
-      int choice = scanner.nextInt();
-      scanner.nextLine();
-
+      int choice = -1;
+      try {
+        choice = scanner.nextInt();
+        scanner.nextLine();
+      } catch (InputMismatchException e) {
+        exit();
+      }
       switch (choice) {
         case 1: // View products
           System.out.println("Here are the list of products: ");
@@ -216,8 +226,13 @@ public class Main {
 
           // Get quantity
           System.out.print("What is the quantity? ");
-          int addQty = scanner.nextInt();
-          scanner.nextLine();
+          int addQty = -1;
+          try {
+            addQty = scanner.nextInt();
+            scanner.nextLine();
+          } catch (InputMismatchException e) {
+            exit();
+          }
 
           if (addQty <= 0) {
             System.out.println("Quantity must be greater than 0.");
@@ -243,8 +258,13 @@ public class Main {
 
           // Get quantity
           System.out.print("What is the quantity? ");
-          int removeQty = scanner.nextInt();
-          scanner.nextLine();
+          int removeQty = -1;
+          try {
+            removeQty = scanner.nextInt();
+            scanner.nextLine();
+          } catch (InputMismatchException e) {
+            exit();
+          }
 
           // Remove Product from cart
           customer.removeProduct(pRemove, removeQty);
@@ -469,8 +489,13 @@ public class Main {
       System.out.println("12. Logout");
       System.out.println("13. Exit");
       System.out.print("Enter a choice (1 - 13): ");
-      int choice = scanner.nextInt();
-      scanner.nextLine();
+      int choice = -1;
+      try {
+        choice = scanner.nextInt();
+        scanner.nextLine();
+      } catch (InputMismatchException e) {
+        exit();
+      }
 
       switch (choice) {
         case 1: // View products
@@ -560,7 +585,12 @@ public class Main {
           String categoryAdd = scanner.nextLine();
           checkExit(categoryAdd);
           System.out.print("What is the initial stock? ");
-          int stockAdd = scanner.nextInt();
+          int stockAdd = -1;
+          try {
+            stockAdd = scanner.nextInt();
+          } catch (InputMismatchException e) {
+            exit();
+          }
           scanner.nextLine();
           System.out.print("What is the product price? ");
           double priceAdd = scanner.nextDouble();
@@ -596,8 +626,13 @@ public class Main {
             System.out.printf(
                 "Current stock of %s (ID: %s) is %d. Add how many? ",
                 p.getName(), p.getProductId(), p.getStock());
-            int newStock = scanner.nextInt();
-            scanner.nextLine();
+            int newStock = -1;
+            try {
+              newStock = scanner.nextInt();
+              scanner.nextLine();
+            } catch (InputMismatchException e) {
+              exit();
+            }
             try {
               p.restock(newStock);
               System.out.printf("New stock is %d.%n", p.getStock());
@@ -617,7 +652,12 @@ public class Main {
             System.out.printf(
                 "Current stock of %s (ID: %s) is %d. Reduce how many? ",
                 p.getName(), p.getProductId(), p.getStock());
-            int newStock = scanner.nextInt();
+            int newStock = -1;
+            try {
+              newStock = scanner.nextInt();
+            } catch (InputMismatchException e) {
+              exit();
+            }
             scanner.nextLine();
             try {
               p.reduceStock(newStock);
@@ -685,6 +725,12 @@ public class Main {
       scanner.close();
       System.exit(0);
     }
+  }
+
+  private static void exit() {
+    System.out.println("Exiting program...");
+    scanner.close();
+    System.exit(0);
   }
 
   private static void initialSetup() {
