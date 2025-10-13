@@ -196,8 +196,7 @@ public class Main {
       System.out.println("14. Check refund status");
       System.out.println("15. Search products");
       System.out.println("16. Logout");
-      System.out.println("17. Exit");
-      System.out.print("Enter a choice (1 - 17): ");
+      System.out.print("Enter a choice (1 - 16): ");
       // Scan user choice input
       int choice = -1;
       try {
@@ -389,9 +388,6 @@ public class Main {
           customer.logout();
           exit = true;
           break;
-        case 17: // Exit
-          exit = true;
-          break;
         default:
           System.out.println("Invalid choice. Try again.");
           break;
@@ -497,8 +493,7 @@ public class Main {
       System.out.println("10. Reduce stock");
       System.out.println("11. Search Inventory");
       System.out.println("12. Logout");
-      System.out.println("13. Exit");
-      System.out.print("Enter a choice (1 - 13): ");
+      System.out.print("Enter a choice (1 - 12): ");
       int choice = -1;
       try {
         choice = scanner.nextInt();
@@ -745,11 +740,9 @@ public class Main {
           sellers.get(sellerID).logout();
           exit = true;
           break;
-        case 13: // Exit
-          exit = true;
-          break;
         default:
           System.out.println("Invalid choice. Try again.");
+          break;
       }
     }
   }
