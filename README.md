@@ -117,5 +117,5 @@ You can use these to test out the system.
 **Matthew Yeh (`mattthewyeh`):**
 - Classes: Created and worked on User and Seller, updated Main
 - Abstract class: Created and updated User
-- Ensured smooth UI/UX, implemented login and logout
-
+- Created Unit Tests
+- Ensured smooth UI/UX, implemented login, logout, and account creation
