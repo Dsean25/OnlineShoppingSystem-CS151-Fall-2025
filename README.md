@@ -46,7 +46,9 @@ to create a functional and interactive system that models real-life online shopp
 4. Run unit test `UnitTestSeller.java`: set up JUnit Jupiter
     - VS Code Setup:
       - Testing → Add Java Test → Select JUnit Jupiter
-
+    - IntelliJ Setup:
+      - File → Project Structure → Libraries → + From Maven → Add ``
+      - File → Project Structure → Project → Modules → Dependencies → ✓ junit.jupiter
 ## Usage
 
 Additionally, we have created some instances for Users, including Seller and Customer for sample use case.
