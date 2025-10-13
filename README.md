@@ -43,11 +43,11 @@ to create a functional and interactive system that models real-life online shopp
        - Extensions → Google Java Format → Install → Settings
        - Save settings and reload VS Code
 3. Run `Main.java`
+4. Run unit test `UnitTestSeller.java`: set up JUnit Jupiter
+    - VS Code Setup:
+      - Testing → Add Java Test → Select JUnit Jupiter
 
 ## Usage
-In order to run the unit tests, set up JUnit Jupiter:
-   -VS Code Setup:
-      -Testing -> Add Java Test -> Select JUnit Jupiter
 
 Additionally, we have created some instances for Users, including Seller and Customer for sample use case.
 You can use these to test out the system.
