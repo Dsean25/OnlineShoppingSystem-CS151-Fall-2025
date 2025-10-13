@@ -345,10 +345,20 @@ public class Main {
           if (category.isBlank()) category = null;
 
           System.out.print("Enter minimum price: ");
-          double minPrice = scanner.nextDouble();
+          double minPrice = -1;
+          try {
+            minPrice = scanner.nextDouble();
+          } catch (InputMismatchException e) {
+            exit();
+          }
           System.out.print("Enter maximum price: ");
-          double maxPrice = scanner.nextDouble();
-          scanner.nextLine();
+          double maxPrice = -1;
+          try {
+            maxPrice = scanner.nextDouble();
+            scanner.nextLine();
+          } catch (InputMismatchException e) {
+            exit();
+          }
 
           System.out.print("Only show available products? (yes/no): ");
           boolean isAvailable = scanner.nextLine().equalsIgnoreCase("yes");
@@ -519,8 +529,13 @@ public class Main {
             System.out.println("Product does not exist. Please try again.");
           } else {
             System.out.print("What is the new price? ");
-            double newPrice = scanner.nextDouble();
-            scanner.nextLine();
+            double newPrice = -1.0;
+            try {
+              newPrice = scanner.nextDouble();
+              scanner.nextLine();
+            } catch (InputMismatchException e) {
+              exit();
+            }
             try {
               sellers.get(sellerID).changeProductPrice(idPriceChange, newPrice);
             } catch (InvalidPriceException e) {
@@ -550,8 +565,13 @@ public class Main {
           } else {
             Product p = sellers.get(sellerID).getProductById(idDiscount);
             System.out.print("What is the discount %? ");
-            double discountPercent = scanner.nextDouble();
-            scanner.nextLine();
+            double discountPercent = -1.0;
+            try {
+              discountPercent = scanner.nextDouble();
+              scanner.nextLine();
+            } catch (InputMismatchException e) {
+              exit();
+            }
             p.applyDiscount(discountPercent);
             System.out.printf(
                 "Applied %.1f%% discount to %s. New price: $%.2f%n",
@@ -588,13 +608,18 @@ public class Main {
           int stockAdd = -1;
           try {
             stockAdd = scanner.nextInt();
+            scanner.nextLine();
           } catch (InputMismatchException e) {
             exit();
           }
-          scanner.nextLine();
           System.out.print("What is the product price? ");
-          double priceAdd = scanner.nextDouble();
-          scanner.nextLine();
+          double priceAdd = -1.0;
+          try {
+            priceAdd = scanner.nextDouble();
+            // scanner.nextLine();
+          } catch (InputMismatchException e) {
+            exit();
+          }
           try {
             Product newProduct = new Product(idAdd, nameAdd, categoryAdd, stockAdd, priceAdd);
             sellers.get(sellerID).addProduct(newProduct);
@@ -672,10 +697,20 @@ public class Main {
           String searchCategory = scanner.nextLine();
           if (searchCategory.isBlank()) searchCategory = null;
           System.out.print("Enter minimum price: ");
-          double searchMinPrice = scanner.nextDouble();
+          double searchMinPrice = -1;
+          try {
+            searchMinPrice = scanner.nextDouble();
+          } catch (InputMismatchException e) {
+            exit();
+          }
           System.out.print("Enter maximum price: ");
-          double searchMaxPrice = scanner.nextDouble();
-          scanner.nextLine(); // consume newline
+          double searchMaxPrice = -1;
+          try {
+            searchMaxPrice = scanner.nextDouble();
+            scanner.nextLine();
+          } catch (InputMismatchException e) {
+            exit();
+          }
           System.out.print("Only show available products? (yes/no): ");
           boolean searchAvailable = scanner.nextLine().equalsIgnoreCase("yes");
           System.out.print("Only show products with discount? (yes/no): ");
