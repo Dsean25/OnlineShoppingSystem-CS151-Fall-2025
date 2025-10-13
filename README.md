@@ -45,8 +45,11 @@ to create a functional and interactive system that models real-life online shopp
 3. Run `Main.java`
 
 ## Usage
+In order to run the unit tests, set up JUnit Jupiter:
+   -VS Code Setup:
+      -Testing -> Add Java Test -> Select JUnit Jupiter
 
-We have created some instances for Users, including Seller and Customer for sample use case.
+Additionally, we have created some instances for Users, including Seller and Customer for sample use case.
 You can use these to test out the system.
 - Seller ID: `S001`, password: `password123`
 - Customer ID: `C001`, password: `password123`
